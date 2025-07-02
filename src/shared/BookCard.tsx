@@ -1,0 +1,47 @@
+import React from 'react'
+import type { GoogleBook, MyBook } from '../types'
+import frontBook from '../assets/imgs/frontBook.png'
+
+type Props = {
+  book: GoogleBook | MyBook | null
+}
+
+const BookCard = ({ book }: Props) => {
+
+  //! Si la función devuelve true, quiere decir que es el book es un GoogleBook
+  const isGoogleBook = (book: GoogleBook | MyBook | null): book is GoogleBook => {
+    //! Los dos !! es para asegurarse que book no sea null ni undefined
+    //! Si book tiene una propiedad llamada 'volumeInfo' entonces es verdadero, por lo que retorna true
+    return !!book && 'volumeInfo' in book
+  }
+
+  return (
+    <main className='flex flex-col items-center hover:scale-105 hover:cursor-pointer transition-all duration-300 gap-2'>
+    {isGoogleBook(book) ? (
+      <React.Fragment>
+        <img src={book?.volumeInfo.imageLinks?.smallThumbnail} 
+        className='w-40 h-64 object-cover rounded shadow-md shadow-black' 
+        width={150} 
+        alt={book?.volumeInfo.title} />        
+        <h2>{book?.volumeInfo.title}</h2>
+      </React.Fragment>
+    ) : (
+      <React.Fragment>
+          <img src={frontBook} 
+          className='object-cover' 
+          alt={book?.title} />        
+          <article className='flex flex-col justify-between h-56 items-center text-orange-600 absolute mt-20 mr-1.5'>
+            <h2 className='text-4xl w-[200px] break-words'>{book?.title}</h2>
+            <div className='flex flex-col items-center'>
+            <h2>{book?.genre}</h2>
+            <h2>{book?.author}</h2>
+            </div>
+        </article>
+      </React.Fragment>
+
+    )}
+    </main>
+  )
+}
+
+export default BookCard
