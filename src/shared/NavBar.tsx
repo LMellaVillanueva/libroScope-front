@@ -10,8 +10,9 @@ import { FiLogOut } from 'react-icons/fi'
 const NavBar = () => {
 
   const [loginModal, setLoginModal] = useState(false)
-  const [loginInfo, setLoginInfo] = useState({ email: '', password: '' })
   const [confirmLogout, setConfirmLogout] = useState(false)
+  const [loginInfo, setLoginInfo] = useState({ email: '', password: '' })
+  const [bookSearch, setbookSearch] = useState('')
 
   const userLogin = useUserStore(state => state.logIn)
   const userLogout = useUserStore(state => state.logOut)
@@ -23,6 +24,10 @@ const NavBar = () => {
     setLoginInfo({...loginInfo, 
       [event.target.name]: event.target.value
     })
+  }
+
+  const handleChangeBookSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setbookSearch(event.target.value)
   }
 
   const handleLogin = async (event: React.FormEvent): Promise<void> => {
@@ -54,6 +59,26 @@ const NavBar = () => {
     }
   }
 
+  const handleBookSearch = async (event: React.FormEvent): Promise<void> => {
+    event.preventDefault()
+    try {
+      if (bookSearch.length) {
+        const { data } = await axios.post(`http://127.0.0.1:5000/books/search/${bookSearch}`)
+        if (data.matching_books) {
+          console.log(data.matching_books)
+        }
+      } else {
+        return window.alert('No puede estar vacío!')
+      }
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return console.log('Error: ', error.response.data.errors)
+      } else {
+        return console.error(error.message)
+      }
+    }
+  }
+
   return (
     <nav className='fixed top-0 left-0 w-full h-2/12 flex items-center justify-between p-10 bg-amber-500 z-10'>
         <h1>LibroScope</h1>
@@ -70,7 +95,10 @@ const NavBar = () => {
           )}
         </div>
         <div className='flex items-center gap-10'>
-          <input className='border border-neutral-600 bg-neutral-700 rounded-md p-1 w-md' type="text" placeholder='Título, género, autor...' />
+          <form onSubmit={handleBookSearch} className='flex'>
+            <input className='border border-neutral-600 bg-neutral-700 rounded-md p-1 w-md' onChange={handleChangeBookSearch} type="text" placeholder='Título, género, autor...' />
+            <button type='submit'>Buscar</button>
+          </form>
           {user && (
             <button className='bg-neutral-800' onClick={() => setConfirmLogout(true)}><FiLogOut size={20} /></button>
           )}
