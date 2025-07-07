@@ -1,11 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useUserStore } from '../store/user'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { GoogleLogin, googleLogout, type CredentialResponse } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
-import type { GoogleJwtPayload } from '../types'
+import type { GoogleBook, GoogleJwtPayload } from '../types'
 import { FiLogOut } from 'react-icons/fi'
+import { useBookStore } from '../store/book'
+import BookSearchedCard from './BookSearchedCard'
 
 const NavBar = () => {
 
@@ -13,6 +15,7 @@ const NavBar = () => {
   const [confirmLogout, setConfirmLogout] = useState(false)
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' })
   const [bookSearch, setbookSearch] = useState('')
+  const [searchedBooks, setSearchedBooks] = useState<GoogleBook[]>([])
 
   const userLogin = useUserStore(state => state.logIn)
   const userLogout = useUserStore(state => state.logOut)
@@ -20,16 +23,38 @@ const NavBar = () => {
   const user = useUserStore(state => state.user)
   const navigate = useNavigate()
 
+  const googleBookCategorie = useBookStore(state => state.googleBookCategorie)
+
+  useEffect(() => {
+    if (!bookSearch.length) {
+      setSearchedBooks([])
+    }
+  }, [bookSearch])
+
   const handleChangeLoginInfo = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLoginInfo({...loginInfo, 
       [event.target.name]: event.target.value
     })
   }
 
-  const handleChangeBookSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeBookSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setbookSearch(event.target.value)
+    try {
+      if (bookSearch.length) {
+        const { data } = await axios.post(`http://127.0.0.1:5000/books/search/${event.target.value}/${googleBookCategorie}`)
+        if (data.matching_books) {
+          setSearchedBooks(data.matching_books)
+        }
+      }
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return console.log('Error: ', error.response.data.errors)
+      } else {
+        return console.error(error.message)
+      }
+    }
   }
-
+  
   const handleLogin = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault()
     try {
@@ -48,7 +73,7 @@ const NavBar = () => {
       }
     }
   }
-
+  
   const handleLogout = () => {
     try {
       useUserStore.persist.clearStorage()
@@ -56,16 +81,16 @@ const NavBar = () => {
       setConfirmLogout(false)
     } catch (error) {
       if (error instanceof Error) console.error(error.message)
-    }
+      }
   }
-
+  
   const handleBookSearch = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault()
     try {
       if (bookSearch.length) {
-        const { data } = await axios.post(`http://127.0.0.1:5000/books/search/${bookSearch}`)
+        const { data } = await axios.post(`http://127.0.0.1:5000/books/search/${bookSearch}/${googleBookCategorie}`)
         if (data.matching_books) {
-          console.log(data.matching_books)
+          setSearchedBooks(data.matching_books)
         }
       } else {
         return window.alert('No puede estar vacío!')
@@ -80,7 +105,8 @@ const NavBar = () => {
   }
 
   return (
-    <nav className='fixed top-0 left-0 w-full h-2/12 flex items-center justify-between p-10 bg-amber-500 z-10'>
+    <main className='flex flex-col w-full fixed top-0 left-0 items-center justify-center z-10'>
+      <nav className='flex items-center justify-between p-10 bg-amber-500 w-full'>
         <h1>LibroScope</h1>
         <div className='flex items-center justify-around w-1/2'>
           <Link to={'/'}>Inicio</Link>
@@ -96,7 +122,10 @@ const NavBar = () => {
         </div>
         <div className='flex items-center gap-10'>
           <form onSubmit={handleBookSearch} className='flex'>
-            <input className='border border-neutral-600 bg-neutral-700 rounded-md p-1 w-md' onChange={handleChangeBookSearch} type="text" placeholder='Título, género, autor...' />
+            <input className='border border-neutral-600 bg-neutral-700 rounded-md p-1 w-md relative' onChange={handleChangeBookSearch} value={bookSearch} type="text" placeholder='Título, género, autor...' />
+            {bookSearch.length !== 0 && (
+              <button className='absolute z-10 right-58' onClick={() => setbookSearch('')}>X</button>
+            )}
             <button type='submit'>Buscar</button>
           </form>
           {user && (
@@ -104,6 +133,7 @@ const NavBar = () => {
           )}
         </div>
 
+          {/* Modal de cerrar sesión */}
           {confirmLogout && (
             <div className='fixed m-auto inset-0 rounded-md w-2/5 h-2/5 flex flex-col items-center justify-center p-5 gap-10 z-10 text-xl bg-neutral-900'>
               <p>¿Quieres cerrar sesión?</p>
@@ -159,7 +189,7 @@ const NavBar = () => {
                     }
                   }}
                   onError={() => {console.error('Login fallido')}}
-                />
+                  />
               </form>
 
               <span>¿No tienes una cuenta?, <Link to={'/registro'} onClick={() => setLoginModal(false)} >Regístrate.</Link></span>
@@ -167,6 +197,15 @@ const NavBar = () => {
           )}
 
     </nav>
+        {/* Searched book's modal in real time */}
+        {searchedBooks.length !== 0 && (
+          <div className='flex flex-col justify-center items-center overflow-y-auto gap-5 p-10 w-1/2 h-[360px] bg-amber-100 text-black'>
+            {searchedBooks?.map((oneBook) => (
+              <BookSearchedCard book={oneBook}/>
+            ))}
+          </div>
+        )}
+  </main>
   )
 
 }

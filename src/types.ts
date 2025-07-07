@@ -34,6 +34,20 @@ export type GoogleBook = {
     }
 }
 
+export enum Categorie {
+    SCIENCE_FICTION = 'science fiction',
+    ACTION = 'action',
+    ROMANCE = 'romance',
+    HORROR = 'horror',
+    DRAMA = 'drama',
+    ADVENTURE = 'adventure',
+    HISTORY = 'history',
+    SELF_HELP = 'self-help',
+    FANTASY = 'fantasy',
+    MYSTERY = 'mystery',
+    NONE = 'none'
+}
+
 export type review = {
     id_review: number,
     description: string,

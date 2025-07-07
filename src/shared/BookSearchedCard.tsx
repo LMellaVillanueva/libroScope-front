@@ -6,7 +6,7 @@ type Props = {
   book: GoogleBook | MyBook | null
 }
 
-const BookCard = ({ book }: Props) => {
+const BookSearchedCard = ({ book }: Props) => {
 
   //! Si la función devuelve true, quiere decir que es el book es un GoogleBook
   const isGoogleBook = (book: GoogleBook | MyBook | null): book is GoogleBook => {
@@ -16,14 +16,23 @@ const BookCard = ({ book }: Props) => {
   }
 
   return (
-    <main className='flex flex-col items-center hover:scale-105 hover:cursor-pointer transition-all duration-300 gap-2'>
+    <main className='flex items-center w-md hover:scale-105 hover:cursor-pointer transition-all duration-300 gap-2'>
     {isGoogleBook(book) ? (
       <React.Fragment>
         <img src={book?.volumeInfo.imageLinks?.smallThumbnail} 
-        className='w-40 h-64 object-cover rounded shadow-md shadow-black' 
-        width={150} 
+        className='w-24 h-40 object-cover rounded shadow-md shadow-black' 
+        width={50} 
         alt={book?.volumeInfo.title} />        
-        <h2 className='break-words'>{book?.volumeInfo.title}</h2>
+        <h2 className='break-words w-full'>{book?.volumeInfo.title}</h2>
+        <div className='border border-black w-3'></div>
+        <div className='flex flex-col items-center gap-2 w-full'>
+            {book?.volumeInfo.authors?.map((auth) => (
+                <section>
+                    <p>{auth}</p>
+                    {/* <div className='border border-black w-full'></div> */}
+                </section>
+            ))}
+        </div>
       </React.Fragment>
     ) : (
       <React.Fragment>
@@ -44,4 +53,4 @@ const BookCard = ({ book }: Props) => {
   )
 }
 
-export default BookCard
+export default BookSearchedCard
