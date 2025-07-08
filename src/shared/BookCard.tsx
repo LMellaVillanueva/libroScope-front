@@ -27,14 +27,13 @@ const BookCard = ({ book }: Props) => {
       </React.Fragment>
     ) : (
       <React.Fragment>
-          <img src={frontBook} 
-          className='object-cover' 
-          alt={book?.title} />        
+          <img src={`http://localhost:5000/books/${book?.image_path}`} alt="Portada" />
           <article className='flex flex-col justify-between h-56 items-center text-orange-600 absolute mt-20 mr-1.5'>
             <h2 className='text-4xl w-[200px] break-words'>{book?.title}</h2>
             <div className='flex flex-col items-center'>
             <h2>{book?.genre}</h2>
             <h2>{book?.author}</h2>
+            <a href={`http://localhost:5000/books/${book?.pdf_path}`} target="_blank" rel="noopener noreferrer">Ver PDF</a>
             </div>
         </article>
       </React.Fragment>

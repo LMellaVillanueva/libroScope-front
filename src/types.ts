@@ -15,10 +15,10 @@ export type MyBook = {
     title: string,
     author: string,
     genre: string,
-    year: number,
-    favorite: boolean,
-    rating?: number,
-    user_id: number
+    description: string,
+    user_id: number,
+    pdf_path: string,
+    image_path: string
 }
 
 export type GoogleBook = {

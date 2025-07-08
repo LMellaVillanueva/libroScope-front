@@ -8,6 +8,9 @@ const PublicarLibro = () => {
     const user = useUserStore(state => state.user)
     const fetchMyBooks = useBookStore(state => state.getBooks)
     const navigate = useNavigate()
+    //Subida de PDF e imagen
+    const [pdf, setPdf] = useState<File | null>(null)
+    const [image, setImage] = useState<File | null>(null)
 
     useEffect(() => {
         if (!user) navigate('/')
@@ -17,9 +20,8 @@ const PublicarLibro = () => {
         title:'',
         author: '',
         genre: '',
-        year: '',
         user_id: user?.id_user,
-        favorite: false
+        description: ''
     })
 
     const handleChangeBookInfo = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,18 +30,30 @@ const PublicarLibro = () => {
         })
     }
 
-    const handleFavorite = (fav: Boolean) => {
-        if (fav) {
-            setBookinfo({ ...bookInfo,  favorite: true})
-        } else {
-            setBookinfo({ ...bookInfo,  favorite: false})
-        }
-    }
+    // const handleFavorite = (fav: Boolean) => {
+    //     if (fav) {
+    //         setBookinfo({ ...bookInfo,  favorite: true})
+    //     } else {
+    //         setBookinfo({ ...bookInfo,  favorite: false})
+    //     }
+    // }
 
     const handlePublish = async (event: React.FormEvent) => {
         event.preventDefault()
+        if (!pdf || !image) return alert('Debes subir la información de tu libro!')
+
+        const formData = new FormData()
+        formData.append('title', bookInfo.title)
+        formData.append('author', bookInfo.author)
+        formData.append('genre', bookInfo.genre)
+        formData.append('user_id', String(bookInfo.user_id))
+        formData.append('description', String(bookInfo.description))
+        formData.append('pdf', pdf)
+        formData.append('image', image)
+
         try {
-            const res = await axios.post('http://127.0.0.1:5000/books/publish', bookInfo)
+
+            const res = await axios.post('http://127.0.0.1:5000/books/publish', formData)
             if (res.data) {
               fetchMyBooks()
               window.alert('Libro creado con éxito')
@@ -47,14 +61,16 @@ const PublicarLibro = () => {
                 title:'',
                 author: '',
                 genre: '',
-                year: '',
+                description: '',
                 user_id: user?.id_user,
-                favorite: false
               })
+              setPdf(null)
+              setImage(null)
             }
         } catch (error: any) {
       if (error.response && error.response.data) {
-        return console.log('Error: ', error.response.data.errors)
+        alert(error.response.data.errors)
+        console.log('Error: ', error.response.data.errors)
       } else {
         return console.error(error.message)
       }
@@ -81,21 +97,29 @@ const PublicarLibro = () => {
                     <input type="text" name='genre' onChange={handleChangeBookInfo} value={bookInfo.genre} />
                 </div>
                 <div className='flex justify-between w-full text-xl'>
-                    <label htmlFor="">Año:</label>
-                    <input type="text" name='year' onChange={handleChangeBookInfo} value={bookInfo.year} />
+                    <label htmlFor="">Descripción:</label>
+                    <input type="text" name='description' onChange={handleChangeBookInfo} value={bookInfo.description} />
                 </div>
-                <div className='flex justify-between items-center w-full text-xl'>
+                <div>
+                    <label htmlFor="">Sube aquí tu libro PDF:</label>
+                    <input type="file" accept='application/pdf' onChange={(event) => {setPdf(event.target.files?.[0] || null)}} required />
+                </div>
+                <div>
+                    <label htmlFor="">Selecciona tu portada:</label>
+                    <input type="file" accept='image/*' onChange={(event) => {setImage(event.target.files?.[0] || null)}} />
+                </div>
+                {/* <div className='flex justify-between items-center w-full text-xl'>
                     <label htmlFor="">Favorito:</label>
                     <button className={`${bookInfo?.favorite ? 'bg-green-700' : 'bg-transparent'}`} onClick={() => handleFavorite(true)} type='button'>Sí</button>
                     <button className={`${!bookInfo?.favorite ? 'bg-red-700' : 'bg-transparent'}`} onClick={() => handleFavorite(false)} type='button'>No</button>
-                </div>
+                </div> */}
                 <button type='submit'>Publicar libro</button>
             </form>
 
             <article className='relative flex flex-col justify-around items-start w-sm h-[500px] p-8 border-2 rounded-md'>
-                {bookInfo.favorite && (
+                {/* {bookInfo.favorite && (
                     <p className='absolute top-0 left-0 m-5 cursor-pointer text-2xl'>⭐</p>
-                )}
+                )} */}
                 {!bookInfo.title ? (
                     <h1 className='self-center'>Título</h1>
                 ) : (
@@ -111,11 +135,6 @@ const PublicarLibro = () => {
                 <div className='flex gap-2 text-lg max-h-20 overflow-auto'>
                   <p>Género:</p>
                   <p className='max-w-3xs break-words'>{bookInfo.genre}</p>
-                </div>
-
-                <div className='flex gap-2 text-lg max-h-20 overflow-auto'>
-                  <p>Año:</p>
-                  <p className='max-w-2xs break-words'>{bookInfo.year}</p>
                 </div>
 
               </div>
