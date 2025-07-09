@@ -1,6 +1,6 @@
 import React from 'react'
 import type { GoogleBook, MyBook } from '../types'
-import frontBook from '../assets/imgs/frontBook.png'
+import { Link } from 'react-router-dom'
 
 type Props = {
   book: GoogleBook | MyBook | null
@@ -16,14 +16,21 @@ const BookCard = ({ book }: Props) => {
   }
 
   return (
-    <main className='flex flex-col items-center hover:scale-105 hover:cursor-pointer transition-all duration-300 gap-2'>
+    <main>
     {isGoogleBook(book) ? (
       <React.Fragment>
+        <Link className='flex flex-col items-center gap-2 hover:scale-105 hover:cursor-pointer transition-all duration-300'
+        to={`/libro/${book?.id}`}
+        state={{ book }}>
         <img src={book?.volumeInfo.imageLinks?.smallThumbnail} 
         className='w-40 h-64 object-cover rounded shadow-md shadow-black' 
         width={150} 
         alt={book?.volumeInfo.title} />        
-        <h2 className='break-words'>{book?.volumeInfo.title}</h2>
+        {!book?.volumeInfo.imageLinks?.smallThumbnail || !book?.volumeInfo.imageLinks?.thumbnail && (
+          <p>Sin portada</p>
+        )}
+        <h2 className=' h-[100px] overflow-y-auto break-words'>{book?.volumeInfo.title}</h2>
+        </Link>
       </React.Fragment>
     ) : (
       <React.Fragment>

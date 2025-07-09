@@ -31,6 +31,7 @@ export type GoogleBook = {
             thumbnail?: string
         }
         title: string
+        description: string
     }
 }
 

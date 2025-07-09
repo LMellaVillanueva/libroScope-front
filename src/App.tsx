@@ -11,6 +11,7 @@ import axios from 'axios'
 import type { GoogleBook } from './types'
 import CreatedBooks from './components/CreatedBooks'
 import { useBookStore } from './store/book'
+import OneBook from './components/OneBook'
 
 function App() {
   const [books, setBooks] = useState<GoogleBook[]>([])
@@ -66,18 +67,18 @@ function App() {
     useEffect(() => {
       fetchMyBooks()
     }, [])
+    console.log(allBooks)
       
   return (
     <React.Fragment>
       <NavBar/>
         <Routes>
-
-          <Route path='/' element={<Landing books={ books } actualPage={actualPage} setActualPage={setActualPage} totalPages={totalPages} bannerBooks={bannerBooks}/>}/>  
+          <Route path='/' element={<Landing books={ books } actualPage={ actualPage } setActualPage={ setActualPage } totalPages={ totalPages } bannerBooks={ bannerBooks }/>}/>  
           <Route path='/registro' element={<RegistroUser/>}/>  
           <Route path='/publicar' element={<PublicarLibro/>}/>  
-          <Route path='/libros' element={<Books allBooks={allBooks}/>}/>  
-          <Route path='/mis_libros' element={<CreatedBooks myBooks={myBooks}/>}/>
-
+          <Route path='/libros' element={<Books allBooks={ allBooks }/>}/>  
+          <Route path='/mis_libros' element={<CreatedBooks myBooks={ myBooks }/>}/>
+          <Route path='/libro/:id' element={<OneBook/>}/>
         </Routes>
         {/* <Footer/> */}
     </React.Fragment>

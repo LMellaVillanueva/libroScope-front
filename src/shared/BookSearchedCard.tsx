@@ -1,12 +1,15 @@
 import React from 'react'
 import type { GoogleBook, MyBook } from '../types'
 import frontBook from '../assets/imgs/frontBook.png'
+import { Link } from 'react-router-dom'
 
 type Props = {
   book: GoogleBook | MyBook | null
+  setSearchedBooks: (book: GoogleBook[]) => void
+  setBookSearch: (booksearch: string) => void
 }
 
-const BookSearchedCard = ({ book }: Props) => {
+const BookSearchedCard = ({ book, setSearchedBooks, setBookSearch }: Props) => {
 
   //! Si la función devuelve true, quiere decir que es el book es un GoogleBook
   const isGoogleBook = (book: GoogleBook | MyBook | null): book is GoogleBook => {
@@ -16,23 +19,28 @@ const BookSearchedCard = ({ book }: Props) => {
   }
 
   return (
-    <main className='flex items-center w-md hover:scale-105 hover:cursor-pointer transition-all duration-300 gap-2'>
+    <main>
     {isGoogleBook(book) ? (
       <React.Fragment>
-        <img src={book?.volumeInfo.imageLinks?.smallThumbnail} 
-        className='w-24 h-40 object-cover rounded shadow-md shadow-black' 
-        width={50} 
-        alt={book?.volumeInfo.title} />        
-        <h2 className='break-words w-full'>{book?.volumeInfo.title}</h2>
-        <div className='border border-black w-3'></div>
-        <div className='flex flex-col items-center gap-2 w-full'>
-            {book?.volumeInfo.authors?.map((auth) => (
+        <Link className='flex items-center w-md hover:scale-105 hover:cursor-pointer transition-all duration-300 gap-2' 
+        to={`/libro/${book?.id}`}
+        state={{ book }}
+        onClick={ () => {setSearchedBooks([]); setBookSearch('')} }>
+          <img src={book?.volumeInfo.imageLinks?.smallThumbnail} 
+          className='w-24 h-40 object-cover rounded shadow-md shadow-black' 
+          width={50} 
+          alt={book?.volumeInfo.title} />        
+          <h2 className='break-words w-full'>{book?.volumeInfo.title}</h2>
+          <div className='border border-black w-3'></div>
+          <div className='flex flex-col items-center gap-2 w-full'>
+              {book?.volumeInfo.authors?.map((auth) => (
                 <section>
-                    <p>{auth}</p>
-                    {/* <div className='border border-black w-full'></div> */}
-                </section>
-            ))}
-        </div>
+                      <p>{auth}</p>
+                      {/* <div className='border border-black w-full'></div> */}
+                  </section>
+              ))}
+          </div>
+        </Link>
       </React.Fragment>
     ) : (
       <React.Fragment>

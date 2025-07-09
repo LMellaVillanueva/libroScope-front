@@ -14,7 +14,7 @@ const NavBar = () => {
   const [loginModal, setLoginModal] = useState(false)
   const [confirmLogout, setConfirmLogout] = useState(false)
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' })
-  const [bookSearch, setbookSearch] = useState('')
+  const [bookSearch, setBookSearch] = useState('')
   const [searchedBooks, setSearchedBooks] = useState<GoogleBook[]>([])
 
   const userLogin = useUserStore(state => state.logIn)
@@ -38,7 +38,7 @@ const NavBar = () => {
   }
 
   const handleChangeBookSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    setbookSearch(event.target.value)
+    setBookSearch(event.target.value)
     try {
       if (bookSearch.length) {
         const { data } = await axios.post(`http://127.0.0.1:5000/books/search/${event.target.value}/${googleBookCategorie}`)
@@ -124,7 +124,7 @@ const NavBar = () => {
           <form onSubmit={handleBookSearch} className='flex'>
             <input className='border border-neutral-600 bg-neutral-700 rounded-md p-1 w-md relative' onChange={handleChangeBookSearch} value={bookSearch} type="text" placeholder='Título, género, autor...' />
             {bookSearch.length !== 0 && (
-              <button className='absolute z-10 right-58' onClick={() => setbookSearch('')}>X</button>
+              <button className='absolute z-10 right-58' onClick={() => setBookSearch('')}>X</button>
             )}
             <button type='submit'>Buscar</button>
           </form>
@@ -201,7 +201,7 @@ const NavBar = () => {
         {searchedBooks.length !== 0 && (
           <div className='flex flex-col justify-center items-center overflow-y-auto gap-5 p-10 w-1/2 h-[360px] bg-amber-100 text-black'>
             {searchedBooks?.map((oneBook) => (
-              <BookSearchedCard book={oneBook}/>
+              <BookSearchedCard book={ oneBook } setSearchedBooks={ setSearchedBooks } setBookSearch={ setBookSearch }/>
             ))}
           </div>
         )}
