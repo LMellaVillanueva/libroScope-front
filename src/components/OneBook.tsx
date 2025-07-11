@@ -1,5 +1,7 @@
 import { useLocation } from 'react-router-dom'
 import type { GoogleBook } from '../types'
+import { useEffect } from 'react'
+import axios from 'axios'
 
 
 const OneBook = () => {
@@ -12,6 +14,23 @@ const OneBook = () => {
     }
 
     const book = state.book
+
+    useEffect(() => {
+        const fetchRecommendBooks = async () => {
+            try {
+                const { data } = await axios.post('http://127.0.0.1:5000/books/recommend', book)
+                
+            } catch (error: any) {
+      if (error.response && error.response.data) {
+        alert(error.response.data.errors)
+        console.log('Error: ', error.response.data.errors)
+      } else {
+        return console.error(error.message)
+      }
+       }
+    }
+    fetchRecommendBooks()
+    }, [])
 
   return (
     <main className='p-5 mt-30 flex justify-around items-center'>
