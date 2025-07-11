@@ -16,6 +16,7 @@ const NavBar = () => {
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' })
   const [bookSearch, setBookSearch] = useState('')
   const [searchedBooks, setSearchedBooks] = useState<GoogleBook[]>([])
+  const [dbUser, setDbUser] = useState(false)
 
   const userLogin = useUserStore(state => state.logIn)
   const userLogout = useUserStore(state => state.logOut)
@@ -24,6 +25,27 @@ const NavBar = () => {
   const navigate = useNavigate()
 
   const googleBookCategorie = useBookStore(state => state.googleBookCategorie)
+
+  // Validar si el user existe en la base de datos
+  useEffect(() => {
+    const fetchUserById = async () => {
+      try {
+        const { data } = await axios(`http://127.0.0.1:5000/one_user/${user?.id_user}`)
+        if (data.success)  {
+         console.log(data.success) 
+         setDbUser(true)
+        }
+      } catch (error: any) {
+        userLogout()        
+        if (error.response && error.response.data) {
+          return console.log('Error: ', error.response.data.errors)
+        } else {
+          return console.error(error.message)
+        }
+      }
+    }
+    fetchUserById()
+  }, [])
 
   useEffect(() => {
     if (!bookSearch.length) {
@@ -111,7 +133,7 @@ const NavBar = () => {
         <div className='flex items-center justify-around w-1/2'>
           <Link to={'/'}>Inicio</Link>
           <Link to={'/libros'}>Libros</Link>
-          {!user ? ( 
+          {!dbUser ? ( 
             <button onClick={() => setLoginModal(true)}>Iniciar Sesión</button>
           ) : (
             <React.Fragment>
@@ -128,7 +150,7 @@ const NavBar = () => {
             )}
             <button type='submit'>Buscar</button>
           </form>
-          {user && (
+          {dbUser && (
             <button className='bg-neutral-800' onClick={() => setConfirmLogout(true)}><FiLogOut size={20} /></button>
           )}
         </div>

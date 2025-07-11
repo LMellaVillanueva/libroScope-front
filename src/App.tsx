@@ -67,7 +67,6 @@ function App() {
     useEffect(() => {
       fetchMyBooks()
     }, [])
-    console.log(allBooks)
       
   return (
     <React.Fragment>

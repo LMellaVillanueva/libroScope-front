@@ -1,12 +1,14 @@
 import { useLocation } from 'react-router-dom'
 import type { GoogleBook } from '../types'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
+import BookRecommendCard from '../shared/BookRecommendCard'
 
 
 const OneBook = () => {
     const location = useLocation()
     const state = location.state as { book?: GoogleBook }
+    const [recommendBooks, setRecommendBooks] = useState<GoogleBook[]>([])
 
     // Validar si existe el state
     if (!state?.book) {
@@ -14,11 +16,15 @@ const OneBook = () => {
     }
 
     const book = state.book
+    console.log(recommendBooks)
 
     useEffect(() => {
         const fetchRecommendBooks = async () => {
             try {
                 const { data } = await axios.post('http://127.0.0.1:5000/books/recommend', book)
+                if (data.recommend_books) {
+                    setRecommendBooks(data.recommend_books)
+                }
                 
             } catch (error: any) {
       if (error.response && error.response.data) {
@@ -55,9 +61,13 @@ const OneBook = () => {
             </section>
         </article>
             {/* Recomendaciones */}
-        <article>
+        <article className='flex flex-col items-center gap-10'>
             <h2>Te podría interesar:</h2>
-            <section></section>
+            <section className='flex flex-col gap-10 h-[400px] overflow-y-auto w-full p-10'>
+            {recommendBooks && recommendBooks.map((book) => (
+                    <BookRecommendCard book={book}/>
+           ))}
+            </section>
         </article>
     </main>
   )
