@@ -1,11 +1,21 @@
+import { useEffect } from "react"
 import BookCard from "../shared/BookCard"
 import type { MyBook } from "../types"
+import { useUserStore } from "../store/user"
+import { useNavigate } from "react-router-dom"
 
 type Props = {
     myBooks: MyBook[] | null
 }
 
 const CreatedBooks = ({ myBooks }: Props) => {
+    const user = useUserStore(store => store.user)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!user) navigate('/')
+    }, [user])
+    
   return (
     <main className='flex flex-col justify-center items-center gap-2 mt-16'>
         {myBooks && myBooks.length > 0 ? (

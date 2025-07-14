@@ -10,6 +10,7 @@ interface State {
     getGoogleBooks: (categorie: Categorie | null) => Promise<void>
     googleBookCategorie: Categorie
     setCategorie: (categorie: Categorie) => void
+    deleteMyBook: (id: number | undefined) => Promise<void>
 }
 
 export const useBookStore = create<State>((set) => ({
@@ -33,5 +34,23 @@ export const useBookStore = create<State>((set) => ({
     },
     setCategorie: (categorie: Categorie) => {
         set({ googleBookCategorie: categorie })
+    },
+    deleteMyBook: async (id): Promise<void> => {
+        try {
+            const { data } = await axios.post(`http://localhost:5000/books/elim/${id}`)
+            if (data.success) {
+                alert(data.success)
+                set((state => ({ 
+                    myBooks: state.myBooks?.filter(book => book.id_book !== id)
+                 })))
+            }
+        } catch (error: any) {
+        if (error.response && error.response.data) {
+          alert(error.response.data.errors)
+          console.log('Error: ', error.response.data.errors)
+        } else {
+          return console.error(error.message)
+        }
+      }
     }
 }))

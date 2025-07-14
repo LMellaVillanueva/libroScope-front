@@ -30,14 +30,6 @@ const PublicarLibro = () => {
         })
     }
 
-    // const handleFavorite = (fav: Boolean) => {
-    //     if (fav) {
-    //         setBookinfo({ ...bookInfo,  favorite: true})
-    //     } else {
-    //         setBookinfo({ ...bookInfo,  favorite: false})
-    //     }
-    // }
-
     const handlePublish = async (event: React.FormEvent) => {
         event.preventDefault()
         if (!pdf || !image) return alert('Debes subir la información de tu libro!')
@@ -108,18 +100,10 @@ const PublicarLibro = () => {
                     <label htmlFor="">Selecciona tu portada:</label>
                     <input type="file" accept='image/*' onChange={(event) => {setImage(event.target.files?.[0] || null)}} />
                 </div>
-                {/* <div className='flex justify-between items-center w-full text-xl'>
-                    <label htmlFor="">Favorito:</label>
-                    <button className={`${bookInfo?.favorite ? 'bg-green-700' : 'bg-transparent'}`} onClick={() => handleFavorite(true)} type='button'>Sí</button>
-                    <button className={`${!bookInfo?.favorite ? 'bg-red-700' : 'bg-transparent'}`} onClick={() => handleFavorite(false)} type='button'>No</button>
-                </div> */}
                 <button type='submit'>Publicar libro</button>
             </form>
 
             <article className='relative flex flex-col justify-around items-start w-sm h-[500px] p-8 border-2 rounded-md'>
-                {/* {bookInfo.favorite && (
-                    <p className='absolute top-0 left-0 m-5 cursor-pointer text-2xl'>⭐</p>
-                )} */}
                 {!bookInfo.title ? (
                     <h1 className='self-center'>Título</h1>
                 ) : (
@@ -137,8 +121,41 @@ const PublicarLibro = () => {
                   <p className='max-w-3xs break-words'>{bookInfo.genre}</p>
                 </div>
 
+                <div className='flex gap-2 text-lg max-h-20 overflow-auto'>
+                  <p>Descripción:</p>
+                  <p className='max-w-3xs break-words'>{bookInfo.description}</p>
+                </div>
+
               </div>
             </article>
+
+            {/* {image !== null && (
+            <img src={image} className='relative flex flex-col justify-around items-start w-sm h-[500px] p-8 border-2 rounded-md'>
+                {!bookInfo.title ? (
+                    <h1 className='self-center'>Título</h1>
+                ) : (
+                    <h1 className='max-w-xs max-h-64 overflow-hidden hover:overflow-y-auto break-words'>{bookInfo.title}</h1>
+                )}
+              <div className='flex flex-col items-start gap-5 max-h-[500px]'>
+
+                <div className='flex gap-2 text-lg max-h-20 overflow-auto'>
+                  <p>Autor:</p>
+                  <p className='max-w-3xs break-words'>{bookInfo.author}</p>
+                </div>
+
+                <div className='flex gap-2 text-lg max-h-20 overflow-auto'>
+                  <p>Género:</p>
+                  <p className='max-w-3xs break-words'>{bookInfo.genre}</p>
+                </div>
+
+                <div className='flex gap-2 text-lg max-h-20 overflow-auto'>
+                  <p>Descripción:</p>
+                  <p className='max-w-3xs break-words'>{bookInfo.description}</p>
+                </div>
+
+              </div>
+            </img>
+            )} */}
 
         </section>
     </main>

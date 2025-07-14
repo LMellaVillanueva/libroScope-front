@@ -1,18 +1,35 @@
 import React from 'react'
 import type { GoogleBook, MyBook } from '../types'
 import { Link } from 'react-router-dom'
+import { useBookStore } from '../store/book'
 
 type Props = {
   book: GoogleBook | MyBook | null
 }
 
 const BookCard = ({ book }: Props) => {
-
+  const elimMyBook = useBookStore(state => state.deleteMyBook)
   //! Si la función devuelve true, quiere decir que es el book es un GoogleBook
   const isGoogleBook = (book: GoogleBook | MyBook | null): book is GoogleBook => {
     //! Los dos !! es para asegurarse que book no sea null ni undefined
     //! Si book tiene una propiedad llamada 'volumeInfo' entonces es verdadero, por lo que retorna true
     return !!book && 'volumeInfo' in book
+  }
+
+  const handleElim = async (event: React.FormEvent) => {
+    event.preventDefault()
+    try {
+      if (!isGoogleBook(book)){
+        await elimMyBook(book?.id_book)
+      }
+    } catch (error: any) {
+        if (error.response && error.response.data) {
+          alert(error.response.data.errors)
+          console.log('Error: ', error.response.data.errors)
+        } else {
+          return console.error(error.message)
+        }
+     }
   }
 
   return (
@@ -41,6 +58,9 @@ const BookCard = ({ book }: Props) => {
             <h2>{book?.genre}</h2>
             <h2>{book?.author}</h2>
             <a href={`http://localhost:5000/books/${book?.pdf_path}`} target="_blank" rel="noopener noreferrer">Ver PDF</a>
+            <form onSubmit={handleElim}>
+              <button type='submit'>Eliminar Libro</button>
+            </form>
             </div>
         </article>
       </React.Fragment>

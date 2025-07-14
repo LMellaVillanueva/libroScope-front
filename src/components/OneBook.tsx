@@ -16,7 +16,6 @@ const OneBook = () => {
     }
 
     const book = state.book
-    console.log(recommendBooks)
 
     useEffect(() => {
         const fetchRecommendBooks = async () => {
@@ -27,13 +26,13 @@ const OneBook = () => {
                 }
                 
             } catch (error: any) {
-      if (error.response && error.response.data) {
-        alert(error.response.data.errors)
-        console.log('Error: ', error.response.data.errors)
-      } else {
-        return console.error(error.message)
-      }
-       }
+            if (error.response && error.response.data) {
+              alert(error.response.data.errors)
+              console.log('Error: ', error.response.data.errors)
+            } else {
+              return console.error(error.message)
+            }
+        }
     }
     fetchRecommendBooks()
     }, [])
@@ -60,15 +59,17 @@ const OneBook = () => {
                 </span>
             </section>
         </article>
-            {/* Recomendaciones */}
-        <article className='flex flex-col items-center gap-10'>
+        {/* Recomendaciones */}
+        {recommendBooks.length > 0 && (
+            <article className='flex flex-col items-center gap-10'>
             <h2>Te podría interesar:</h2>
             <section className='flex flex-col gap-10 h-[400px] overflow-y-auto w-full p-10'>
-            {recommendBooks && recommendBooks.map((book) => (
-                    <BookRecommendCard book={book}/>
-           ))}
+            {recommendBooks.map((book) => (
+                <BookRecommendCard book={book}/>
+            ))}
             </section>
         </article>
+        )}
     </main>
   )
 }

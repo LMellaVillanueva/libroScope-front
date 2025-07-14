@@ -30,7 +30,7 @@ const NavBar = () => {
   useEffect(() => {
     const fetchUserById = async () => {
       try {
-        const { data } = await axios(`http://127.0.0.1:5000/one_user/${user?.id_user}`)
+        const { data } = await axios(`http://127.0.0.1:5000/user/one_user/${user?.id_user}`)
         if (data.success)  {
          console.log(data.success) 
          setDbUser(true)
@@ -38,6 +38,7 @@ const NavBar = () => {
       } catch (error: any) {
         userLogout()        
         if (error.response && error.response.data) {
+          setDbUser(false)
           return console.log('Error: ', error.response.data.errors)
         } else {
           return console.error(error.message)
@@ -45,7 +46,7 @@ const NavBar = () => {
       }
     }
     fetchUserById()
-  }, [])
+  }, [user])
 
   useEffect(() => {
     if (!bookSearch.length) {
