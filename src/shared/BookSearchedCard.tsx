@@ -36,11 +36,11 @@ const BookSearchedCard = ({ book, setSearchedBooks, setBookSearch }: Props) => {
               {book?.volumeInfo.authors?.map((auth) => (
                 <section>
                       <p>{auth}</p>
-                      {/* <div className='border border-black w-full'></div> */}
                   </section>
               ))}
           </div>
         </Link>
+        <div className='border border-black w-full mt-5'></div>
       </React.Fragment>
     ) : (
       <React.Fragment>

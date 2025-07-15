@@ -17,16 +17,15 @@ const CreatedBooks = ({ myBooks }: Props) => {
     }, [user])
     
   return (
-    <main className='flex flex-col justify-center items-center gap-2 mt-16'>
+    <main className='flex flex-col gap-10 items-start p-20 mt-20'>
+        <h2 className="text-3xl">Libros de {user?.name}:</h2>
         {myBooks && myBooks.length > 0 ? (
-        <article className='flex justify-center items-center mt-36'>
-            <section className='grid grid-cols-5 gap-8 w-5/6 p-3 items-center'>
+        <article className='flex justify-center items-center'>
                 {myBooks?.map((oneBook) => (
                     <div key={oneBook.id_book} className='flex justify-center items-center'>
                         <BookCard book={ oneBook }/>
                     </div>
                 ))}
-            </section>
         </article>
         ) : (
             <main>

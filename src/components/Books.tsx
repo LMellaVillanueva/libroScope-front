@@ -24,7 +24,7 @@ const Books = ({ allBooks }: Props) => {
             <div className='flex flex-col'>
                 <button onClick={() => setCategorie(Categorie.SCIENCE_FICTION)}>Ciencia Ficción</button>
                 <button onClick={() => setCategorie(Categorie.ACTION)}>Acción</button>
-                <button onClick={() => setCategorie(Categorie.ROMANCE)}>Romance</button>
+                {/* <button onClick={() => setCategorie(Categorie.ROMANCE)}>Romance</button> */}
                 <button onClick={() => setCategorie(Categorie.HORROR)}>Terror</button>
                 <button onClick={() => setCategorie(Categorie.DRAMA)}>Dramático</button>
                 <button onClick={() => setCategorie(Categorie.ADVENTURE)}>Aventura</button>
@@ -32,11 +32,12 @@ const Books = ({ allBooks }: Props) => {
                 <button onClick={() => setCategorie(Categorie.SELF_HELP)}>Desarrollo Personal</button>
                 <button onClick={() => setCategorie(Categorie.FANTASY)}>Fantasía</button>
                 <button onClick={() => setCategorie(Categorie.MYSTERY)}>Misterio</button>
+                <button onClick={() => setCategorie(Categorie.COMMUNITY)}>Comunidad</button>
                 {categorie !== Categorie.NONE && <button className='font-bold' onClick={() => setCategorie(Categorie.NONE)}>Borrar Filtro</button>}
             </div>
         </section>
         <article className='flex justify-end mt-32'>
-            <section className='grid grid-cols-5 gap-8 w-5/6 p-3 py-10 items-center'>
+            <section className='grid grid-cols-5 gap-8 min-w-[80%] w-5/6 p-3 py-10 items-center'>
             {categorie === Categorie.NONE ? (
                 allBooks?.map((oneBook) => (
                     <div key={oneBook.id} className='flex justify-center items-center'>

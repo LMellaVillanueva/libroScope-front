@@ -222,7 +222,7 @@ const NavBar = () => {
     </nav>
         {/* Searched book's modal in real time */}
         {searchedBooks.length !== 0 && (
-          <div className='flex flex-col justify-center items-center overflow-y-auto gap-5 p-10 w-1/2 h-[360px] bg-amber-100 text-black'>
+          <div className='flex flex-col items-center overflow-y-auto gap-5 p-10 w-1/2 h-[360px] bg-amber-100 text-black'>
             {searchedBooks?.map((oneBook) => (
               <BookSearchedCard book={ oneBook } setSearchedBooks={ setSearchedBooks } setBookSearch={ setBookSearch }/>
             ))}

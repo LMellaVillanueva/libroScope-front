@@ -47,15 +47,15 @@ const OneBook = () => {
             <h2 className='text-3xl text-left'>{book.volumeInfo?.title}</h2>
                 <span className='flex gap-1'>
                     <p className='font-bold'>Autor/es:</p>
-                    <p>{book.volumeInfo?.authors?.join(', ')}</p>
+                    <p>{book.volumeInfo?.authors?.join(', ') || 'Libro sin información'}</p>
                 </span>
                 <span className='flex gap-1'>
                     <p className='font-bold'>Género:</p> 
-                    <p>{book.volumeInfo?.categories?.join(', ')}</p>
+                    <p>{book.volumeInfo?.categories?.join(', ') || 'Libro sin información'}</p>
                 </span>
                 <span className='flex flex-col items-start gap-2'>
                     <p className='font-bold'>Descripción:</p>
-                    <p className='max-h-[250px] overflow-y-auto break-words'>{book.volumeInfo?.description}</p>
+                    <p className='max-h-[250px] overflow-y-auto break-words'>{book.volumeInfo?.description || 'Libro sin información'}</p>
                 </span>
             </section>
         </article>

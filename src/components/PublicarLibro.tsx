@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useUserStore } from '../store/user'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -11,10 +11,22 @@ const PublicarLibro = () => {
     //Subida de PDF e imagen
     const [pdf, setPdf] = useState<File | null>(null)
     const [image, setImage] = useState<File | null>(null)
+    const [imagePreview, setImagePreview] = useState<string | null>(null)
+    //Setear el pdf e image en null
+    const pdfRef = useRef<HTMLInputElement | null>(null)
+    const imageRef = useRef<HTMLInputElement | null>(null)
 
     useEffect(() => {
         if (!user) navigate('/')
     }, [user])
+
+    useEffect(() => {
+      return () => {
+        if (imagePreview) {
+          URL.revokeObjectURL(imagePreview)
+        }
+      }
+    }, [imagePreview])
 
     const [bookInfo, setBookinfo] = useState({
         title:'',
@@ -56,8 +68,9 @@ const PublicarLibro = () => {
                 description: '',
                 user_id: user?.id_user,
               })
-              setPdf(null)
-              setImage(null)
+              setImagePreview('')
+              if (pdfRef.current) pdfRef.current.value = ''
+              if (imageRef.current) imageRef.current.value = ''
             }
         } catch (error: any) {
       if (error.response && error.response.data) {
@@ -68,6 +81,19 @@ const PublicarLibro = () => {
       }
      }
     }
+
+    // Previsualización de la portada
+    const handleChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0] || null
+      setImage(file)
+      if (file) {
+        const previewUrl = URL.createObjectURL(file)
+        setImagePreview(previewUrl)
+      } else {
+        setImagePreview(null)
+      }
+    }
+
     
   return (
     <main>
@@ -94,11 +120,11 @@ const PublicarLibro = () => {
                 </div>
                 <div>
                     <label htmlFor="">Sube aquí tu libro PDF:</label>
-                    <input type="file" accept='application/pdf' onChange={(event) => {setPdf(event.target.files?.[0] || null)}} required />
+                    <input ref={pdfRef} type="file" accept='application/pdf' onChange={(event) => {setPdf(event.target.files?.[0] || null)}} required />
                 </div>
                 <div>
                     <label htmlFor="">Selecciona tu portada:</label>
-                    <input type="file" accept='image/*' onChange={(event) => {setImage(event.target.files?.[0] || null)}} />
+                    <input ref={imageRef} type="file" accept='image/*' onChange={handleChangeImage} />
                 </div>
                 <button type='submit'>Publicar libro</button>
             </form>
@@ -109,32 +135,12 @@ const PublicarLibro = () => {
                 ) : (
                     <h1 className='max-w-xs max-h-64 overflow-hidden hover:overflow-y-auto break-words'>{bookInfo.title}</h1>
                 )}
-              <div className='flex flex-col items-start gap-5 max-h-[500px]'>
-
-                <div className='flex gap-2 text-lg max-h-20 overflow-auto'>
-                  <p>Autor:</p>
-                  <p className='max-w-3xs break-words'>{bookInfo.author}</p>
-                </div>
-
-                <div className='flex gap-2 text-lg max-h-20 overflow-auto'>
-                  <p>Género:</p>
-                  <p className='max-w-3xs break-words'>{bookInfo.genre}</p>
-                </div>
-
-                <div className='flex gap-2 text-lg max-h-20 overflow-auto'>
-                  <p>Descripción:</p>
-                  <p className='max-w-3xs break-words'>{bookInfo.description}</p>
-                </div>
-
-              </div>
-            </article>
-
-            {/* {image !== null && (
-            <img src={image} className='relative flex flex-col justify-around items-start w-sm h-[500px] p-8 border-2 rounded-md'>
-                {!bookInfo.title ? (
-                    <h1 className='self-center'>Título</h1>
-                ) : (
-                    <h1 className='max-w-xs max-h-64 overflow-hidden hover:overflow-y-auto break-words'>{bookInfo.title}</h1>
+                {imagePreview && (
+                  <img
+                    src={imagePreview}
+                    alt="portada"
+                    className="w-full h-full object-cover absolute top-0 left-0 opacity-45"
+                  />
                 )}
               <div className='flex flex-col items-start gap-5 max-h-[500px]'>
 
@@ -150,12 +156,11 @@ const PublicarLibro = () => {
 
                 <div className='flex gap-2 text-lg max-h-20 overflow-auto'>
                   <p>Descripción:</p>
-                  <p className='max-w-3xs break-words'>{bookInfo.description}</p>
+                  <p className='max-w-[200px] break-words'>{bookInfo.description}</p>
                 </div>
 
               </div>
-            </img>
-            )} */}
+            </article>
 
         </section>
     </main>

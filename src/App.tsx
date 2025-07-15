@@ -49,7 +49,7 @@ function App() {
           const res = await axios('https://www.googleapis.com/books/v1/volumes?q=fiction&maxResults=40&key=AIzaSyDNQ631Qv6pa6tyXCeU1xds2mnYL1KYNg8')
 
           //?Fetch de 5 libros para el banner
-          const res5 = await axios('https://www.googleapis.com/books/v1/volumes?q=romantic&maxResults=5&key=AIzaSyDNQ631Qv6pa6tyXCeU1xds2mnYL1KYNg8')
+          const res5 = await axios('https://www.googleapis.com/books/v1/volumes?q=adventure&maxResults=5&key=AIzaSyDNQ631Qv6pa6tyXCeU1xds2mnYL1KYNg8')
            if (res.data) {
             //?Setear todos los libros para la ruta /libros
             setAllBooks(res.data.items)

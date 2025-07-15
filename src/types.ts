@@ -46,7 +46,8 @@ export enum Categorie {
     SELF_HELP = 'self-help',
     FANTASY = 'fantasy',
     MYSTERY = 'mystery',
-    NONE = 'none'
+    NONE = 'none',
+    COMMUNITY = 'community'
 }
 
 export type review = {

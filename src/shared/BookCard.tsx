@@ -39,30 +39,34 @@ const BookCard = ({ book }: Props) => {
         <Link className='flex flex-col items-center gap-2 hover:scale-105 hover:cursor-pointer transition-all duration-300'
         to={`/libro/${book?.id}`}
         state={{ book }}>
-        <img src={book?.volumeInfo.imageLinks?.smallThumbnail} 
+        <img src={book?.volumeInfo.imageLinks?.smallThumbnail || '/default-cover.png'} 
         className='w-40 h-64 object-cover rounded shadow-md shadow-black' 
         width={150} 
         alt={book?.volumeInfo.title} />        
-        {!book?.volumeInfo.imageLinks?.smallThumbnail || !book?.volumeInfo.imageLinks?.thumbnail && (
-          <p>Sin portada</p>
-        )}
         <h2 className=' h-[100px] overflow-y-auto break-words'>{book?.volumeInfo.title}</h2>
         </Link>
       </React.Fragment>
     ) : (
       <React.Fragment>
-          <img src={`http://localhost:5000/books/${book?.image_path}`} alt="Portada" />
-          <article className='flex flex-col justify-between h-56 items-center text-orange-600 absolute mt-20 mr-1.5'>
-            <h2 className='text-4xl w-[200px] break-words'>{book?.title}</h2>
-            <div className='flex flex-col items-center'>
-            <h2>{book?.genre}</h2>
-            <h2>{book?.author}</h2>
-            <a href={`http://localhost:5000/books/${book?.pdf_path}`} target="_blank" rel="noopener noreferrer">Ver PDF</a>
-            <form onSubmit={handleElim}>
-              <button type='submit'>Eliminar Libro</button>
-            </form>
-            </div>
-        </article>
+        <main className='flex flex-col items-center'>
+          <img
+          className='w-32 h-[200px] object-cover' 
+          src={`http://localhost:5000/books/${book?.image_path}`} 
+          alt="Portada" />
+            <article className='flex flex-col justify-evenly items-center h-[230px] text-orange-600'>
+              <h2 className='text-2xl w-xs max-h-[150px] break-words'>{book?.title}</h2>
+              <div className='flex flex-col items-center'>
+              <h2>Género: {book?.genre}</h2>
+              <h2>Autor: {book?.author}</h2>
+              <a href={`http://localhost:5000/books/${book?.pdf_path}`} target="_blank" rel="noopener noreferrer">
+                <button>Ver Libro</button>
+              </a>
+              <form onSubmit={handleElim}>
+                <button type='submit'>Eliminar Libro</button>
+              </form>
+              </div>
+            </article>
+        </main>
       </React.Fragment>
 
     )}
