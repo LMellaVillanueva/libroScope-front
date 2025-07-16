@@ -7,7 +7,8 @@ import { useBookStore } from '../store/book'
 const PublicarLibro = () => {
     const user = useUserStore(state => state.user)
     const fetchMyBooks = useBookStore(state => state.getBooks)
-    const navigate = useNavigate()
+    const getCommunityBooks = useBookStore(state => state.getCommunityBooks)
+    const navigate = useNavigate()  
     //Subida de PDF e imagen
     const [pdf, setPdf] = useState<File | null>(null)
     const [image, setImage] = useState<File | null>(null)
@@ -30,7 +31,7 @@ const PublicarLibro = () => {
 
     const [bookInfo, setBookinfo] = useState({
         title:'',
-        author: '',
+        author: user?.name,
         genre: '',
         user_id: user?.id_user,
         description: ''
@@ -56,10 +57,10 @@ const PublicarLibro = () => {
         formData.append('image', image)
 
         try {
-
             const res = await axios.post('http://127.0.0.1:5000/books/publish', formData)
             if (res.data) {
-              fetchMyBooks()
+              await fetchMyBooks()
+              await getCommunityBooks()
               window.alert('Libro creado con éxito')
               setBookinfo({
                 title:'',
@@ -96,8 +97,8 @@ const PublicarLibro = () => {
 
     
   return (
-    <main>
-        <h2 className='text-left mt-20 px-10'>{user?.name},</h2>
+    <main className='mt-32 py-14'>
+        <h2 className='text-left px-10'>{user?.name},</h2>
         <h1 className='text-left px-5 py-1'>Publica tu propio libro:</h1>
 
         <section className='flex justify-around pt-10'>
@@ -106,10 +107,10 @@ const PublicarLibro = () => {
                     <label htmlFor="">Título:</label>
                     <input type="text" name='title' onChange={handleChangeBookInfo} value={bookInfo.title} />
                 </div>
-                <div className='flex justify-between w-full text-xl'>
+                {/* <div className='flex justify-between w-full text-xl'>
                     <label htmlFor="">Autor:</label>
-                    <input type="text" name='author' onChange={handleChangeBookInfo} value={bookInfo.author} />
-                </div>
+                    <input type="text" name='author' onChange={handleChangeBookInfo} disabled value={bookInfo.author} />
+                </div> */}
                 <div className='flex justify-between w-full text-xl'>
                     <label htmlFor="">Género:</label>
                     <input type="text" name='genre' onChange={handleChangeBookInfo} value={bookInfo.genre} />

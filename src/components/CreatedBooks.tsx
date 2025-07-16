@@ -3,6 +3,7 @@ import BookCard from "../shared/BookCard"
 import type { MyBook } from "../types"
 import { useUserStore } from "../store/user"
 import { useNavigate } from "react-router-dom"
+import { useBookStore } from "../store/book"
 
 type Props = {
     myBooks: MyBook[] | null
@@ -10,10 +11,14 @@ type Props = {
 
 const CreatedBooks = ({ myBooks }: Props) => {
     const user = useUserStore(store => store.user)
+    const setMyBooks = useBookStore(store => store.setMyBooks)
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!user) navigate('/')
+        if (!user) {
+            setMyBooks()
+            navigate('/')
+        } 
     }, [user])
     
   return (

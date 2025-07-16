@@ -2,13 +2,17 @@ import React from 'react'
 import type { GoogleBook, MyBook } from '../types'
 import { Link } from 'react-router-dom'
 import { useBookStore } from '../store/book'
+import { useUserStore } from '../store/user'
 
 type Props = {
   book: GoogleBook | MyBook | null
 }
 
 const BookCard = ({ book }: Props) => {
+  const user = useUserStore(state => state.user)
   const elimMyBook = useBookStore(state => state.deleteMyBook)
+  const fetchMyBooks = useBookStore(state => state.getBooks)
+  const getCommunityBooks = useBookStore(state => state.getCommunityBooks)
   //! Si la función devuelve true, quiere decir que es el book es un GoogleBook
   const isGoogleBook = (book: GoogleBook | MyBook | null): book is GoogleBook => {
     //! Los dos !! es para asegurarse que book no sea null ni undefined
@@ -21,6 +25,8 @@ const BookCard = ({ book }: Props) => {
     try {
       if (!isGoogleBook(book)){
         await elimMyBook(book?.id_book)
+        await fetchMyBooks()
+        await getCommunityBooks()
       }
     } catch (error: any) {
         if (error.response && error.response.data) {
@@ -51,19 +57,26 @@ const BookCard = ({ book }: Props) => {
         <main className='flex flex-col items-center'>
           <img
           className='w-32 h-[200px] object-cover' 
-          src={`http://localhost:5000/books/${book?.image_path}`} 
+          src={`http://127.0.0.1:5000/books/${book?.image_path}`} 
           alt="Portada" />
             <article className='flex flex-col justify-evenly items-center h-[230px] text-orange-600'>
               <h2 className='text-2xl w-xs max-h-[150px] break-words'>{book?.title}</h2>
               <div className='flex flex-col items-center'>
               <h2>Género: {book?.genre}</h2>
               <h2>Autor: {book?.author}</h2>
-              <a href={`http://localhost:5000/books/${book?.pdf_path}`} target="_blank" rel="noopener noreferrer">
+              <a href={`http://127.0.0.1:5000/books/${book?.pdf_path}`} target="_blank" rel="noopener noreferrer">
                 <button>Ver Libro</button>
               </a>
-              <form onSubmit={handleElim}>
-                <button type='submit'>Eliminar Libro</button>
-              </form>
+              {user?.id_user === book?.user_id && (
+                <form onSubmit={handleElim}>
+                  <button type='submit'>Eliminar Libro</button>
+                </form>
+              )}
+              {user?.admin == true && (
+                <form onSubmit={handleElim}>
+                  <button type='submit'>Eliminar Libro</button>
+                </form>
+              )}
               </div>
             </article>
         </main>

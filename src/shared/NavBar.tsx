@@ -138,14 +138,20 @@ const NavBar = () => {
             <button onClick={() => setLoginModal(true)}>Iniciar Sesión</button>
           ) : (
             <React.Fragment>
-              <Link to={'/mis_libros'}>Mis Libros</Link>
-              <Link to={'/publicar'}>Publicar libro</Link>
+              {user?.admin ? (
+                <Link to={'/todos_los_libros'}>Libros Publicados</Link>
+              ) : (
+                <section className='flex items-center gap-15'>
+                  <Link to={'/mis_libros'}>Mis Libros</Link>
+                  <Link to={'/publicar'}>Publicar libro</Link>
+                </section>
+              )}
             </React.Fragment>
           )}
         </div>
         <div className='flex items-center gap-10'>
           <form onSubmit={handleBookSearch} className='flex'>
-            <input className='border border-neutral-600 bg-neutral-700 rounded-md p-1 w-md relative' onChange={handleChangeBookSearch} value={bookSearch} type="text" placeholder='Título, género, autor...' />
+            <input className='border border-neutral-600 bg-neutral-700 rounded-md p-1 w-md relative text-white' onChange={handleChangeBookSearch} value={bookSearch} type="text" placeholder='Título, género, autor...' />
             {bookSearch.length !== 0 && (
               <button className='absolute z-10 right-58' onClick={() => setBookSearch('')}>X</button>
             )}

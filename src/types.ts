@@ -2,6 +2,7 @@ export type User = {
     id_user: number,
     name: string,
     email: string,
+    admin?: boolean
 }
 
 export interface GoogleJwtPayload {
@@ -18,7 +19,7 @@ export type MyBook = {
     description: string,
     user_id: number,
     pdf_path: string,
-    image_path: string
+    image_path: string,
 }
 
 export type GoogleBook = {

@@ -12,13 +12,18 @@ import type { GoogleBook } from './types'
 import CreatedBooks from './components/CreatedBooks'
 import { useBookStore } from './store/book'
 import OneBook from './components/OneBook'
+import { useUserStore } from './store/user'
+import AllCreatedBooks from './admin/AllCreatedBooks'
 
 function App() {
+  //? User para actualizar el estado de allCretedBooks
+  const user = useUserStore(store => store.user)
   const [books, setBooks] = useState<GoogleBook[]>([])
   const [allBooks, setAllBooks] = useState<GoogleBook[]>([])
   const [bannerBooks, setBannerBooks] = useState<GoogleBook[]>([])
   const fetchMyBooks = useBookStore(state => state.getBooks)
   const myBooks = useBookStore(state => state.myBooks)
+  const getCommunityBooks = useBookStore(state => state.getCommunityBooks)
   
   //?Paginación
   const [actualPage, setActualPage] = useState<number>(1)
@@ -26,7 +31,8 @@ function App() {
   const booksPerPage = 10
   //?Total de páginas según el total de libros
   const totalPages = Math.ceil( totalBooks / booksPerPage )
-  
+
+  //? Books paginados
   useEffect(() => {
     const start = (actualPage - 1) * booksPerPage
     const fetchBooks = async () => {
@@ -42,6 +48,7 @@ function App() {
     fetchBooks()
     }, [actualPage])
 
+    //? AllBooks y Banner Books
     useEffect(() => {
       const fetchNoPaginationBooks = async () => {
         try {
@@ -50,13 +57,16 @@ function App() {
 
           //?Fetch de 5 libros para el banner
           const res5 = await axios('https://www.googleapis.com/books/v1/volumes?q=adventure&maxResults=5&key=AIzaSyDNQ631Qv6pa6tyXCeU1xds2mnYL1KYNg8')
-           if (res.data) {
+
+
+          if (res.data) {
             //?Setear todos los libros para la ruta /libros
             setAllBooks(res.data.items)
           }
           if (res5.data) {
             setBannerBooks(res5.data.items)
           }
+
         } catch (error) {
           if (error instanceof Error) console.log(error.message)
         }
@@ -64,9 +74,14 @@ function App() {
       fetchNoPaginationBooks()
     }, [])
 
+    //? Fetch libros creados por la comunidad
+    useEffect(() => {
+      getCommunityBooks()
+    }, [user])
+
     useEffect(() => {
       fetchMyBooks()
-    }, [])
+    }, [user])
       
   return (
     <React.Fragment>
@@ -78,6 +93,7 @@ function App() {
           <Route path='/libros' element={<Books allBooks={ allBooks }/>}/>  
           <Route path='/mis_libros' element={<CreatedBooks myBooks={ myBooks }/>}/>
           <Route path='/libro/:id' element={<OneBook/>}/>
+          <Route path='/todos_los_libros' element={<AllCreatedBooks/>}/>
         </Routes>
         {/* <Footer/> */}
     </React.Fragment>
