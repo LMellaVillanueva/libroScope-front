@@ -31,7 +31,7 @@ const PublicarLibro = () => {
 
     const [bookInfo, setBookinfo] = useState({
         title:'',
-        author: user?.name,
+        author: user?.name ?? 'Indefinido',
         genre: '',
         user_id: user?.id_user,
         description: ''

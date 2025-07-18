@@ -14,6 +14,7 @@ import { useBookStore } from './store/book'
 import OneBook from './components/OneBook'
 import { useUserStore } from './store/user'
 import AllCreatedBooks from './admin/AllCreatedBooks'
+import Footer from './shared/Footer'
 
 function App() {
   //? User para actualizar el estado de allCretedBooks
@@ -95,7 +96,7 @@ function App() {
           <Route path='/libro/:id' element={<OneBook/>}/>
           <Route path='/todos_los_libros' element={<AllCreatedBooks/>}/>
         </Routes>
-        {/* <Footer/> */}
+      <Footer/>
     </React.Fragment>
   )
 }

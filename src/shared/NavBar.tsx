@@ -129,29 +129,46 @@ const NavBar = () => {
 
   return (
     <main className='flex flex-col w-full fixed top-0 left-0 items-center justify-center z-10'>
-      <nav className='flex items-center justify-between p-10 bg-amber-500 w-full'>
-        <h1>LibroScope</h1>
-        <div className='flex items-center justify-around w-1/2'>
+      <nav className='flex items-center gap-4 p-9 bg-red-200 dark:bg-red-900 w-full'>
+        <h1 className=''>LibroScope</h1>
+        <div className='flex items-center justify-around w-5/12'>
           <Link to={'/'}>Inicio</Link>
+
+            <div className='border border-black h-5'></div>
+
           <Link to={'/libros'}>Libros</Link>
+
+            <div className='border border-black h-5'></div>
           {!dbUser ? ( 
-            <button onClick={() => setLoginModal(true)}>Iniciar Sesión</button>
+            <React.Fragment>
+              <button onClick={() => setLoginModal(true)}>Iniciar Sesión</button>
+              <div className='border border-black h-5'></div>
+            </React.Fragment>
           ) : (
             <React.Fragment>
               {user?.admin ? (
-                <Link to={'/todos_los_libros'}>Libros Publicados</Link>
+                <React.Fragment>
+                  <Link to={'/todos_los_libros'}>Libros Publicados</Link>
+                  <div className='border border-black h-5'></div>
+                </React.Fragment>
               ) : (
-                <section className='flex items-center gap-15'>
+                <section className='flex items-center justify-between w-3xs'>
                   <Link to={'/mis_libros'}>Mis Libros</Link>
+                    <div className='border border-black h-5'></div>
                   <Link to={'/publicar'}>Publicar libro</Link>
                 </section>
               )}
             </React.Fragment>
           )}
         </div>
-        <div className='flex items-center gap-10'>
-          <form onSubmit={handleBookSearch} className='flex'>
-            <input className='border border-neutral-600 bg-neutral-700 rounded-md p-1 w-md relative text-white' onChange={handleChangeBookSearch} value={bookSearch} type="text" placeholder='Título, género, autor...' />
+        <div className='flex items-center gap-8'>
+          <form onSubmit={handleBookSearch} className='flex items-center gap-2'>
+            <input 
+            className=' bg-neutral-700 rounded-md p-1 w-md relative text-white' 
+            onChange={handleChangeBookSearch} 
+            value={bookSearch} 
+            type="text" 
+            placeholder='Título, género, autor...' />
             {bookSearch.length !== 0 && (
               <button className='absolute z-10 right-58' onClick={() => setBookSearch('')}>X</button>
             )}
