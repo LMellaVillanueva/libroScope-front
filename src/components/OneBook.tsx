@@ -38,7 +38,7 @@ const OneBook = () => {
     }, [])
 
   return (
-    <main className='p-5 mt-30 flex justify-around items-center'>
+    <main className='p-5 pb-40 mt-40 flex justify-around items-center'>
         <article className='w-2/3 flex items-center justify-evenly'>
             <img className='w-64'
             src={book.volumeInfo.imageLinks?.smallThumbnail} 
@@ -55,7 +55,7 @@ const OneBook = () => {
                 </span>
                 <span className='flex flex-col items-start gap-2'>
                     <p className='font-bold'>Descripción:</p>
-                    <p className='max-h-[250px] overflow-y-auto break-words'>{book.volumeInfo?.description || 'Libro sin información'}</p>
+                    <p className='max-h-[220px] overflow-y-auto break-words'>{book.volumeInfo?.description || 'Libro sin información'}</p>
                 </span>
             </section>
         </article>

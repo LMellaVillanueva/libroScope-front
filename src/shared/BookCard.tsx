@@ -46,7 +46,7 @@ const BookCard = ({ book }: Props) => {
         to={`/libro/${book?.id}`}
         state={{ book }}>
         <img src={book?.volumeInfo.imageLinks?.smallThumbnail || '/default-cover.png'} 
-        className='w-40 h-64 object-cover rounded shadow-md shadow-black' 
+        className='w-44 h-72 object-cover rounded shadow-md shadow-black' 
         width={150} 
         alt={book?.volumeInfo.title} />        
         <h2 className=' h-[100px] overflow-y-auto break-words'>{book?.volumeInfo.title}</h2>

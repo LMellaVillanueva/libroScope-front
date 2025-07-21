@@ -8,6 +8,7 @@ import type { GoogleBook, GoogleJwtPayload } from '../types'
 import { FiLogOut } from 'react-icons/fi'
 import { useBookStore } from '../store/book'
 import BookSearchedCard from './BookSearchedCard'
+import nav_logo from '../assets/imgs/nav_logo.png'
 
 const NavBar = () => {
 
@@ -129,9 +130,11 @@ const NavBar = () => {
 
   return (
     <main className='flex flex-col w-full fixed top-0 left-0 items-center justify-center z-10'>
-      <nav className='flex items-center gap-4 p-9 bg-red-200 dark:bg-red-900 w-full'>
-        <h1 className=''>LibroScope</h1>
-        <div className='flex items-center justify-around w-5/12'>
+      <nav className='flex items-center gap-4 p-3 dark:bg-red-900 w-full' style={{ backgroundColor: '#dd4a3d' }}>
+        <Link to={'/'}>
+          <img src={nav_logo} alt="nav_logo" width={300} />
+        </Link>
+        <div className='flex items-center justify-around w-5/12 text-red-900'>
           <Link to={'/'}>Inicio</Link>
 
             <div className='border border-black h-5'></div>
@@ -163,16 +166,18 @@ const NavBar = () => {
         </div>
         <div className='flex items-center gap-8'>
           <form onSubmit={handleBookSearch} className='flex items-center gap-2'>
-            <input 
-            className=' bg-neutral-700 rounded-md p-1 w-md relative text-white' 
-            onChange={handleChangeBookSearch} 
-            value={bookSearch} 
-            type="text" 
-            placeholder='Título, género, autor...' />
+            <div className='flex items-center w-full max-w-xl h-10 overflow-hidden rounded-full border border-gray-300 bg-white relative'>
+              <input 
+              className='w-md text-gray-700 placeholder-gray-500 focus:outline-none' 
+              onChange={handleChangeBookSearch} 
+              value={bookSearch} 
+              type="text" 
+              placeholder='Título, género, autor...' />
+              <button type='submit'>🔍</button>
+            </div>
             {bookSearch.length !== 0 && (
-              <button className='absolute z-10 right-58' onClick={() => setBookSearch('')}>X</button>
+              <button className='absolute right-38' style={{ background: 'none' }} onClick={() => setBookSearch('')}>✖️</button>
             )}
-            <button type='submit'>Buscar</button>
           </form>
           {dbUser && (
             <button className='bg-neutral-800' onClick={() => setConfirmLogout(true)}><FiLogOut size={20} /></button>

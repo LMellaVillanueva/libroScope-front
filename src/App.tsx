@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Landing from './components/Landing'
 import NavBar from './shared/NavBar'
 import RegistroUser from './components/RegistroUser'
@@ -25,6 +25,9 @@ function App() {
   const fetchMyBooks = useBookStore(state => state.getBooks)
   const myBooks = useBookStore(state => state.myBooks)
   const getCommunityBooks = useBookStore(state => state.getCommunityBooks)
+
+  // Usar el pathname para scrollear cuando navegue
+  const { pathname } = useLocation()
   
   //?Paginación
   const [actualPage, setActualPage] = useState<number>(1)
@@ -32,6 +35,11 @@ function App() {
   const booksPerPage = 10
   //?Total de páginas según el total de libros
   const totalPages = Math.ceil( totalBooks / booksPerPage )
+
+  //?Scroll
+  useEffect(() => {
+    window.scrollTo({ top: 0, 'behavior': 'smooth' })
+  }, [pathname])
 
   //? Books paginados
   useEffect(() => {
