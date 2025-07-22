@@ -130,34 +130,34 @@ const NavBar = () => {
 
   return (
     <main className='flex flex-col w-full fixed top-0 left-0 items-center justify-center z-10'>
-      <nav className='flex items-center gap-4 p-3 dark:bg-red-900 w-full' style={{ backgroundColor: '#dd4a3d' }}>
+      <nav className='flex items-center gap-4 p-1 dark:bg-red-900 w-full text-lg' style={{ backgroundColor: '#080e21' }}>
         <Link to={'/'}>
           <img src={nav_logo} alt="nav_logo" width={300} />
         </Link>
-        <div className='flex items-center justify-around w-5/12 text-red-900'>
+        <div className='flex items-center justify-around w-5/12 text-blue-500'>
           <Link to={'/'}>Inicio</Link>
 
-            <div className='border border-black h-5'></div>
+            <div className='border border-white h-5'></div>
 
           <Link to={'/libros'}>Libros</Link>
 
-            <div className='border border-black h-5'></div>
+            <div className='border border-white h-5'></div>
           {!dbUser ? ( 
             <React.Fragment>
-              <button onClick={() => setLoginModal(true)}>Iniciar Sesión</button>
-              <div className='border border-black h-5'></div>
+              <button onClick={() => setLoginModal(true)} className='w-fit'>Iniciar Sesión</button>
+              {/* <div className='border border-white h-5'></div> */}
             </React.Fragment>
           ) : (
             <React.Fragment>
               {user?.admin ? (
                 <React.Fragment>
                   <Link to={'/todos_los_libros'}>Libros Publicados</Link>
-                  <div className='border border-black h-5'></div>
+                  <div className='border border-white h-5'></div>
                 </React.Fragment>
               ) : (
                 <section className='flex items-center justify-between w-3xs'>
                   <Link to={'/mis_libros'}>Mis Libros</Link>
-                    <div className='border border-black h-5'></div>
+                    <div className='border border-white h-5'></div>
                   <Link to={'/publicar'}>Publicar libro</Link>
                 </section>
               )}

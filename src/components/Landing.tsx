@@ -1,8 +1,8 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react"
 import { useUserStore } from "../store/user"
 import type { GoogleBook } from "../types"
-import BookCard from "../shared/BookCard"
 import BookLangingCard from "../shared/BookLandingCard"
+import BookBannerCard from "../shared/BookBannerCard"
 
 type Props = {
     books: GoogleBook[] | null
@@ -58,22 +58,18 @@ const Landing = ({ books, actualPage, setActualPage, totalPages, bannerBooks }: 
   }, [user])
 
   return (
-    <main className="mt-52">
-      {user && (
-        <h2 className="text-left px-10">Bienvenido/a {user?.name}</h2>
-      )}
-      <h1 className={`text-left px-5 py-1 ${!user && 'mt-10'} `}>Te podría gustar:</h1>
+    <main className="mt-36 flex flex-col gap-10">
+      <div>
+        {user && (
+          <h2 className="text-left px-10">Bienvenido/a {user?.name}</h2>
+        )}
+        <h1 className={`text-left px-5 py-1 ${!user && 'mt-10'} `}>Te podría gustar:</h1>
+      </div>
       {bannerBooks && bannerBooks.length > 0 && (
-        <article className="flex justify-between items-center bg-amber-950 p-10 m-10 rounded-md">
-          {/* <img 
-          src={banner} 
-          alt="banner" 
-          className="w-full h-full object-cover rounded-lg"
-          /> */}
+        <article className="flex justify-between py-8 items-center rounded-md" style={{ backgroundColor: '#d2a4ff' }}>
           <button onClick={prevBanner}>{'<'}</button>
-
-          <section>
-            <BookCard book={bannerBooks[bannerIndex]}/>
+          <section className="w-full">
+            <BookBannerCard book={bannerBooks[bannerIndex]}/>
           </section>
 
           <button onClick={nextBanner}>{'>'}</button>
