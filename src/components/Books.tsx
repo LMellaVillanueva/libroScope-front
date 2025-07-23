@@ -21,7 +21,7 @@ const Books = ({ allBooks }: Props) => {
 
   return (
     <main className='flex gap-6 px-6 mt-44'>
-      <section className='sticky top-24 h-fit min-w-[220px] bg-white text-black rounded-xl shadow-md p-5'>
+      <section className='sticky top-10 h-fit min-w-[220px] bg-white text-black rounded-xl shadow-md p-5 my-8'>
         <h2 className='text-2xl font-semibold mb-4'>Filtros</h2>
         <div className='flex flex-col gap-2'>
           <button onClick={() => setCategorie(Categorie.SCIENCE_FICTION)}>Ciencia Ficción</button>

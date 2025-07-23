@@ -20,15 +20,13 @@ a {
   /* color: #841818; */
   text-decoration: inherit;
 }
-a:hover {
-    color: #9edaf7;
-}
 
 body {
   margin: 0;
   display: flex;
   place-items: center;
   min-height: 100vh;
+  background: linear-gradient(to bottom, #eeeeee, #8b8b8b);
 }
 
 h1 {
@@ -37,11 +35,11 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  /* border-radius: 8px; */
   /* border: 1px solid transparent; */
   /* padding: 0.6em 1.2em; */
-  font-size: 1em;
-  font-weight: 500;
+  /* font-size: 1em; */
+  /* font-weight: 500; */
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
@@ -51,15 +49,6 @@ button {
   :root {
     color: #213547;
     background-color: #ffffff;
-  }
-  a:hover {
-    color: #9edaf7;
-  }
-  button {
-    /* background-color: #f9f9f9; */
-  }
-  button:hover {
-    color: #9edaf7;
   }
   input {
     border: 2px whitesmoke solid;

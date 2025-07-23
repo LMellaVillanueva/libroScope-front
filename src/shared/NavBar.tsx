@@ -129,36 +129,36 @@ const NavBar = () => {
   }
 
   return (
-    <main className='flex flex-col w-full fixed top-0 left-0 items-center justify-center z-10'>
+    <main className='flex flex-col w-full absolute top-0 left-0 items-center justify-center z-10'>
       <nav className='flex items-center gap-4 p-1 dark:bg-red-900 w-full text-lg' style={{ backgroundColor: '#080e21' }}>
-        <Link to={'/'}>
+        <Link className='hover:text-blue-300' to={'/'}>
           <img src={nav_logo} alt="nav_logo" width={300} />
         </Link>
         <div className='flex items-center justify-around w-5/12 text-blue-500'>
-          <Link to={'/'}>Inicio</Link>
+          <Link className='hover:text-blue-300' to={'/'}>Inicio</Link>
 
             <div className='border border-white h-5'></div>
 
-          <Link to={'/libros'}>Libros</Link>
+          <Link className='hover:text-blue-300' to={'/libros'}>Libros</Link>
 
             <div className='border border-white h-5'></div>
           {!dbUser ? ( 
             <React.Fragment>
-              <button onClick={() => setLoginModal(true)} className='w-fit'>Iniciar Sesión</button>
+              <button onClick={() => setLoginModal(true)} className='w-fit font-medium hover:text-blue-300'>Iniciar Sesión</button>
               {/* <div className='border border-white h-5'></div> */}
             </React.Fragment>
           ) : (
             <React.Fragment>
               {user?.admin ? (
                 <React.Fragment>
-                  <Link to={'/todos_los_libros'}>Libros Publicados</Link>
+                  <Link className='hover:text-blue-300' to={'/todos_los_libros'}>Libros Publicados</Link>
                   <div className='border border-white h-5'></div>
                 </React.Fragment>
               ) : (
-                <section className='flex items-center justify-between w-3xs'>
-                  <Link to={'/mis_libros'}>Mis Libros</Link>
+                <section className='flex items-center justify-between w-2xs'>
+                  <Link className='hover:text-blue-300' to={'/mis_libros'}>Mis Libros</Link>
                     <div className='border border-white h-5'></div>
-                  <Link to={'/publicar'}>Publicar libro</Link>
+                  <Link className='hover:text-blue-300' to={'/publicar'}>Publicar libro</Link>
                 </section>
               )}
             </React.Fragment>
@@ -180,29 +180,32 @@ const NavBar = () => {
             )}
           </form>
           {dbUser && (
-            <button className='bg-neutral-800' onClick={() => setConfirmLogout(true)}><FiLogOut size={20} /></button>
+            <button className='text-white hover:text-blue-300 rounded-full' onClick={() => setConfirmLogout(true)}><FiLogOut size={25} /></button>
           )}
         </div>
 
           {/* Modal de cerrar sesión */}
           {confirmLogout && (
-            <div className='fixed m-auto inset-0 rounded-md w-2/5 h-2/5 flex flex-col items-center justify-center p-5 gap-10 z-10 text-xl bg-neutral-900'>
-              <p>¿Quieres cerrar sesión?</p>
-            <div className='flex justify-center items-center gap-8 w-full'>
-             <button className='bg-red-500' onClick={handleLogout}>Sí</button>
-             <button className='bg-neutral-800' onClick={() => setConfirmLogout(false)}>No</button>
-            </div>
-           </div>
+            <React.Fragment>
+              <div className='fixed bg-black opacity-60 inset-0 z-10 w-[100vw] h-[100vh]'></div>
+               <div className='fixed m-auto inset-0 rounded-md w-3/12 h-4/12 flex flex-col items-center justify-center p-5 gap-10 z-20 text-2xl bg-neutral-200'>
+                 <p className='font-bold'>¿Quieres cerrar sesión?</p>
+               <div className='flex justify-center items-center gap-8 w-full text-3xl'>
+                <button className='text-gray-500 hover:text-black' onClick={handleLogout}>Sí</button>
+                <button className='text-gray-500 hover:text-black' onClick={() => setConfirmLogout(false)}>No</button>
+               </div>
+              </div>
+            </React.Fragment>
           )}
 
         {/*//!Modal de login */}
           {loginModal && (
-            <section className='fixed m-auto inset-0 w-1/5 h-3/5 p-10 rounded-md flex flex-col justify-around z-10 bg-neutral-900 text-amber-600' >
+            <section className='fixed m-auto inset-0 top-20 w-3/12 h-4/6 p-8 rounded-md flex flex-col justify-around z-10 bg-indigo-950 text-neutral-200' >
               <button className='absolute top-4 right-4' onClick={() => setLoginModal(false)}>X</button>
 
               <h2 className='font-bold text-2xl'>Inicio de Sesión</h2>
 
-              <form onSubmit={handleLogin} className='flex flex-col items-center justify-between h-1/2'>
+              <form onSubmit={handleLogin} className='flex flex-col items-center justify-between gap-5'>
 
                 <div className='text-left'>
                   <label htmlFor="email">Correo:</label> <br />
@@ -214,7 +217,7 @@ const NavBar = () => {
                   <input type="password" name='password' onChange={handleChangeLoginInfo} className='border border-neutral-800 w-3xs rounded-md p-0.5' />
                 </div>
 
-                <button className='w-fit' type='submit'>Iniciar Sesión</button>
+                <button className='text-blue-400 hover:text-blue-300 font-medium' type='submit'>Iniciar Sesión</button>
                 <GoogleLogin 
                   onSuccess={ async (credentials: CredentialResponse) => {
                     try {
@@ -243,7 +246,7 @@ const NavBar = () => {
                   />
               </form>
 
-              <span>¿No tienes una cuenta?, <Link to={'/registro'} onClick={() => setLoginModal(false)} >Regístrate.</Link></span>
+              <span>¿No tienes una cuenta?, <Link className='text-blue-400 hover:text-blue-300' to={'/registro'} onClick={() => setLoginModal(false)} >Regístrate.</Link></span>
             </section>
           )}
 

@@ -1,5 +1,3 @@
-import gh from '../assets/imgs/gh.png'
-import linkedIN from '../assets/imgs/linkedIN.png'
 import lb_logo from '../assets/imgs/lb_logo.png'
 import { Link } from 'react-router-dom'
 
@@ -31,9 +29,9 @@ const Footer = () => {
           {/* <article className='flex justify-evenly pt-2'> */}
             {/* <img src={gh} alt="gh" width={50} />
             <img src={linkedIN} alt="lkdin" width={50} /> */}
-            <a className='text-blue-500' target='_blank' href="https://portafolio-lucas-mella.vercel.app/">Portafolio</a>
-            <a className='text-blue-500' target='_blank' href="https://www.linkedin.com/in/lucas-mella-947989231/">LinkedIn</a>
-            <a className='text-blue-500' target='_blank' href="https://github.com/LMellaVillanueva">GitHub</a>
+            <a className='text-blue-500 w-fit' target='_blank' href="https://portafolio-lucas-mella.vercel.app/">Portafolio</a>
+            <a className='text-blue-500 w-fit' target='_blank' href="https://www.linkedin.com/in/lucas-mella-947989231/">LinkedIn</a>
+            <a className='text-blue-500 w-fit' target='_blank' href="https://github.com/LMellaVillanueva">GitHub</a>
           {/* </article> */}
         </div>
 
