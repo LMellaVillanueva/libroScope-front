@@ -61,11 +61,11 @@ const Landing = ({ books, actualPage, setActualPage, totalPages, bannerBooks }: 
         </article>
       )}
           <div className="flex items-center justify-baseline gap-4 mx-auto">
-            <button onClick={() => setBannerIndex(0)} className={`w-3 h-3 rounded-full ${bannerIndex === 0 ? 'bg-gray-400' : 'bg-black'} hover:bg-gray-400`}></button>
-            <button onClick={() => setBannerIndex(1)} className={`w-3 h-3 rounded-full ${bannerIndex === 1 ? 'bg-gray-400' : 'bg-black'} hover:bg-gray-400`}></button>
-            <button onClick={() => setBannerIndex(2)} className={`w-3 h-3 rounded-full ${bannerIndex === 2 ? 'bg-gray-400' : 'bg-black'} hover:bg-gray-400`}></button>
-            <button onClick={() => setBannerIndex(3)} className={`w-3 h-3 rounded-full ${bannerIndex === 3 ? 'bg-gray-400' : 'bg-black'} hover:bg-gray-400`}></button>
-            <button onClick={() => setBannerIndex(4)} className={`w-3 h-3 rounded-full ${bannerIndex === 4 ? 'bg-gray-400' : 'bg-black'} hover:bg-gray-400`}></button>
+            <button onClick={() => setBannerIndex(0)} className={`w-3 h-3 rounded-full ${bannerIndex === 0 ? 'bg-black' : 'bg-gray-400'} hover:bg-gray-400`}></button>
+            <button onClick={() => setBannerIndex(1)} className={`w-3 h-3 rounded-full ${bannerIndex === 1 ? 'bg-black' : 'bg-gray-400'} hover:bg-gray-400`}></button>
+            <button onClick={() => setBannerIndex(2)} className={`w-3 h-3 rounded-full ${bannerIndex === 2 ? 'bg-black' : 'bg-gray-400'} hover:bg-gray-400`}></button>
+            <button onClick={() => setBannerIndex(3)} className={`w-3 h-3 rounded-full ${bannerIndex === 3 ? 'bg-black' : 'bg-gray-400'} hover:bg-gray-400`}></button>
+            <button onClick={() => setBannerIndex(4)} className={`w-3 h-3 rounded-full ${bannerIndex === 4 ? 'bg-black' : 'bg-gray-400'} hover:bg-gray-400`}></button>
           </div>
 
       <div className='flex flex-col gap-5 items-center p-10'>

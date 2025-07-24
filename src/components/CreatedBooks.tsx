@@ -22,7 +22,7 @@ const CreatedBooks = ({ myBooks }: Props) => {
     }, [user])
     
   return (
-    <main className='flex flex-col gap-10 items-start p-20 mt-20'>
+    <main className='flex flex-col gap-10 items-start p-20 mt-20 text-neutral-600'>
         <h2 className="text-3xl">Libros de {user?.name}:</h2>
         {myBooks && myBooks.length > 0 ? (
         <article className='flex justify-center items-center'>
@@ -33,8 +33,8 @@ const CreatedBooks = ({ myBooks }: Props) => {
                 ))}
         </article>
         ) : (
-            <main>
-                <h1>No hay Libros publicados...</h1>
+            <main className="h-[60vh]">
+                <h1 className="pt-10">No hay Libros publicados...</h1>
             </main>
         )}
     </main>

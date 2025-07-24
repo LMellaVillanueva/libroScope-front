@@ -97,7 +97,7 @@ const PublicarLibro = () => {
 
     
   return (
-    <main className='mt-32 py-14'>
+    <main className='mt-32 py-20 text-neutral-600'>
         <h2 className='text-left px-10'>{user?.name},</h2>
         <h1 className='text-left px-5 py-1'>Publica tu propio libro:</h1>
 
@@ -127,7 +127,7 @@ const PublicarLibro = () => {
                     <label htmlFor="">Selecciona tu portada:</label>
                     <input ref={imageRef} type="file" accept='image/*' onChange={handleChangeImage} />
                 </div>
-                <button type='submit'>Publicar libro</button>
+                <button type='submit' className='hover:font-semibold hover:text-neutral-800'>Publicar libro</button>
             </form>
 
             <article className='relative flex flex-col justify-around items-start w-sm h-[500px] p-8 border-2 rounded-md'>

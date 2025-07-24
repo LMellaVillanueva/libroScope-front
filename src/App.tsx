@@ -15,6 +15,7 @@ import OneBook from './components/OneBook'
 import { useUserStore } from './store/user'
 import AllCreatedBooks from './admin/AllCreatedBooks'
 import Footer from './shared/Footer'
+import OneCreatedBook from './components/OneCreatedBook'
 
 function App() {
   //? User para actualizar el estado de allCretedBooks
@@ -102,6 +103,7 @@ function App() {
           <Route path='/libros' element={<Books allBooks={ allBooks }/>}/>  
           <Route path='/mis_libros' element={<CreatedBooks myBooks={ myBooks }/>}/>
           <Route path='/libro/:id' element={<OneBook/>}/>
+          <Route path='/libro_publicado/:id' element={<OneCreatedBook/>}/>
           <Route path='/todos_los_libros' element={<AllCreatedBooks/>}/>
         </Routes>
       <Footer/>

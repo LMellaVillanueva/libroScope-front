@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import BookRecommendCard from '../shared/BookRecommendCard'
 
-
 const OneBook = () => {
     const location = useLocation()
     const state = location.state as { book?: GoogleBook }

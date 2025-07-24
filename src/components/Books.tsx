@@ -24,18 +24,18 @@ const Books = ({ allBooks }: Props) => {
       <section className='sticky top-10 h-fit min-w-[220px] bg-white text-black rounded-xl shadow-md p-5 my-8'>
         <h2 className='text-2xl font-semibold mb-4'>Filtros</h2>
         <div className='flex flex-col gap-2'>
-          <button onClick={() => setCategorie(Categorie.SCIENCE_FICTION)}>Ciencia Ficción</button>
-          <button onClick={() => setCategorie(Categorie.ACTION)}>Acción</button>
-          <button onClick={() => setCategorie(Categorie.HORROR)}>Terror</button>
-          <button onClick={() => setCategorie(Categorie.DRAMA)}>Dramático</button>
-          <button onClick={() => setCategorie(Categorie.ADVENTURE)}>Aventura</button>
-          <button onClick={() => setCategorie(Categorie.HISTORY)}>Histórico</button>
-          <button onClick={() => setCategorie(Categorie.SELF_HELP)}>Desarrollo Personal</button>
-          <button onClick={() => setCategorie(Categorie.FANTASY)}>Fantasía</button>
-          <button onClick={() => setCategorie(Categorie.MYSTERY)}>Misterio</button>
-          <button onClick={() => setCategorie(Categorie.COMMUNITY)}>Comunidad</button>
+          <button className='hover:font-bold' onClick={() => setCategorie(Categorie.SCIENCE_FICTION)}>Ciencia Ficción</button>
+          <button className='hover:font-bold' onClick={() => setCategorie(Categorie.ACTION)}>Acción</button>
+          <button className='hover:font-bold' onClick={() => setCategorie(Categorie.HORROR)}>Terror</button>
+          <button className='hover:font-bold' onClick={() => setCategorie(Categorie.DRAMA)}>Dramático</button>
+          <button className='hover:font-bold' onClick={() => setCategorie(Categorie.ADVENTURE)}>Aventura</button>
+          <button className='hover:font-bold' onClick={() => setCategorie(Categorie.HISTORY)}>Histórico</button>
+          <button className='hover:font-bold' onClick={() => setCategorie(Categorie.SELF_HELP)}>Desarrollo Personal</button>
+          <button className='hover:font-bold' onClick={() => setCategorie(Categorie.FANTASY)}>Fantasía</button>
+          <button className='hover:font-bold' onClick={() => setCategorie(Categorie.MYSTERY)}>Misterio</button>
+          <button className='hover:font-bold' onClick={() => setCategorie(Categorie.COMMUNITY)}>Comunidad</button>
           {categorie !== Categorie.NONE && (
-            <button className='font-bold text-red-600' onClick={() => setCategorie(Categorie.NONE)}>Borrar Filtro</button>
+            <button className='text-red-600 hover:font-bold' onClick={() => setCategorie(Categorie.NONE)}>Borrar Filtro</button>
           )}
         </div>
       </section>
