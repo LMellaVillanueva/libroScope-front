@@ -51,14 +51,14 @@ button {
     background-color: #ffffff;
   }
   input {
-    border: 2px whitesmoke solid;
+    border: 2px #525252 solid;
     border-radius: 10px;
     padding: 3px;
   }
 }
 
 input {
-  border: 2px whitesmoke solid;
+  border: 2px #525252 solid;
   border-radius: 10px;
   padding: 3px;
 }

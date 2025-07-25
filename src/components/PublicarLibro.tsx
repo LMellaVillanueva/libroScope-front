@@ -72,6 +72,7 @@ const PublicarLibro = () => {
               setImagePreview('')
               if (pdfRef.current) pdfRef.current.value = ''
               if (imageRef.current) imageRef.current.value = ''
+              navigate('/mis_libros')
             }
         } catch (error: any) {
       if (error.response && error.response.data) {
@@ -97,20 +98,16 @@ const PublicarLibro = () => {
 
     
   return (
-    <main className='mt-32 py-20 text-neutral-600'>
+    <main className='mt-32 py-14 pb-32 text-neutral-600'>
         <h2 className='text-left px-10'>{user?.name},</h2>
         <h1 className='text-left px-5 py-1'>Publica tu propio libro:</h1>
 
-        <section className='flex justify-around pt-10'>
+        <section className='flex justify-around pt-5'>
             <form onSubmit={handlePublish} className='flex flex-col justify-center items-center w-1/5 gap-8'>
                 <div className='flex justify-between w-full text-xl'>
                     <label htmlFor="">Título:</label>
                     <input type="text" name='title' onChange={handleChangeBookInfo} value={bookInfo.title} />
                 </div>
-                {/* <div className='flex justify-between w-full text-xl'>
-                    <label htmlFor="">Autor:</label>
-                    <input type="text" name='author' onChange={handleChangeBookInfo} disabled value={bookInfo.author} />
-                </div> */}
                 <div className='flex justify-between w-full text-xl'>
                     <label htmlFor="">Género:</label>
                     <input type="text" name='genre' onChange={handleChangeBookInfo} value={bookInfo.genre} />
