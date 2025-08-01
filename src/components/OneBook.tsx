@@ -37,7 +37,7 @@ const OneBook = () => {
     }, [])
 
   return (
-    <main className='p-5 pb-40 mt-40 flex justify-around items-center'>
+    <main className='p-5 pb-40 mt-40 flex justify-around items-center text-neutral-600'>
         <article className='w-2/3 flex items-center justify-evenly'>
             <img className='w-64'
             src={book.volumeInfo.imageLinks?.smallThumbnail} 

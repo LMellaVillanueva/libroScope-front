@@ -49,9 +49,9 @@ const Landing = ({ books, actualPage, setActualPage, totalPages, bannerBooks }: 
     <main className="mt-36 flex flex-col gap-10 text-neutral-600">
       <div>
         {user && (
-          <h2 className="text-left px-10 pt-5">Bienvenido/a {user?.name}</h2>
+          <h2 className="text-left text-4xl font-light px-10 pt-5">Bienvenido/a {user?.name}</h2>
         )}
-        <h1 className={`text-left px-5 py-1 ${!user && 'mt-10'} `}>Te podría gustar:</h1>
+        <h1 className={`text-left px-20 py-1 ${!user && 'mt-10'} `}>Te podría gustar:</h1>
       </div>
       {bannerBooks && bannerBooks.length > 0 && (
         <article className="flex justify-between py-8 px-3 items-center rounded-md" /*style={{ backgroundColor: '#d2a4ff' }}*/>

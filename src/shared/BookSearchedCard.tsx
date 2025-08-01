@@ -1,6 +1,5 @@
 import React from 'react'
 import type { GoogleBook, MyBook } from '../types'
-import frontBook from '../assets/imgs/frontBook.png'
 import { Link } from 'react-router-dom'
 
 type Props = {
@@ -44,9 +43,6 @@ const BookSearchedCard = ({ book, setSearchedBooks, setBookSearch }: Props) => {
       </React.Fragment>
     ) : (
       <React.Fragment>
-          <img src={frontBook} 
-          className='object-cover' 
-          alt={book?.title} />        
           <article className='flex flex-col justify-between h-56 items-center text-orange-600 absolute mt-20 mr-1.5'>
             <h2 className='text-4xl w-[200px] break-words'>{book?.title}</h2>
             <div className='flex flex-col items-center'>

@@ -130,57 +130,57 @@ const NavBar = () => {
 
   return (
     <main className='flex flex-col w-full absolute top-0 left-0 items-center justify-center z-10'>
-      <nav className='flex items-center gap-4 p-1 dark:bg-red-900 w-full text-lg' style={{ backgroundColor: '#080e21' }}>
-        <Link className='hover:text-blue-300' to={'/'}>
-          <img src={nav_logo} alt="nav_logo" width={300} />
+      <nav className='flex items-center justify-around p-3 w-full text-lg border-b border-b-black' /*style={{ backgroundColor: '#080e21' }}*/>
+        <Link to={'/'}>
+          <img src={nav_logo} alt="nav_logo" width={250} className='rounded-md shadow-md shadow-indigo-800' />
         </Link>
-        <div className='flex items-center justify-around w-5/12 text-blue-500'>
-          <Link className='hover:text-blue-300' to={'/'}>Inicio</Link>
+        <div className='flex items-center gap-12 min-w-md text-neutral-500'>
 
-            <div className='border border-white h-5'></div>
+            <Link className='hover:text-blue-600' to={'/'}>Inicio</Link>
+              <div className='border border-black h-5'></div>
+            <Link className='hover:text-blue-600' to={'/libros'}>Libros</Link>
+              <div className='border border-black h-5'></div>
 
-          <Link className='hover:text-blue-300' to={'/libros'}>Libros</Link>
+          {!dbUser && (
+            <button onClick={() => setLoginModal(true)} className='text-neutral-500 w-fit font-medium hover:text-blue-600'>Iniciar Sesión</button>
+          )}
 
-            <div className='border border-white h-5'></div>
-          {!dbUser ? ( 
+          {dbUser && (
             <React.Fragment>
-              <button onClick={() => setLoginModal(true)} className='w-fit font-medium hover:text-blue-300'>Iniciar Sesión</button>
-              {/* <div className='border border-white h-5'></div> */}
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              {user?.admin ? (
-                <React.Fragment>
-                  <Link className='hover:text-blue-300' to={'/todos_los_libros'}>Libros Publicados</Link>
-                  <div className='border border-white h-5'></div>
-                </React.Fragment>
-              ) : (
-                <section className='flex items-center justify-between w-2xs'>
-                  <Link className='hover:text-blue-300' to={'/mis_libros'}>Mis Libros</Link>
-                    <div className='border border-white h-5'></div>
-                  <Link className='hover:text-blue-300' to={'/publicar'}>Publicar libro</Link>
-                </section>
-              )}
+                {user?.admin ? (
+                  <React.Fragment>
+                    <Link className='hover:text-blue-600' to={'/todos_los_libros'}>Libros Publicados</Link>
+                    <div className='border border-black h-5'></div>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <Link className='hover:text-blue-600' to={'/mis_libros'}>Mis Libros</Link>
+                      <div className='border border-black h-5'></div>
+                    <Link className='hover:text-blue-600' to={'/publicar'}>Publicar libro</Link>
+                  </React.Fragment>
+                )}
             </React.Fragment>
           )}
         </div>
         <div className='flex items-center gap-8'>
           <form onSubmit={handleBookSearch} className='flex items-center gap-2'>
-            <div className='flex items-center w-full max-w-xl h-10 overflow-hidden rounded-full border border-gray-300 bg-white relative'>
+            <div className='flex items-center w-full max-w-xl h-10 overflow-hidden rounded-md border border-black bg-white relative'>
               <input 
               className='w-md text-gray-700 placeholder-gray-500 focus:outline-none' 
               onChange={handleChangeBookSearch} 
               value={bookSearch} 
               type="text" 
               placeholder='Título, género, autor...' />
-              <button type='submit'>🔍</button>
-            </div>
+            <section className='flex items-center gap-2'>
             {bookSearch.length !== 0 && (
-              <button className='absolute right-38' style={{ background: 'none' }} onClick={() => setBookSearch('')}>✖️</button>
+              <button style={{ background: 'none' }} onClick={() => setBookSearch('')}>✖️</button>
             )}
+              <button type='submit'>🔍</button>
+            </section>
+            </div>
           </form>
           {dbUser && (
-            <button className='text-white hover:text-blue-300 rounded-full' onClick={() => setConfirmLogout(true)}><FiLogOut size={25} /></button>
+            <button className='text-neutral-500 hover:text-blue-600 rounded-full' onClick={() => setConfirmLogout(true)}><FiLogOut size={25} /></button>
           )}
         </div>
 
@@ -191,8 +191,8 @@ const NavBar = () => {
                <div className='fixed m-auto inset-0 rounded-md w-3/12 h-4/12 flex flex-col items-center justify-center p-5 gap-10 z-20 text-2xl bg-neutral-200'>
                  <p className='font-bold'>¿Quieres cerrar sesión?</p>
                <div className='flex justify-center items-center gap-8 w-full text-3xl'>
-                <button className='text-gray-500 hover:text-black' onClick={handleLogout}>Sí</button>
-                <button className='text-gray-500 hover:text-black' onClick={() => setConfirmLogout(false)}>No</button>
+                <button className='text-neutral-500 hover:text-blue-600' onClick={handleLogout}>Sí</button>
+                <button className='text-neutral-500 hover:text-blue-600' onClick={() => setConfirmLogout(false)}>No</button>
                </div>
               </div>
             </React.Fragment>
@@ -200,7 +200,9 @@ const NavBar = () => {
 
         {/*//!Modal de login */}
           {loginModal && (
-            <section className='fixed m-auto inset-0 top-20 w-3/12 h-4/6 p-8 rounded-md flex flex-col justify-around z-10 bg-indigo-950 text-neutral-200' >
+            <React.Fragment>
+              <div className='fixed bg-black opacity-60 inset-0 z-10 w-[100vw] h-[100vh]'></div>
+              <section className='fixed m-auto inset-0 top-20 w-3/12 h-4/6 p-8 rounded-md flex flex-col justify-around z-10 bg-indigo-950 text-neutral-200' >
               <button className='absolute top-4 right-4' onClick={() => setLoginModal(false)}>X</button>
 
               <h2 className='font-bold text-2xl'>Inicio de Sesión</h2>
@@ -209,12 +211,12 @@ const NavBar = () => {
 
                 <div className='text-left'>
                   <label htmlFor="email">Correo:</label> <br />
-                  <input type="email" name='email' onChange={handleChangeLoginInfo} className='border border-neutral-800 w-3xs rounded-md p-0.5' />
+                  <input type="email" name='email' onChange={handleChangeLoginInfo} className='border border-white w-3xs rounded-md p-0.5' />
                 </div>
 
                 <div className='text-left'>
                   <label htmlFor="password">Contraseña:</label> <br />
-                  <input type="password" name='password' onChange={handleChangeLoginInfo} className='border border-neutral-800 w-3xs rounded-md p-0.5' />
+                  <input type="password" name='password' onChange={handleChangeLoginInfo} className='border border-white w-3xs rounded-md p-0.5' />
                 </div>
 
                 <button className='text-blue-400 hover:text-blue-300 font-medium' type='submit'>Iniciar Sesión</button>
@@ -248,13 +250,14 @@ const NavBar = () => {
 
               <span>¿No tienes una cuenta?, <Link className='text-blue-400 hover:text-blue-300' to={'/registro'} onClick={() => setLoginModal(false)} >Regístrate.</Link></span>
             </section>
+          </React.Fragment>
           )}
 
     </nav>
         {/* Searched book's modal in real time */}
         {searchedBooks.length !== 0 && (
           <div className='flex flex-col items-center overflow-y-auto gap-5 p-10 w-1/2 h-[360px] bg-amber-100 text-black'>
-            {searchedBooks?.map((oneBook) => (
+          {searchedBooks?.map((oneBook) => (
               <BookSearchedCard book={ oneBook } setSearchedBooks={ setSearchedBooks } setBookSearch={ setBookSearch }/>
             ))}
           </div>

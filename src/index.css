@@ -26,7 +26,8 @@ body {
   display: flex;
   place-items: center;
   min-height: 100vh;
-  background: linear-gradient(to bottom, #eeeeee, #8b8b8b);
+  background-color: #eeeeee;
+  /* background: linear-gradient(to bottom, #eeeeee, #8b8b8b); */
 }
 
 h1 {
@@ -50,15 +51,4 @@ button {
     color: #213547;
     background-color: #ffffff;
   }
-  input {
-    border: 2px #525252 solid;
-    border-radius: 10px;
-    padding: 3px;
-  }
-}
-
-input {
-  border: 2px #525252 solid;
-  border-radius: 10px;
-  padding: 3px;
 }
