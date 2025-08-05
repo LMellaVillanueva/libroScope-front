@@ -1,18 +1,20 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react"
 import { useUserStore } from "../store/user"
 import type { GoogleBook } from "../types"
-import BookBannerCard from "../shared/BookBannerCard"
 import BookCard from "../shared/BookCard"
+import banner_1 from '../assets/imgs/banner_1.png'
+import banner_2 from '../assets/imgs/banner_2.png'
+import banner_3 from '../assets/imgs/banner_3.png'
+import banner_4 from '../assets/imgs/banner_4.png'
 
 type Props = {
     books: GoogleBook[] | null
     actualPage: number
     setActualPage: Dispatch<SetStateAction<number>>
     totalPages: number
-    bannerBooks: GoogleBook[] | null
 }
 
-const Landing = ({ books, actualPage, setActualPage, totalPages, bannerBooks }: Props) => {
+const Landing = ({ books, actualPage, setActualPage, totalPages }: Props) => {
 
   const user = useUserStore(state => state.user)
   //?Índice para mostrar solo un libro en banner
@@ -26,6 +28,8 @@ const Landing = ({ books, actualPage, setActualPage, totalPages, bannerBooks }: 
     const postPage = () => {
         setActualPage(prevPage => Math.min(prevPage + 1, totalPages))
     }
+
+    const bannerBooks = [ banner_1, banner_2, banner_3, banner_4 ]
 
   //Avance automático de carrusel
   useEffect(() => {
@@ -46,27 +50,24 @@ const Landing = ({ books, actualPage, setActualPage, totalPages, bannerBooks }: 
   }, [user])
 
   return (
-    <main className="mt-36 flex flex-col gap-10 text-neutral-600">
+    <main className="mt-36 flex flex-col gap-1 text-neutral-600">
       <div>
         {user && (
           <h2 className="text-left text-4xl font-light px-10 pt-5">Bienvenido/a {user?.name}</h2>
         )}
-        <h1 className={`text-left px-20 py-1 ${!user && 'mt-10'} `}>Te podría gustar:</h1>
+        <h1 className={`text-left px-20 pt-8 ${!user && 'mt-10'} `}>Te podría gustar:</h1>
       </div>
-      {bannerBooks && bannerBooks.length > 0 && (
-        <article className="flex justify-between py-8 px-3 items-center rounded-md" /*style={{ backgroundColor: '#d2a4ff' }}*/>
-          <section className="w-full">
-            <BookBannerCard book={bannerBooks[bannerIndex]}/>
-          </section>
+
+        <article className="flex flex-col items-center pb-20" /*style={{ backgroundColor: '#d2a4ff' }}*/>
+            <img src={bannerBooks[bannerIndex]} alt="bannerImgs" className="w-full h-[100vh] -m-16 drop-shadow-[0_8px_10px_rgba(0,0,0,0.8)]" />
+            <div className="flex items-center justify-baseline gap-4 mx-auto z-10">
+              <button onClick={() => setBannerIndex(0)} className={`w-2.5 h-2.5 rounded-full ${bannerIndex === 0 ? 'bg-black' : 'bg-gray-400'} hover:bg-gray-400`}></button>
+              <button onClick={() => setBannerIndex(1)} className={`w-2.5 h-2.5 rounded-full ${bannerIndex === 1 ? 'bg-black' : 'bg-gray-400'} hover:bg-gray-400`}></button>
+              <button onClick={() => setBannerIndex(2)} className={`w-2.5 h-2.5 rounded-full ${bannerIndex === 2 ? 'bg-black' : 'bg-gray-400'} hover:bg-gray-400`}></button>
+              <button onClick={() => setBannerIndex(3)} className={`w-2.5 h-2.5 rounded-full ${bannerIndex === 3 ? 'bg-black' : 'bg-gray-400'} hover:bg-gray-400`}></button>
+            </div>
         </article>
-      )}
-          <div className="flex items-center justify-baseline gap-4 mx-auto">
-            <button onClick={() => setBannerIndex(0)} className={`w-3 h-3 rounded-full ${bannerIndex === 0 ? 'bg-black' : 'bg-gray-400'} hover:bg-gray-400`}></button>
-            <button onClick={() => setBannerIndex(1)} className={`w-3 h-3 rounded-full ${bannerIndex === 1 ? 'bg-black' : 'bg-gray-400'} hover:bg-gray-400`}></button>
-            <button onClick={() => setBannerIndex(2)} className={`w-3 h-3 rounded-full ${bannerIndex === 2 ? 'bg-black' : 'bg-gray-400'} hover:bg-gray-400`}></button>
-            <button onClick={() => setBannerIndex(3)} className={`w-3 h-3 rounded-full ${bannerIndex === 3 ? 'bg-black' : 'bg-gray-400'} hover:bg-gray-400`}></button>
-            <button onClick={() => setBannerIndex(4)} className={`w-3 h-3 rounded-full ${bannerIndex === 4 ? 'bg-black' : 'bg-gray-400'} hover:bg-gray-400`}></button>
-          </div>
+
 
       <div className='flex flex-col gap-5 items-center p-10'>
         <article className='flex justify-between w-full items-center mt-10'>

@@ -14,6 +14,10 @@ const Footer = () => {
           <a className='text-blue-500' href="">Terror</a>
           <a className='text-blue-500' href="">Dramático</a>
           <a className='text-blue-500' href="">Aventura</a>
+          <a className='text-blue-500' href="">Histórico</a>
+          <a className='text-blue-500' href="">Desarrollo Personal</a>
+          <a className='text-blue-500' href="">Fantasía</a>
+          <a className='text-blue-500' href="">Misterio</a>
           <a className='text-blue-500' href="">Comunidad</a>
          </div>
 

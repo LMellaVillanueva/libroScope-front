@@ -22,7 +22,7 @@ function App() {
   const user = useUserStore(store => store.user)
   const [books, setBooks] = useState<GoogleBook[]>([])
   const [allBooks, setAllBooks] = useState<GoogleBook[]>([])
-  const [bannerBooks, setBannerBooks] = useState<GoogleBook[]>([])
+  // const [bannerBooks, setBannerBooks] = useState<GoogleBook[]>([])
   const fetchMyBooks = useBookStore(state => state.getBooks)
   const myBooks = useBookStore(state => state.myBooks)
   const getCommunityBooks = useBookStore(state => state.getCommunityBooks)
@@ -66,16 +66,16 @@ function App() {
           const res = await axios('https://www.googleapis.com/books/v1/volumes?q=fiction&maxResults=40&key=AIzaSyDNQ631Qv6pa6tyXCeU1xds2mnYL1KYNg8')
 
           //?Fetch de 5 libros para el banner
-          const res5 = await axios('https://www.googleapis.com/books/v1/volumes?q=subject:self-help&maxResults=5&key=AIzaSyDNQ631Qv6pa6tyXCeU1xds2mnYL1KYNg8')
+          // const res5 = await axios('https://www.googleapis.com/books/v1/volumes?q=subject:self-help&maxResults=5&key=AIzaSyDNQ631Qv6pa6tyXCeU1xds2mnYL1KYNg8')
 
 
           if (res.data) {
             //?Setear todos los libros para la ruta /libros
             setAllBooks(res.data.items)
           }
-          if (res5.data) {
-            setBannerBooks(res5.data.items)
-          }
+          // if (res5.data) {
+          //   setBannerBooks(res5.data.items)
+          // }
 
         } catch (error) {
           if (error instanceof Error) console.log(error.message)
@@ -97,7 +97,7 @@ function App() {
     <React.Fragment>
       <NavBar/>
         <Routes>
-          <Route path='/' element={<Landing books={ books } actualPage={ actualPage } setActualPage={ setActualPage } totalPages={ totalPages } bannerBooks={ bannerBooks }/>}/>  
+          <Route path='/' element={<Landing books={ books } actualPage={ actualPage } setActualPage={ setActualPage } totalPages={ totalPages }/>}/>  
           <Route path='/registro' element={<RegistroUser/>}/>  
           <Route path='/publicar' element={<PublicarLibro/>}/>  
           <Route path='/libros' element={<Books allBooks={ allBooks }/>}/>  
