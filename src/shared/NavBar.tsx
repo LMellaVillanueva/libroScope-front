@@ -132,7 +132,7 @@ const NavBar = () => {
     <main className='flex flex-col w-full absolute top-0 left-0 items-center justify-center z-10'>
       <nav className='flex items-center justify-around p-3 w-full text-lg border-b border-b-black' /*style={{ backgroundColor: '#080e21' }}*/>
         <Link to={'/'}>
-          <img src={nav_logo} alt="nav_logo" width={250} className='rounded-md shadow-md shadow-indigo-800' />
+          <img src={nav_logo} alt="nav_logo" width={250}/>
         </Link>
         <div className='flex items-center gap-12 min-w-md text-neutral-500'>
 
