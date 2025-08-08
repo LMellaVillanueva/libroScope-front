@@ -107,15 +107,15 @@ const PublicarLibro = () => {
             <form onSubmit={handlePublish} className='flex text flex-col justify-center items-center w-2/6 gap-7'>
                 <div className='flex justify-between w-full text-2xl'>
                     <label htmlFor="">Título:</label>
-                    <input className='border border-black rounded-md' type="text" name='title' onChange={handleChangeBookInfo} value={bookInfo.title} />
+                    <input placeholder='Título del libro...' className='border border-black p-0.5 rounded-md' type="text" name='title' onChange={handleChangeBookInfo} value={bookInfo.title} />
                 </div>
                 <div className='flex justify-between w-full text-2xl'>
                     <label htmlFor="">Género:</label>
-                    <input className='border border-black rounded-md' type="text" name='genre' onChange={handleChangeBookInfo} value={bookInfo.genre} />
+                    <input placeholder='Ej: Terror, Comedia, etc...' className='border border-black p-0.5 rounded-md' type="text" name='genre' onChange={handleChangeBookInfo} value={bookInfo.genre} />
                 </div>
                 <div className='flex justify-between w-full text-2xl'>
                     <label htmlFor="">Descripción:</label>
-                    <input className='border border-black rounded-md' type="text" name='description' onChange={handleChangeBookInfo} value={bookInfo.description} />
+                    <input placeholder='Este libro se basa en...' className='border border-black p-0.5 rounded-md' type="text" name='description' onChange={handleChangeBookInfo} value={bookInfo.description} />
                 </div>
                 <div className='flex justify-between w-full text-lg gap-5'>
                     <label htmlFor="">Sube aquí tu libro PDF:</label>
@@ -125,39 +125,55 @@ const PublicarLibro = () => {
                     <label htmlFor="">Selecciona tu portada:</label>
                     <input className='border border-black rounded-md p-0.5' ref={imageRef} type="file" accept='image/*' onChange={handleChangeImage} />
                 </div>
-                <button type='submit' className='hover:font-semibold hover:text-neutral-800 text-2xl'>Publicar libro</button>
+                <button type='submit' className='transition-transform hover:scale-110 hover:font-semibold text-2xl'>Publicar libro</button>
             </form>
 
             {/* PREVIEW */}
-            <article className='relative flex flex-col justify-around items-start w-sm h-[500px] p-8 border-2 rounded-md gap-3 text-neutral-200 bg-blue-500'>
+            <article className={`relative flex flex-col justify-center gap-22 items-center w-xl h-[700px] rounded-md transition-all ${imagePreview ? 'text-neutral-700' : 'text-neutral-200'} `}>
+              {!imagePreview ? (
+                <img 
+                src={book} 
+                alt="portada" 
+                className='w-full h-full absolute bottom-3 left-0 object-cover'/>
+              ) : (
+                <img
+                  src={imagePreview}
+                  alt="portada"
+                  className="w-full h-11/12 object-cover absolute top-0 left-0 opacity-45"/>
+              )}
                 {!bookInfo.title ? (
-                    <h1 className='self-center border-2 border-white p-2 rounded-md'>Título</h1>
+                    <h1 className='self-center p-2 rounded-md z-10'>Título</h1>
                 ) : (
-                    <h1 className='max-w-xs max-h-64 overflow-hidden hover:overflow-y-auto break-words border-2 border-white p-2 rounded-md'>{bookInfo.title}</h1>
+                    <h2 id='scrollSect' className='font-bold max-w-xs max-h-40 text-5xl ml-10 overflow-hidden hover:overflow-y-auto break-words p-2 rounded-md z-10'>{bookInfo.title}</h2>
                 )}
-                {imagePreview && (
-                  <img
-                    src={imagePreview}
-                    alt="portada"
-                    className="w-full h-full object-cover absolute top-0 left-0 opacity-45"
-                  />
-                )}
-              <div className='flex flex-col items-start gap-5 max-h-[500px]'>
+              <div className='flex flex-col items-start gap-5 max-h-[500px] w-2xs z-10'>
 
-                <div className='flex gap-2 text-lg max-h-20 overflow-auto'>
+                <div className='flex gap-2 text-lg max-h-20'>
                   <p>Autor:</p>
-                  <p className='max-w-3xs break-words'>{bookInfo.author}</p>
+                  <p id='scrollSect' className='max-w-3xs overflow-hidden hover:overflow-y-auto font-bold break-words'>{bookInfo.author}</p>
                 </div>
 
-                <div className='flex gap-2 text-lg overflow-auto'>
-                  <p>Género:</p>
-                  <p className='max-w-3xs break-words max-h-10'>{bookInfo.genre}</p>
-                </div>
+                {!bookInfo.genre ? (
+                  <div className='flex items-center gap-2 text-lg'>
+                    <p>Género:</p><p className={`${imagePreview ? 'text-neutral-700' : 'text-neutral-400'}`}>...</p>
+                  </div>
+                ) : (
+                  <div className='flex gap-2 text-lg'>
+                    <p>Género:</p>
+                    <p id='scrollSect' className='max-w-3xs overflow-hidden hover:overflow-y-auto font-bold break-words max-h-12'>{bookInfo.genre}</p>
+                  </div>
+                )}
 
-                <div className='flex gap-2 text-lg max-h-20 overflow-auto'>
-                  <p>Descripción:</p>
-                  <p className='max-w-[200px] break-words'>{bookInfo.description}</p>
-                </div>
+                {!bookInfo.description ? (
+                  <div className='flex items-center gap-2 text-lg'>
+                    <p>Descripción:</p><p className={`${imagePreview ? 'text-neutral-700' : 'text-neutral-400'}`}>...</p>
+                  </div>
+                ) : (
+                  <div className='flex gap-2 text-lg max-h-20 overflow-auto'>
+                    <p>Descripción:</p>
+                    <p id='scrollSect' className='max-w-[230px] overflow-hidden hover:overflow-y-auto font-bold break-words'>{bookInfo.description}</p>
+                  </div>
+                )}
 
               </div>
             </article>

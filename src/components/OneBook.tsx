@@ -1,12 +1,13 @@
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import type { GoogleBook } from '../types'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import BookRecommendCard from '../shared/BookRecommendCard'
-import { Link } from 'react-router-dom'
+import { FaArrowLeft } from 'react-icons/fa'
 
 const OneBook = () => {
     const location = useLocation()
+    const navigate = useNavigate()
     const state = location.state as { book?: GoogleBook }
     const [recommendBooks, setRecommendBooks] = useState<GoogleBook[]>([])
 
@@ -39,16 +40,17 @@ const OneBook = () => {
 
   return (
     <main className='p-5 pb-40 mt-40 flex justify-around items-center text-neutral-600'>
-        <Link 
-  to={'/libros'} 
-  className='self-start text-4xl inline-block hover:scale-130'>{'<'}</Link>
+        
+        <button className='self-start' onClick={() => navigate(-1)}>
+            <FaArrowLeft size={35} className='transition-transform hover:scale-120'/>
+        </button>
 
         <article className='w-full flex items-start justify-evenly'>
             <img className='w-64 self-baseline'
             src={book.volumeInfo.imageLinks?.smallThumbnail} 
             alt={book.volumeInfo?.title} />
-            <section className='flex flex-col items-start gap-7 w-1/2'>
-            <h2 className='text-3xl text-left'>{book.volumeInfo?.title}</h2>
+            <section className='flex flex-col items-start gap-7 w-1/2 text-lg'>
+            <h2 className='text-4xl text-left font-bold'>{book.volumeInfo?.title}</h2>
                 <span className='flex gap-1'>
                     <p className='font-bold'>Autor/es:</p>
                     <p>{book.volumeInfo?.authors?.join(', ') || 'Libro sin información'}</p>
@@ -59,13 +61,13 @@ const OneBook = () => {
                 </span>
                 <span className='flex flex-col items-start gap-2'>
                     <p className='font-bold'>Descripción:</p>
-                    <p className={`${!recommendBooks.length ? 'max-h-[300px] overflow-y-auto break-words' : ''}`}>{book.volumeInfo?.description || 'Libro sin información'}</p>
+                    <p id='scrollSect' className={`${!recommendBooks.length ? 'max-h-[300px] overflow-y-auto break-words' : ''}`}>{book.volumeInfo?.description || 'Libro sin información'}</p>
                 </span>
             </section>
         {/* Recomendaciones */}
         {recommendBooks.length > 0 && (
             <article className='flex flex-col items-center'>
-                <h2>Te podría interesar:</h2>
+                <h2 className='font-semibold text-xl'>Te podría interesar:</h2>
             <section className='flex flex-col gap-10 w-full p-10'>
             {recommendBooks.map((book) => (
                 <BookRecommendCard book={book}/>

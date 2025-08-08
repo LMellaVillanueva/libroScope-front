@@ -136,27 +136,27 @@ const NavBar = () => {
         </Link>
         <div className='flex items-center gap-12 min-w-md text-neutral-500'>
 
-            <Link className='hover:text-blue-600' to={'/'}>Inicio</Link>
+            <Link className='hover:font-bold transition-all hover:text-neutral-800' to={'/'}>Inicio</Link>
               <div className='border border-black h-5'></div>
-            <Link className='hover:text-blue-600' to={'/libros'}>Libros</Link>
+            <Link className='hover:font-bold transition-all hover:text-neutral-800' to={'/libros'}>Libros</Link>
               <div className='border border-black h-5'></div>
 
           {!dbUser && (
-            <button onClick={() => setLoginModal(true)} className='text-neutral-500 w-fit font-medium hover:text-blue-600'>Iniciar Sesión</button>
+            <button onClick={() => setLoginModal(true)} className='text-neutral-500 w-fit font-medium hover:font-bold transition-all hover:text-neutral-800'>Iniciar Sesión</button>
           )}
 
           {dbUser && (
             <React.Fragment>
                 {user?.admin ? (
                   <React.Fragment>
-                    <Link className='hover:text-blue-600' to={'/todos_los_libros'}>Libros Publicados</Link>
+                    <Link className='hover:font-bold transition-all hover:text-neutral-800' to={'/todos_los_libros'}>Libros Publicados</Link>
                     <div className='border border-black h-5'></div>
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
-                    <Link className='hover:text-blue-600' to={'/mis_libros'}>Mis Libros</Link>
+                    <Link className='hover:font-bold transition-all hover:text-neutral-800' to={'/mis_libros'}>Mis Libros</Link>
                       <div className='border border-black h-5'></div>
-                    <Link className='hover:text-blue-600' to={'/publicar'}>Publicar libro</Link>
+                    <Link className='hover:font-bold transition-all hover:text-neutral-800' to={'/publicar'}>Publicar libro</Link>
                   </React.Fragment>
                 )}
             </React.Fragment>
@@ -180,7 +180,7 @@ const NavBar = () => {
             </div>
           </form>
           {dbUser && (
-            <button className='text-neutral-500 hover:text-blue-600 rounded-full' onClick={() => setConfirmLogout(true)}><FiLogOut size={25} /></button>
+            <button className='text-neutral-500 hover:font-bold transition-all hover:text-neutral-900 rounded-full' onClick={() => setConfirmLogout(true)}><FiLogOut size={25} /></button>
           )}
         </div>
 
@@ -189,10 +189,10 @@ const NavBar = () => {
             <React.Fragment>
               <div className='fixed bg-black opacity-60 inset-0 z-10 w-[100vw] h-[100vh]'></div>
                <div className='fixed m-auto inset-0 rounded-md w-3/12 h-4/12 flex flex-col items-center justify-center p-5 gap-10 z-20 text-2xl bg-neutral-200'>
-                 <p className='font-bold'>¿Quieres cerrar sesión?</p>
-               <div className='flex justify-center items-center gap-8 w-full text-3xl'>
-                <button className='text-neutral-500 hover:text-blue-600' onClick={handleLogout}>Sí</button>
-                <button className='text-neutral-500 hover:text-blue-600' onClick={() => setConfirmLogout(false)}>No</button>
+                 <p className='font-bold text-neutral-600'>¿Quieres cerrar sesión?</p>
+               <div className='flex justify-evenly items-center gap-8 w-full text-3xl'>
+                <button className='text-neutral-500 hover:font-bold transition-all hover:text-neutral-800 border border-black p-2 rounded-md text-xl w-18' onClick={handleLogout}>Sí</button>
+                <button className='text-neutral-500 hover:font-bold transition-all hover:text-neutral-800 border border-black p-2 rounded-md text-xl w-18' onClick={() => setConfirmLogout(false)}>No</button>
                </div>
               </div>
             </React.Fragment>

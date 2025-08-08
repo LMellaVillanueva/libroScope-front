@@ -13,13 +13,13 @@ const BookRecommendCard = ({ book }: Props) => {
         to={`/libro/${book?.id}`}
         state={{ book }}>
         <img src={book?.volumeInfo.imageLinks?.smallThumbnail} 
-        className='w-20 h-32 object-cover rounded shadow-md shadow-black' 
+        className='w-28 h-44 object-cover rounded shadow-md shadow-black' 
         width={150} 
         alt={book?.volumeInfo.title} />        
         {!book?.volumeInfo.imageLinks?.smallThumbnail || !book?.volumeInfo.imageLinks?.thumbnail && (
             <p>Sin portada</p>
         )}
-        <h2 className='max-h-[100px] max-w-[200px] overflow-y-auto break-words'>{book?.volumeInfo.title}</h2>
+        <h2 className='max-h-[100px] max-w-[200px] overflow-y-auto break-words font-bold text-lg'>{book?.volumeInfo.title}</h2>
         </Link>
     </React.Fragment>
   )

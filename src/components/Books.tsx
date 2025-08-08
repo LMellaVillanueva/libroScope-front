@@ -24,7 +24,7 @@ const Books = ({ allBooks }: Props) => {
       <section className='sticky top-10 h-fit min-w-[220px] bg-white text-black rounded-xl shadow-md p-5 my-8'>
         <h2 className='text-2xl font-semibold mb-4'>Filtros</h2>
         <div className='flex flex-col gap-2'>
-          <button className='hover:font-bold' onClick={() => setCategorie(Categorie.SCIENCE_FICTION)}>Ciencia Ficción</button>
+          <button id='science_books' className='hover:font-bold' onClick={() => setCategorie(Categorie.SCIENCE_FICTION)}>Ciencia Ficción</button>
           <button className='hover:font-bold' onClick={() => setCategorie(Categorie.ACTION)}>Acción</button>
           <button className='hover:font-bold' onClick={() => setCategorie(Categorie.HORROR)}>Terror</button>
           <button className='hover:font-bold' onClick={() => setCategorie(Categorie.DRAMA)}>Dramático</button>

@@ -6,6 +6,7 @@ import banner_1 from '../assets/imgs/banner_1.png'
 import banner_2 from '../assets/imgs/banner_2.png'
 import banner_3 from '../assets/imgs/banner_3.png'
 import banner_4 from '../assets/imgs/banner_4.png'
+import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa"
 
 type Props = {
     books: GoogleBook[] | null
@@ -71,7 +72,11 @@ const Landing = ({ books, actualPage, setActualPage, totalPages }: Props) => {
 
       <div className='flex flex-col gap-5 items-center p-10'>
         <article className='flex justify-between w-full items-center mt-10'>
-            <button className="p-2 pt-1 text-xl rounded-full text-black hover:bg-indigo-950 hover:text-neutral-200" onClick={prevPage} disabled={actualPage === 1}> {'<<'} </button>
+            
+            <button onClick={prevPage} disabled={actualPage === 1}> 
+              <FaAngleDoubleLeft size={35} className="transition-transform hover:scale-120"/> 
+            </button>
+
             <section className='grid grid-cols-5 p-5 gap-20 items-center'>
                 {books?.map((oneBook) => (
                     <div key={oneBook.id} className='flex justify-center items-center'>
@@ -79,7 +84,9 @@ const Landing = ({ books, actualPage, setActualPage, totalPages }: Props) => {
                     </div>
                 ))}
             </section>
-            <button className="p-2 pt-1 text-xl rounded-full text-black hover:bg-indigo-950 hover:text-neutral-200" onClick={postPage} disabled={actualPage === totalPages}> {'>>'} </button>
+            <button onClick={postPage} disabled={actualPage === totalPages}> 
+              <FaAngleDoubleRight size={35} className="transition-transform hover:scale-120"/>
+             </button>
         </article>
         <span className='font-bold'>Página {actualPage} de {totalPages}</span>
       </div>

@@ -2,6 +2,12 @@ import lb_logo from '../assets/imgs/lb_logo.png'
 import { Link } from 'react-router-dom'
 
 const Footer = () => {
+
+  const navToBooks = () => {
+    const categorie = document.getElementById('science_books')
+    
+  }
+
   return (
     <footer className="flex items-center justify-around p-16 text-white" style={{ backgroundColor: '#080e21' }}>
 

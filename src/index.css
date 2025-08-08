@@ -43,7 +43,11 @@ button {
   /* font-weight: 500; */
   font-family: inherit;
   cursor: pointer;
-  transition: border-color 0.25s;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
 }
 
 @media (prefers-color-scheme: light) {
@@ -51,4 +55,20 @@ button {
     color: #213547;
     background-color: #ffffff;
   }
+}
+
+#scrollSect::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+
+#scrollSect::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#scrollSect::-webkit-scrollbar-thumb {
+  background-color: #85878b;
+  border-radius: 50px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
