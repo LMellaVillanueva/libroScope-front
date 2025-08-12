@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 const Footer = () => {
 
-  const navToBooks = () => {
-    const categorie = document.getElementById('science_books')
+  // const navToBooks = () => {
+  //   const categorie = document.getElementById('science_books')
     
-  }
+  // }
 
   return (
     <footer className="flex items-center justify-around p-16 text-white" style={{ backgroundColor: '#080e21' }}>
@@ -15,22 +15,21 @@ const Footer = () => {
 
          <div className="flex flex-col text-start">
           <h2>Géneros</h2>
-          <a className='text-blue-500' href="">Ciencia Ficción</a>
-          <a className='text-blue-500' href="">Acción</a>
-          <a className='text-blue-500' href="">Terror</a>
-          <a className='text-blue-500' href="">Dramático</a>
-          <a className='text-blue-500' href="">Aventura</a>
-          <a className='text-blue-500' href="">Histórico</a>
-          <a className='text-blue-500' href="">Desarrollo Personal</a>
-          <a className='text-blue-500' href="">Fantasía</a>
-          <a className='text-blue-500' href="">Misterio</a>
-          <a className='text-blue-500' href="">Comunidad</a>
+          <Link className='text-blue-500' to="">Ciencia Ficción</Link>
+          <Link className='text-blue-500' to="">Acción</Link>
+          <Link className='text-blue-500' to="">Terror</Link>
+          <Link className='text-blue-500' to="">Dramático</Link>
+          <Link className='text-blue-500' to="">Aventura</Link>
+          <Link className='text-blue-500' to="">Histórico</Link>
+          <Link className='text-blue-500' to="">Desarrollo Personal</Link>
+          <Link className='text-blue-500' to="">Fantasía</Link>
+          <Link className='text-blue-500' to="">Misterio</Link>
+          <Link className='text-blue-500' to="">Comunidad</Link>
          </div>
 
          <div className="flex flex-col text-start">
-          <h2>Quiénes somos</h2> 
-          <a className='text-blue-500' href="">Nuestra Empresa</a>
-          <a className='text-blue-500' href="">Sobre Nosotros</a>
+          <h2>Acerca de Mí</h2> 
+          <Link className='text-blue-500' to={'/perfil'}>Perfil y Proyecto</Link>
          </div>   
 
         <div className="flex flex-col text-start">
@@ -39,9 +38,9 @@ const Footer = () => {
           {/* <article className='flex justify-evenly pt-2'> */}
             {/* <img src={gh} alt="gh" width={50} />
             <img src={linkedIN} alt="lkdin" width={50} /> */}
-            <a className='text-blue-500 w-fit' target='_blank' href="https://portafolio-lucas-mella.vercel.app/">Portafolio</a>
-            <a className='text-blue-500 w-fit' target='_blank' href="https://www.linkedin.com/in/lucas-mella-947989231/">LinkedIn</a>
-            <a className='text-blue-500 w-fit' target='_blank' href="https://github.com/LMellaVillanueva">GitHub</a>
+            <Link className='text-blue-500 w-fit' target='_blank' to="https://portafolio-lucas-mella.vercel.app/">Portafolio</Link>
+            <Link className='text-blue-500 w-fit' target='_blank' to="https://www.linkedin.com/in/lucas-mella-947989231/">LinkedIn</Link>
+            <Link className='text-blue-500 w-fit' target='_blank' to="https://github.com/LMellaVillanueva">GitHub</Link>
           {/* </article> */}
         </div>
 
