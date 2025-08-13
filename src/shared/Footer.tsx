@@ -1,12 +1,8 @@
 import lb_logo from '../assets/imgs/lb_logo.png'
 import { Link } from 'react-router-dom'
+import { Categorie } from '../types'
 
 const Footer = () => {
-
-  // const navToBooks = () => {
-  //   const categorie = document.getElementById('science_books')
-    
-  // }
 
   return (
     <footer className="flex items-center justify-around p-16 text-white" style={{ backgroundColor: '#080e21' }}>
@@ -15,16 +11,16 @@ const Footer = () => {
 
          <div className="flex flex-col text-start">
           <h2>Géneros</h2>
-          <Link className='text-blue-500' to="">Ciencia Ficción</Link>
-          <Link className='text-blue-500' to="">Acción</Link>
-          <Link className='text-blue-500' to="">Terror</Link>
-          <Link className='text-blue-500' to="">Dramático</Link>
-          <Link className='text-blue-500' to="">Aventura</Link>
-          <Link className='text-blue-500' to="">Histórico</Link>
-          <Link className='text-blue-500' to="">Desarrollo Personal</Link>
-          <Link className='text-blue-500' to="">Fantasía</Link>
-          <Link className='text-blue-500' to="">Misterio</Link>
-          <Link className='text-blue-500' to="">Comunidad</Link>
+          <Link className='text-blue-500' to="/libros" state={Categorie.SCIENCE_FICTION}>Ciencia Ficción</Link>
+          <Link className='text-blue-500' to="/libros" state={Categorie.ACTION}>Acción</Link>
+          <Link className='text-blue-500' to="/libros" state={Categorie.HORROR}>Terror</Link>
+          <Link className='text-blue-500' to="/libros" state={Categorie.DRAMA}>Dramático</Link>
+          <Link className='text-blue-500' to="/libros" state={Categorie.ADVENTURE}>Aventura</Link>
+          <Link className='text-blue-500' to="/libros" state={Categorie.HISTORY}>Histórico</Link>
+          <Link className='text-blue-500' to="/libros" state={Categorie.SELF_HELP}>Desarrollo Personal</Link>
+          <Link className='text-blue-500' to="/libros" state={Categorie.FANTASY}>Fantasía</Link>
+          <Link className='text-blue-500' to="/libros" state={Categorie.MYSTERY}>Misterio</Link>
+          <Link className='text-blue-500' to="/libros" state={Categorie.COMMUNITY}>Comunidad</Link>
          </div>
 
          <div className="flex flex-col text-start">

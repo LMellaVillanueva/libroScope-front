@@ -2,6 +2,7 @@ import { Categorie, type GoogleBook } from '../types'
 import BookCard from '../shared/BookCard'
 import { useEffect } from 'react'
 import { useBookStore } from '../store/book'
+import { useLocation } from 'react-router-dom'
 
 type Props = {
     allBooks: GoogleBook[]
@@ -13,6 +14,18 @@ const Books = ({ allBooks }: Props) => {
     const googleBooks = useBookStore(state => state.googleBooks)
     const getGoogleBooksByCategorie = useBookStore(state => state.getGoogleBooks)
     const communityBooks = useBookStore(state => state.communityBooks)
+
+    const location = useLocation()
+    const filterByFooter = location.state
+
+    useEffect(() => {
+      if (filterByFooter) {
+        setCategorie(filterByFooter)
+        window.scrollTo({ top: 0, 'behavior': 'smooth' })
+      } else {
+        null
+      }
+    }, [filterByFooter])
     
     
     useEffect(() => {
@@ -20,7 +33,7 @@ const Books = ({ allBooks }: Props) => {
     }, [categorie])
 
   return (
-    <main className='flex gap-6 px-6 mt-44'>
+    <main className='flex gap-6 px-6 py-8 mt-44'>
       <section className='sticky top-10 h-fit min-w-[220px] bg-white text-black rounded-xl shadow-md p-5 my-8'>
         <h2 className='text-2xl font-semibold mb-4'>Filtros</h2>
         <div className='flex flex-col gap-2'>
