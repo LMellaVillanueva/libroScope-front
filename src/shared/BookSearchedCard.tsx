@@ -24,7 +24,7 @@ const BookSearchedCard = ({ book, setSearchedBooks, setBookSearch }: Props) => {
         <Link className='flex items-center w-md hover:scale-105 hover:cursor-pointer transition-all duration-300 gap-2' 
         to={`/libro/${book?.id}`}
         state={{ book }}
-        onClick={ () => {setSearchedBooks([]); setBookSearch('')} }>
+        onClick={ () => {setSearchedBooks([]); setBookSearch('');} }>
           <img src={book?.volumeInfo.imageLinks?.smallThumbnail} 
           className='w-24 h-40 object-cover rounded shadow-md shadow-black' 
           width={50} 
@@ -43,15 +43,22 @@ const BookSearchedCard = ({ book, setSearchedBooks, setBookSearch }: Props) => {
       </React.Fragment>
     ) : (
       <React.Fragment>
-          <article className='flex flex-col justify-between h-56 items-center text-orange-600 absolute mt-20 mr-1.5'>
-            <h2 className='text-4xl w-[200px] break-words'>{book?.title}</h2>
-            <div className='flex flex-col items-center'>
-            <h2>{book?.genre}</h2>
-            <h2>{book?.author}</h2>
-            </div>
-        </article>
+        <Link className='flex items-center w-md hover:scale-105 hover:cursor-pointer transition-all duration-300 gap-2' 
+        to={`/libro/${book?.id_book}`}
+        state={{ book }}
+        onClick={ () => {setSearchedBooks([]); setBookSearch('');} }>
+          <img src={`http://127.0.0.1:5000/books/${book?.image_path}`} 
+          className='w-24 h-40 object-cover rounded shadow-md shadow-black' 
+          width={50} 
+          alt={book?.title} />        
+          <h2 className='break-words w-full'>{book?.title}</h2>
+          <div className='border border-black w-3'></div>
+          <div className='flex flex-col items-center gap-2 w-full'>
+          <p>{book?.author}</p>
+          </div>
+        </Link>
+        <div className='border border-black w-full mt-5'></div>
       </React.Fragment>
-
     )}
     </main>
   )

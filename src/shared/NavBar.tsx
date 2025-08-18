@@ -1,10 +1,10 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useUserStore } from '../store/user'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { GoogleLogin, googleLogout, type CredentialResponse } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
-import type { GoogleBook, GoogleJwtPayload, MyBook } from '../types'
+import type { GoogleBook, GoogleJwtPayload } from '../types'
 import { FiLogOut } from 'react-icons/fi'
 import { useBookStore } from '../store/book'
 import BookSearchedCard from './BookSearchedCard'
@@ -17,16 +17,13 @@ const NavBar = () => {
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' })
   const [bookSearch, setBookSearch] = useState('')
   const [searchedBooks, setSearchedBooks] = useState<GoogleBook[]>([])
-  const [searchedMyBooks, setSearchedMyBooks] = useState<MyBook[]>([])
   const [dbUser, setDbUser] = useState(false)
-  const [changeInput, setChangeInput] = useState(false)
 
   const userLogin = useUserStore(state => state.logIn)
   const userLogout = useUserStore(state => state.logOut)
 
   const user = useUserStore(state => state.user)
   const navigate = useNavigate()
-  const location = useLocation()
 
   const googleBookCategorie = useBookStore(state => state.googleBookCategorie)
 
@@ -58,15 +55,6 @@ const NavBar = () => {
     }
   }, [bookSearch])
 
-  //Validar el pathname
-  useEffect(() => {
-    if (location.pathname === '/mis_libros') {
-      setChangeInput(true)
-    } else {
-      setChangeInput(false)
-    }
-  }, [location.pathname])
-
   const handleChangeLoginInfo = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLoginInfo({...loginInfo, 
       [event.target.name]: event.target.value
@@ -77,7 +65,7 @@ const NavBar = () => {
     setBookSearch(event.target.value)
     try {
       if (bookSearch.length) {
-        const { data } = await axios.post(`http://127.0.0.1:5000/books/search/${event.target.value}/${googleBookCategorie}`)
+        const { data } = await axios.post(`http://127.0.0.1:5000/books/search/${googleBookCategorie}/${event.target.value}`)
         if (data.matching_books) {
           setSearchedBooks(data.matching_books)
         }
@@ -91,25 +79,6 @@ const NavBar = () => {
     }
   }
 
-  const handleChangeMyBookSearch = async (event: React.ChangeEvent<HTMLInputElement>)  => {
-    setBookSearch(event.target.value)
-    try {
-      if (bookSearch.length) {
-        const { data } = await axios.post(`http://127.0.0.1:5000/books/search_my_books/${event.target.value}`)
-        if (data.book) {
-          setSearchedMyBooks(data.book)
-          console.log(data.book)
-        }
-      }
-    } catch (error: any) {
-      if (error.response && error.response.data) {
-        return console.log('Error: ', error.response.data.errors)
-      } else {
-        return console.error(error.message)
-      }
-    }
-  }
-  
   const handleLogin = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault()
     try {
@@ -159,26 +128,6 @@ const NavBar = () => {
     }
   }
 
-  const handleMyBookSearch = async (event: React.FormEvent): Promise<void> => {
-    event.preventDefault()
-    try {
-      if (bookSearch.length) {
-        const { data } = await axios.post(`http://127.0.0.1:5000/books/search_my_books/${bookSearch}`)
-        if (data.book) {
-          setSearchedMyBooks(data.book)
-        }
-      } else {
-        return window.alert('No puede estar vacío!')
-      }
-    } catch (error: any) {
-      if (error.response && error.response.data) {
-        return console.log('Error: ', error.response.data.errors)
-      } else {
-        return console.error(error.message)
-      }
-    }
-  }
-
   return (
     <main className='flex flex-col w-full absolute top-0 left-0 items-center justify-center z-10'>
       <nav className='flex items-center justify-around p-3 w-full text-lg border-b border-b-black' /*style={{ backgroundColor: '#080e21' }}*/>
@@ -213,26 +162,7 @@ const NavBar = () => {
             </React.Fragment>
           )}
         </div>
-        <div className='flex items-center gap-8'>
-          {changeInput ? (
-          <form onSubmit={handleMyBookSearch} className='flex items-center gap-2'>
-            <div className='flex items-center w-full max-w-xl h-10 overflow-hidden rounded-md border border-black bg-white relative'>
-              <input 
-              className='w-md text-gray-700 placeholder-gray-500 focus:outline-none' 
-              onChange={handleChangeMyBookSearch} 
-              value={bookSearch} 
-              type="text" 
-              placeholder='Título, género, autor...' />
-            <section className='flex items-center gap-2'>
-            {bookSearch.length !== 0 && (
-              <button style={{ background: 'none' }} onClick={() => setBookSearch('')}>✖️</button>
-            )}
-              <button type='submit'>🔍</button>
-            </section>
-            </div>
-          </form>
 
-          ) : (
           <form onSubmit={handleBookSearch} className='flex items-center gap-2'>
             <div className='flex items-center w-full max-w-xl h-10 overflow-hidden rounded-md border border-black bg-white relative'>
               <input 
@@ -249,11 +179,10 @@ const NavBar = () => {
             </section>
             </div>
           </form>
-          )}
+          
           {dbUser && (
             <button className='text-neutral-500 hover:font-bold transition-all hover:text-neutral-900 rounded-full' onClick={() => setConfirmLogout(true)}><FiLogOut size={25} /></button>
           )}
-        </div>
 
           {/* Modal de cerrar sesión */}
           {confirmLogout && (

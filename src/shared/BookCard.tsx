@@ -23,7 +23,7 @@ const BookCard = ({ book }: Props) => {
         to={`/libro/${book?.id}`}
         state={{ book }}>
         <img src={book?.volumeInfo.imageLinks?.smallThumbnail || '/default-cover.png'} 
-        className='w-44 h-64 object-cover rounded shadow-md shadow-black' 
+        className='w-44 h-64 object-cover rounded shadow-lg shadow-black' 
         width={150} 
         alt={book?.volumeInfo.title} />        
         <h2 id='scrollSect' className='h-[100px] max-w-44 text-start overflow-y-auto break-words text-black'>{book?.volumeInfo.title}</h2>
@@ -32,11 +32,12 @@ const BookCard = ({ book }: Props) => {
     ) : (
       <React.Fragment>
         <main className='flex flex-col items-center gap-3'>
-          <Link className='w-44 h-64 object-cover hover:scale-105 hover:cursor-pointer transition-all duration-300'
-          to={`/libro_publicado/${book?.id_book}`}
+          <Link className='hover:scale-105 hover:cursor-pointer transition-all duration-300'
+          to={`/libro/${book?.id_book}`}
           state={{ book }}>
             <img
             src={`http://127.0.0.1:5000/books/${book?.image_path}`} 
+            className='w-44 h-64 object-cover rounded shadow-lg shadow-black'
             alt="Portada" />
           </Link>
             <article className='flex flex-col items-center gap-3 h-[230px] text-orange-600'>

@@ -67,9 +67,11 @@ const Books = ({ allBooks }: Props) => {
             ))
           )}
           {categorie === Categorie.COMMUNITY && (
-            communityBooks?.map((oneBook) => (
+            communityBooks?.length !== 0 ? (communityBooks?.map((oneBook) => (
               <BookCard key={oneBook.id_book} book={oneBook} />
-            ))
+            ))) : (
+              <h1>No hay libros publicados...</h1>
+            )
           )}
         </div>
       </section>

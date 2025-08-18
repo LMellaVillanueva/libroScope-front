@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import Landing from './components/Landing'
 import NavBar from './shared/NavBar'
 import RegistroUser from './components/RegistroUser'
@@ -15,7 +15,6 @@ import OneBook from './components/OneBook'
 import { useUserStore } from './store/user'
 import AllCreatedBooks from './admin/AllCreatedBooks'
 import Footer from './shared/Footer'
-import OneCreatedBook from './components/OneCreatedBook'
 import Profile from './components/Profile'
 
 function App() {
@@ -30,6 +29,7 @@ function App() {
 
   // Usar el pathname para scrollear cuando navegue
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   
   //?Paginación
   const [actualPage, setActualPage] = useState<number>(1)
@@ -37,6 +37,10 @@ function App() {
   const booksPerPage = 10
   //?Total de páginas según el total de libros
   const totalPages = Math.ceil( totalBooks / booksPerPage )
+
+  useEffect(() => {
+    if (location.pathname === '/libro/') navigate('/')
+  }, [])
 
   //?Scroll
   useEffect(() => {
@@ -104,7 +108,6 @@ function App() {
           <Route path='/libros' element={<Books allBooks={ allBooks }/>}/>  
           <Route path='/mis_libros' element={<CreatedBooks myBooks={ myBooks }/>}/>
           <Route path='/libro/:id' element={<OneBook/>}/>
-          <Route path='/libro_publicado/:id' element={<OneCreatedBook/>}/>
           <Route path='/todos_los_libros' element={<AllCreatedBooks/>}/>
           <Route path='/perfil' element={<Profile/>}/>
         </Routes>
