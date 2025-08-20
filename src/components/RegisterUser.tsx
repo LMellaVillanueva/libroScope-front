@@ -9,7 +9,7 @@ import { GoogleLogin, googleLogout, type CredentialResponse } from '@react-oauth
 import { jwtDecode } from 'jwt-decode'
 import type { GoogleJwtPayload } from '../types'
 
-const RegistroUser = () => {
+const RegisterUser = () => {
 
   const [registerInfo, setRegisterInfo] = useState({ 
     name: '',
@@ -62,17 +62,17 @@ const RegistroUser = () => {
   }
 
   return (
-    <main>
-        <h1 className='text-left mb-20 lg:mt-24 px-5'>Crea una cuenta en LibroScope</h1>
-        <section className='flex justify-evenly h-96'>
+    <main className='py-36 px-5 text-neutral-600'>
+        <h1 className='text-left px-10 pt-5'>Crea una cuenta en LibroScope</h1>
+        <section className='flex justify-evenly h-96 mt-16'>
 
-          <form onSubmit={handleRegister} className='flex flex-col justify-evenly' >
-            <input type="text" name='name' onChange={handleChangeRegisterInfo} placeholder='Nombre' />
-            <input type="email" name='email' onChange={handleChangeRegisterInfo} placeholder='Correo electrónico' />
-            <input type="password" name='password' onChange={handleChangeRegisterInfo} placeholder='Contraseña' />
-            <input type="password" name='confirm_password' onChange={handleChangeRegisterInfo} placeholder='Confirmar contraseña' />
+          <form onSubmit={handleRegister} className='flex flex-col justify-evenly text-neutral-600 text-xl'>
+            <input className='p-0.5 placeholder-neutral-500 border border-black rounded-md w-4/5' type="text" name='name' onChange={handleChangeRegisterInfo} placeholder='Nombre' />
+            <input className='p-0.5 placeholder-neutral-500 border border-black rounded-md w-4/5' type="email" name='email' onChange={handleChangeRegisterInfo} placeholder='Correo electrónico' />
+            <input className='p-0.5 placeholder-neutral-500 border border-black rounded-md w-4/5' type="password" name='password' onChange={handleChangeRegisterInfo} placeholder='Contraseña' />
+            <input className='p-0.5 placeholder-neutral-500 border border-black rounded-md w-4/5' type="password" name='confirm_password' onChange={handleChangeRegisterInfo} placeholder='Confirmar contraseña' />
             <div className='flex justify-center gap-16'>
-              <button type='submit'>Crear cuenta</button>
+              <button className='text-neutral-500 hover:font-bold transition-all hover:text-neutral-900 border border-black p-2 rounded-md text-xl min-w-[140px]' type='submit'>Crear cuenta</button>
               <GoogleLogin 
                 onSuccess={ async (credentials: CredentialResponse) => {
                   try {
@@ -110,10 +110,10 @@ const RegistroUser = () => {
             </div>
           </form>
 
-          <article className='flex flex-col justify-evenly self-baseline w-3/6'>
-            <div className='flex items-center justify-between gap-10 border p-5 rounded-lg'>
+          <article className='flex flex-col justify-evenly self-baseline border border-black rounded-md w-3/6 h-[50vh]'>
+            <div className='flex items-center justify-between gap-10 p-5'>
               <div className='flex flex-col items-center justify-center'>
-                <p className='w-2/5'>
+                <p className='w-2/5 py-3'>
                   Publica tus 
                   propios libros en
                   nuestra 
@@ -121,14 +121,14 @@ const RegistroUser = () => {
                 <img src={coment} width={150} alt="img1" />
               </div>
               <div className='flex flex-col items-center justify-center'>
-                <p className='w-2/5'>
+                <p className='w-2/5 py-3'>
                   Comenta y
                   valora tus
                   libros favoritos</p>
                 <img src={libro} width={150} alt="img2" />
               </div>
               <div className='flex flex-col items-center justify-center gap-1'>
-                <p className='w-2/5'>
+                <p className='w-2/5 py-3'>
                   Personalización
                   exculsiva en 
                   nuestra página </p>
@@ -142,4 +142,4 @@ const RegistroUser = () => {
   )
 }
 
-export default RegistroUser
+export default RegisterUser

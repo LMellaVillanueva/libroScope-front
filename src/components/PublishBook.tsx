@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useBookStore } from '../store/book'
 import book from '../assets/imgs/book.png'
 
-const PublicarLibro = () => {
+const PublishBook = () => {
     const user = useUserStore(state => state.user)
     const fetchMyBooks = useBookStore(state => state.getBooks)
     const getCommunityBooks = useBookStore(state => state.getCommunityBooks)
@@ -99,11 +99,11 @@ const PublicarLibro = () => {
 
     
   return (
-    <main className='mt-32 py-14 pb-32 text-neutral-600'>
-        <h2 className='text-left text-4xl font-light px-10'>{user?.name},</h2>
-        <h1 className='text-left px-5 py-1'>Publica tu propio libro:</h1>
+    <main className='mt-36 text-neutral-600'>
+        <h2 className='text-left text-4xl font-light px-10 pt-5'>{user?.name},</h2>
+        <h1 className='text-left px-20 pt-8'>Publica tu propio libro:</h1>
 
-        <section className='flex justify-evenly pt-5'>
+        <section className='flex justify-evenly pb-10'>
             <form onSubmit={handlePublish} className='flex text flex-col justify-center items-center w-2/6 gap-7'>
                 <div className='flex justify-between w-full text-2xl'>
                     <label htmlFor="">Título:</label>
@@ -125,7 +125,7 @@ const PublicarLibro = () => {
                     <label htmlFor="">Selecciona tu portada:</label>
                     <input className='border border-black rounded-md p-0.5' ref={imageRef} type="file" accept='image/*' onChange={handleChangeImage} />
                 </div>
-                <button type='submit' className='transition-transform hover:scale-110 hover:font-semibold text-2xl'>Publicar libro</button>
+                <button type='submit' className='text-neutral-500 hover:font-bold transition-all hover:text-neutral-900 border border-black p-2 rounded-md text-xl w-44'>Publicar libro</button>
             </form>
 
             {/* PREVIEW */}
@@ -183,4 +183,4 @@ const PublicarLibro = () => {
   )
 }
 
-export default PublicarLibro
+export default PublishBook

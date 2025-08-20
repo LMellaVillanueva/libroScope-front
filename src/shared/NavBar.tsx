@@ -5,7 +5,7 @@ import axios from 'axios'
 import { GoogleLogin, googleLogout, type CredentialResponse } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
 import type { GoogleBook, GoogleJwtPayload } from '../types'
-import { FiLogOut } from 'react-icons/fi'
+import { FiLogOut, FiX, FiSearch } from 'react-icons/fi'
 import { useBookStore } from '../store/book'
 import BookSearchedCard from './BookSearchedCard'
 import nav_logo from '../assets/imgs/nav_logo.png'
@@ -129,59 +129,74 @@ const NavBar = () => {
   }
 
   return (
-    <main className='flex flex-col w-full absolute top-0 left-0 items-center justify-center z-10'>
+    <main className='flex flex-col w-full absolute top-0 left-0 items-center justify-center z-20'>
       <nav className='flex items-center justify-around p-3 w-full text-lg border-b border-b-black' /*style={{ backgroundColor: '#080e21' }}*/>
         <Link to={'/'}>
           <img src={nav_logo} alt="nav_logo" width={250}/>
         </Link>
         <div className='flex items-center gap-12 min-w-md text-neutral-500'>
 
-            <Link className='hover:font-bold transition-all hover:text-neutral-800' to={'/'}>Inicio</Link>
+            <Link className='transition-all hover:text-neutral-900 hover:font-bold min-w-[60px]' to={'/'}>Inicio</Link>
               <div className='border border-black h-5'></div>
-            <Link className='hover:font-bold transition-all hover:text-neutral-800' to={'/libros'}>Libros</Link>
+            <Link className='transition-all hover:text-neutral-900 hover:font-bold min-w-[60px]' to={'/libros'}>Libros</Link>
               <div className='border border-black h-5'></div>
 
           {!dbUser && (
-            <button onClick={() => setLoginModal(true)} className='text-neutral-500 w-fit font-medium hover:font-bold transition-all hover:text-neutral-800'>Iniciar Sesión</button>
+            <button onClick={() => setLoginModal(true)} className='transition-all hover:text-neutral-900 hover:font-bold min-w-[120px]'>Iniciar Sesión</button>
           )}
 
           {dbUser && (
             <React.Fragment>
                 {user?.admin ? (
                   <React.Fragment>
-                    <Link className='hover:font-bold transition-all hover:text-neutral-800' to={'/todos_los_libros'}>Libros Publicados</Link>
+                    <Link className='transition-all hover:text-neutral-900 hover:font-bold  min-w-[60px]' to={'/todos_los_libros'}>Libros Publicados</Link>
                     <div className='border border-black h-5'></div>
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
-                    <Link className='hover:font-bold transition-all hover:text-neutral-800' to={'/mis_libros'}>Mis Libros</Link>
+                    <Link className='transition-all hover:text-neutral-900 hover:font-bold  min-w-[88px]' to={'/mis_libros'}>Mis Libros</Link>
                       <div className='border border-black h-5'></div>
-                    <Link className='hover:font-bold transition-all hover:text-neutral-800' to={'/publicar'}>Publicar libro</Link>
+                    <Link className='transition-all hover:text-neutral-900 hover:font-bold  min-w-[115px]' to={'/publicar'}>Publicar libro</Link>
                   </React.Fragment>
                 )}
             </React.Fragment>
           )}
         </div>
 
-          <form onSubmit={handleBookSearch} className='flex items-center gap-2'>
-            <div className='flex items-center w-full max-w-xl h-10 overflow-hidden rounded-md border border-black bg-white relative'>
+          <form onSubmit={handleBookSearch} className='flex items-center gap-2 w-md'>
+            <div className='relative w-full max-w-xl'>
               <input 
-              className='w-md text-gray-700 placeholder-gray-500 focus:outline-none' 
-              onChange={handleChangeBookSearch} 
-              value={bookSearch} 
-              type="text" 
-              placeholder='Título, género, autor...' />
-            <section className='flex items-center gap-2'>
-            {bookSearch.length !== 0 && (
-              <button style={{ background: 'none' }} onClick={() => setBookSearch('')}>✖️</button>
-            )}
-              <button type='submit'>🔍</button>
-            </section>
+                className='w-full h-10 pl-3 pr-10 text-gray-700 placeholder-gray-500 border border-black rounded-md focus:outline-none' 
+                onChange={handleChangeBookSearch} 
+                value={bookSearch} 
+                type="text" 
+                placeholder='Título, género, autor...' 
+              />
+              {/* Contenedor absoluto para los botones */}
+              <div className='absolute right-0 top-0 h-full flex items-center gap-1 pr-1'>
+                {bookSearch.length !== 0 && (
+                  <button 
+                    type="button" 
+                    onClick={() => setBookSearch('')}
+                    className='flex items-center justify-center p-1'
+                  >
+                    <FiX className='text-black' size={20}/>
+                  </button>
+                )}
+                <button type='submit' className='flex items-center justify-center p-1'>
+                  <FiSearch className='text-black' size={20}/>
+                </button>
+              </div>
             </div>
           </form>
+
           
           {dbUser && (
-            <button className='text-neutral-500 hover:font-bold transition-all hover:text-neutral-900 rounded-full' onClick={() => setConfirmLogout(true)}><FiLogOut size={25} /></button>
+            <button 
+            className='text-neutral-500 hover:font-bold transition-all hover:text-neutral-950' 
+            onClick={() => setConfirmLogout(true)}>
+              <FiLogOut size={25} />
+            </button>
           )}
 
           {/* Modal de cerrar sesión */}
@@ -191,35 +206,35 @@ const NavBar = () => {
                <div className='fixed m-auto inset-0 rounded-md w-3/12 h-4/12 flex flex-col items-center justify-center p-5 gap-10 z-20 text-2xl bg-neutral-200'>
                  <p className='font-bold text-neutral-600'>¿Quieres cerrar sesión?</p>
                <div className='flex justify-evenly items-center gap-8 w-full text-3xl'>
-                <button className='text-neutral-500 hover:font-bold transition-all hover:text-neutral-800 border border-black p-2 rounded-md text-xl w-18' onClick={handleLogout}>Sí</button>
-                <button className='text-neutral-500 hover:font-bold transition-all hover:text-neutral-800 border border-black p-2 rounded-md text-xl w-18' onClick={() => setConfirmLogout(false)}>No</button>
+                <button className='text-neutral-500 hover:font-bold transition-all hover:text-neutral-900 border border-black p-2 rounded-md text-xl w-18' onClick={handleLogout}>Sí</button>
+                <button className='text-neutral-500 hover:font-bold transition-all hover:text-neutral-900 border border-black p-2 rounded-md text-xl w-18' onClick={() => setConfirmLogout(false)}>No</button>
                </div>
               </div>
             </React.Fragment>
           )}
 
-        {/*//!Modal de login */}
-          {loginModal && (
-            <React.Fragment>
-              <div className='fixed bg-black opacity-60 inset-0 z-10 w-[100vw] h-[100vh]'></div>
-              <section className='fixed m-auto inset-0 top-20 w-3/12 h-4/6 p-8 rounded-md flex flex-col justify-around z-10 bg-indigo-950 text-neutral-200' >
-              <button className='absolute top-4 right-4' onClick={() => setLoginModal(false)}>X</button>
+      {/*//!Modal de login */}
+        {loginModal && (
+          <React.Fragment>
+            <div className='fixed bg-black opacity-60 inset-0 z-20 w-[100vw] h-[100vh]'></div>
+              <section className='fixed m-auto inset-0 top-10 w-3/12 h-4/6 p-8 rounded-md flex flex-col justify-around z-20 bg-neutral-200 text-neutral-200 text' >
+              <button className='absolute top-4 right-4 text-black' onClick={() => setLoginModal(false)}><FiX size={25}/></button>
 
-              <h2 className='font-bold text-2xl'>Inicio de Sesión</h2>
+              <h2 className='font-bold text-2xl text-neutral-700'>Inicio de Sesión</h2>
 
-              <form onSubmit={handleLogin} className='flex flex-col items-center justify-between gap-5'>
+              <form onSubmit={handleLogin} className='flex flex-col items-center justify-between gap-5 text-neutral-600'>
 
                 <div className='text-left'>
                   <label htmlFor="email">Correo:</label> <br />
-                  <input type="email" name='email' onChange={handleChangeLoginInfo} className='border border-white w-3xs rounded-md p-0.5' />
+                  <input type="email" name='email' onChange={handleChangeLoginInfo} className='border border-black w-3xs rounded-md p-0.5' />
                 </div>
 
                 <div className='text-left'>
                   <label htmlFor="password">Contraseña:</label> <br />
-                  <input type="password" name='password' onChange={handleChangeLoginInfo} className='border border-white w-3xs rounded-md p-0.5' />
+                  <input type="password" name='password' onChange={handleChangeLoginInfo} className='border border-black w-3xs rounded-md p-0.5' />
                 </div>
 
-                <button className='text-blue-400 hover:text-blue-300 font-medium' type='submit'>Iniciar Sesión</button>
+                <button className='transition-all hover:text-neutral-900 hover:font-bold' type='submit'>Iniciar Sesión</button>
                 <GoogleLogin 
                   onSuccess={ async (credentials: CredentialResponse) => {
                     try {
@@ -248,7 +263,14 @@ const NavBar = () => {
                   />
               </form>
 
-              <span>¿No tienes una cuenta?, <Link className='text-blue-400 hover:text-blue-300' to={'/registro'} onClick={() => setLoginModal(false)} >Regístrate.</Link></span>
+              <span className='text-neutral-600'>
+                ¿No tienes una cuenta?, <b></b>
+                  <Link
+                   className='transition-all font-medium text-neutral-700 hover:text-neutral-900 hover:font-bold' to={'/registro'} 
+                   onClick={() => setLoginModal(false)}>
+                      Regístrate.
+                  </Link>
+                </span>
             </section>
           </React.Fragment>
           )}

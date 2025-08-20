@@ -3,9 +3,9 @@ import './App.css'
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import Landing from './components/Landing'
 import NavBar from './shared/NavBar'
-import RegistroUser from './components/RegistroUser'
+import RegisterUser from './components/RegisterUser'
 // import Footer from './shared/Footer'
-import PublicarLibro from './components/PublicarLibro'
+import PublishBook from './components/PublishBook'
 import Books from './components/Books'
 import axios from 'axios'
 import type { GoogleBook } from './types'
@@ -103,8 +103,8 @@ function App() {
       <NavBar/>
         <Routes>
           <Route path='/' element={<Landing books={ books } actualPage={ actualPage } setActualPage={ setActualPage } totalPages={ totalPages }/>}/>  
-          <Route path='/registro' element={<RegistroUser/>}/>  
-          <Route path='/publicar' element={<PublicarLibro/>}/>  
+          <Route path='/registro' element={<RegisterUser/>}/>  
+          <Route path='/publicar' element={<PublishBook/>}/>  
           <Route path='/libros' element={<Books allBooks={ allBooks }/>}/>  
           <Route path='/mis_libros' element={<CreatedBooks myBooks={ myBooks }/>}/>
           <Route path='/libro/:id' element={<OneBook/>}/>
