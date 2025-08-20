@@ -30,7 +30,7 @@ const RegisterUser = () => {
   const handleRegister = async (event: React.FormEvent) => {
     event.preventDefault()
     if (registerInfo.password !== registerInfo.confirm_password) {
-      return console.error('Las contraseñas no coinciden')
+      return window.alert('Las contraseñas no coinciden')
     }
 
     const { confirm_password, ...dataRegister } = registerInfo
@@ -54,7 +54,7 @@ const RegisterUser = () => {
       }
     } catch (error: any) {
       if (error.response && error.response.data) {
-        return console.log('Error: ', error.response.data.errors)
+        return window.alert(error.response.data.errors)
       } else {
         return console.error(error.message)
       }
@@ -63,7 +63,8 @@ const RegisterUser = () => {
 
   return (
     <main className='py-36 px-5 text-neutral-600'>
-        <h1 className='text-left px-10 pt-5'>Crea una cuenta en LibroScope</h1>
+        <h1 className='text-left px-10 pt-5'
+        style={{ fontFamily: '"Libre Franklin", sans-serif' }}>Crea una cuenta en LibroScope:</h1>
         <section className='flex justify-evenly h-96 mt-16'>
 
           <form onSubmit={handleRegister} className='flex flex-col justify-evenly text-neutral-600 text-xl'>
@@ -97,8 +98,7 @@ const RegisterUser = () => {
                     
                   } catch (error: any) {
                       if (error.response && error.response.data) {
-                        console.log('Sesión de Google cerrada')
-                        console.log('Error: ', error.response.data.errors)
+                        window.alert(error.response.data.errors)
                         return googleLogout()
                       } else {
                         return console.error(error.message)
@@ -110,29 +110,31 @@ const RegisterUser = () => {
             </div>
           </form>
 
-          <article className='flex flex-col justify-evenly self-baseline border border-black rounded-md w-3/6 h-[50vh]'>
-            <div className='flex items-center justify-between gap-10 p-5'>
-              <div className='flex flex-col items-center justify-center'>
-                <p className='w-2/5 py-3'>
+          <article className='flex flex-col justify-evenly self-baseline border-2 border-black rounded-md w-3/6 h-[50vh]'>
+            <div className='flex items-center justify-between gap-10 p-5 text-lg'
+            style={{ fontFamily:'"Asap", sans-serif' }}>
+              <div className='flex flex-col items-center justify-center drop-shadow-xl drop-shadow-neutral-500'>
+                <p className='w-3/5 py-3'>
                   Publica tus 
                   propios libros en
                   nuestra 
-                  plataforma</p>
-                <img src={coment} width={150} alt="img1" />
+                  plataforma!</p>
+                <img src={coment} width={150} alt="img1"/>
               </div>
-              <div className='flex flex-col items-center justify-center'>
-                <p className='w-2/5 py-3'>
-                  Comenta y
-                  valora tus
-                  libros favoritos</p>
-                <img src={libro} width={150} alt="img2" />
+              <div className='flex flex-col items-center justify-center drop-shadow-xl drop-shadow-neutral-600'>
+                <p className='w-3/5 py-3'>
+                  Lee y/o 
+                  compra tus 
+                  libros 
+                  favoritos.</p>
+                <img src={libro} width={150} alt="img2"/>
               </div>
-              <div className='flex flex-col items-center justify-center gap-1'>
-                <p className='w-2/5 py-3'>
+              <div className='flex flex-col items-center drop-shadow-xl drop-shadow-neutral-600 justify-center gap-1'>
+                <p className='w-3/5 py-3'>
                   Personalización
                   exculsiva en 
-                  nuestra página </p>
-                <img src={pers} width={140} alt="img3" />
+                  nuestra página.</p>
+                <img src={pers} width={140} alt="img3"/>
               </div>
             </div>
           </article>

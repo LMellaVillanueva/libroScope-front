@@ -3,7 +3,7 @@ import type { GoogleBook, MyBook } from '../types'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import BookRecommendCard from '../shared/BookRecommendCard'
-import { FaArrowLeft } from 'react-icons/fa'
+import { FaArrowLeft, FaExternalLinkAlt } from 'react-icons/fa'
 import { useUserStore } from '../store/user'
 import { useBookStore } from '../store/book'
 
@@ -36,7 +36,7 @@ const OneBook = () => {
                 navigate('/mis_libros')
             } catch (error: any) {
                 if (error.response && error.response.data) {
-                    console.log('Error: ', error.response.data.errors)
+                    window.alert(error.repsonse.data.errors)
                     navigate('/mis_libros')
                 } else {
                     return console.error(error.message)
@@ -56,7 +56,6 @@ const OneBook = () => {
              } catch (error: any) {
              if (error.response && error.response.data) {
                alert(error.response.data.errors)
-               console.log('Error: ', error.response.data.errors)
              } else {
                return console.error(error.message)
              }
@@ -78,17 +77,23 @@ const OneBook = () => {
                 alt={book.volumeInfo?.title} />
                 <section className='flex flex-col items-start gap-7 w-1/2 text-lg'>
                 <h2 className='text-4xl text-left font-bold'>{book.volumeInfo?.title}</h2>
+                {book.accessInfo.webReaderLink && (
+                <span className='flex items-center gap-2 transition-all text-neutral-600 font-medium text-2xl hover:text-neutral-900 hover:font-bold'>
+                  <a href={book.accessInfo.webReaderLink} target='a_blank' className='min-w-[102px]'>Ver Libro</a> 
+                  <FaExternalLinkAlt/>
+                </span>
+                )}
                     <span className='flex gap-1'>
                         <p className='font-bold'>Autor/es:</p>
-                        <p>{book.volumeInfo?.authors?.join(', ') || 'Libro sin información'}</p>
+                        <p>{book.volumeInfo?.authors?.join(', ') || 'Libro sin información.'}</p>
                     </span>
                     <span className='flex gap-1'>
                         <p className='font-bold'>Género:</p> 
-                        <p>{book.volumeInfo?.categories?.join(', ') || 'Libro sin información'}</p>
+                        <p>{book.volumeInfo?.categories?.join(', ') || 'Libro sin información.'}</p>
                     </span>
                     <span className='flex flex-col items-start gap-2'>
                         <p className='font-bold'>Descripción:</p>
-                        <p id='scrollSect' className={`${!recommendBooks.length ? 'max-h-[300px] overflow-y-auto break-words' : ''}`}>{book.volumeInfo?.description || 'Libro sin información'}</p>
+                        <p id='scrollSect' className={`${!recommendBooks.length ? 'max-h-[300px] overflow-y-auto break-words' : ''}`}>{book.volumeInfo?.description || 'Libro sin información.'}</p>
                     </span>
                 </section>
             {/* Recomendaciones */}

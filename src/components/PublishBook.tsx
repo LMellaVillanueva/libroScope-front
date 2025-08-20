@@ -78,7 +78,6 @@ const PublishBook = () => {
         } catch (error: any) {
       if (error.response && error.response.data) {
         alert(error.response.data.errors)
-        console.log('Error: ', error.response.data.errors)
       } else {
         return console.error(error.message)
       }
@@ -100,8 +99,9 @@ const PublishBook = () => {
     
   return (
     <main className='mt-36 text-neutral-600'>
-        <h2 className='text-left text-4xl font-light px-10 pt-5'>{user?.name},</h2>
-        <h1 className='text-left px-20 pt-8'>Publica tu propio libro:</h1>
+        <h2 className='text-left text-3xl font-light px-10 pt-5'>{user?.name},</h2>
+        <h1 className='text-left px-20 pt-8'
+        style={{ fontFamily: '"Libre Franklin", sans-serif' }}>Publica tu propio libro:</h1>
 
         <section className='flex justify-evenly pb-10'>
             <form onSubmit={handlePublish} className='flex text flex-col justify-center items-center w-2/6 gap-7'>
@@ -129,7 +129,8 @@ const PublishBook = () => {
             </form>
 
             {/* PREVIEW */}
-            <article className={`relative flex flex-col justify-center gap-22 items-center w-xl h-[700px] rounded-md transition-all ${imagePreview ? 'text-neutral-700' : 'text-neutral-200'} `}>
+            <article className={`relative flex flex-col justify-center gap-22 items-center w-xl h-[700px] rounded-md transition-all ${imagePreview ? 'text-neutral-700' : 'text-neutral-200'} `}
+            style={{ fontFamily:'"Asap", sans-serif' }}>
               {!imagePreview ? (
                 <img 
                 src={book} 

@@ -24,6 +24,9 @@ export type MyBook = {
 
 export type GoogleBook = {
     id: string
+    accessInfo: {
+        webReaderLink: string
+    }
     volumeInfo: {
         authors?: string[]
         categories?: string[]

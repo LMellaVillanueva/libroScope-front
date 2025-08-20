@@ -34,7 +34,8 @@ const CreatedBooks = ({ myBooks }: Props) => {
         </article>
         ) : (
             <main className="h-[60vh]">
-                <h1 className="px-20">No hay Libros publicados...</h1>
+                <h1 className="px-20" 
+                style={{ fontFamily: '"Libre Franklin", sans-serif' }}>No hay Libros publicados...</h1>
             </main>
         )}
     </main>

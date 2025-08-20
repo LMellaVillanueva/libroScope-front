@@ -33,14 +33,12 @@ const NavBar = () => {
       try {
         const { data } = await axios(`http://127.0.0.1:5000/user/one_user/${user?.id_user}`)
         if (data.success)  {
-         console.log(data.success) 
          setDbUser(true)
         }
       } catch (error: any) {
         userLogout()        
         if (error.response && error.response.data) {
           setDbUser(false)
-          return console.log('Error: ', error.response.data.errors)
         } else {
           return console.error(error.message)
         }
@@ -71,11 +69,7 @@ const NavBar = () => {
         }
       }
     } catch (error: any) {
-      if (error.response && error.response.data) {
-        return console.log('Error: ', error.response.data.errors)
-      } else {
-        return console.error(error.message)
-      }
+      if (error instanceof Error) return console.error(error.message)
     }
   }
 
@@ -91,7 +85,7 @@ const NavBar = () => {
       }
     } catch (error: any) {
       if (error.response && error.response.data) {
-        return console.log('Error: ', error.response.data.errors)
+        return window.alert(error.response.data.errors)
       } else {
         return console.error(error.message)
       }
@@ -121,7 +115,7 @@ const NavBar = () => {
       }
     } catch (error: any) {
       if (error.response && error.response.data) {
-        return console.log('Error: ', error.response.data.errors)
+        return window.alert(error.response.data.errors)
       } else {
         return console.error(error.message)
       }
@@ -129,12 +123,13 @@ const NavBar = () => {
   }
 
   return (
-    <main className='flex flex-col w-full absolute top-0 left-0 items-center justify-center z-20'>
-      <nav className='flex items-center justify-around p-3 w-full text-lg border-b border-b-black' /*style={{ backgroundColor: '#080e21' }}*/>
+    <main className='flex flex-col w-full absolute top-0 left-0 items-center justify-center z-20'
+    style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
+      <nav className='flex items-center justify-around p-3 w-full text-lg border-b border-b-black lg:justify-evenly md:justify-center' /*style={{ backgroundColor: '#080e21' }}*/>
         <Link to={'/'}>
           <img src={nav_logo} alt="nav_logo" width={250}/>
         </Link>
-        <div className='flex items-center gap-12 min-w-md text-neutral-500'>
+        <div className='flex items-center gap-12 min-w-md text-neutral-500 lg:gap-12 md:justify-center md:gap-3'>
 
             <Link className='transition-all hover:text-neutral-900 hover:font-bold min-w-[60px]' to={'/'}>Inicio</Link>
               <div className='border border-black h-5'></div>
@@ -163,8 +158,8 @@ const NavBar = () => {
           )}
         </div>
 
-          <form onSubmit={handleBookSearch} className='flex items-center gap-2 w-md'>
-            <div className='relative w-full max-w-xl'>
+          <form onSubmit={handleBookSearch} className='flex items-center gap-2 lg:w-md md:w-xs md:pr-3 lg:pr-0'>
+            <div className='relative w-full max-w-xl md:max-w-md'>
               <input 
                 className='w-full h-10 pl-3 pr-10 text-gray-700 placeholder-gray-500 border border-black rounded-md focus:outline-none' 
                 onChange={handleChangeBookSearch} 
@@ -217,7 +212,7 @@ const NavBar = () => {
         {loginModal && (
           <React.Fragment>
             <div className='fixed bg-black opacity-60 inset-0 z-20 w-[100vw] h-[100vh]'></div>
-              <section className='fixed m-auto inset-0 top-10 w-3/12 h-4/6 p-8 rounded-md flex flex-col justify-around z-20 bg-neutral-200 text-neutral-200 text' >
+              <section className='fixed m-auto inset-0 top-10 w-1/4 h-4/6 p-8 rounded-md flex flex-col justify-around z-20 bg-neutral-200 text-neutral-200 text' >
               <button className='absolute top-4 right-4 text-black' onClick={() => setLoginModal(false)}><FiX size={25}/></button>
 
               <h2 className='font-bold text-2xl text-neutral-700'>Inicio de Sesión</h2>
@@ -251,8 +246,7 @@ const NavBar = () => {
                       }
                     }  catch (error: any) {
                       if (error.response && error.response.data) {
-                        console.log('Sesión de Google cerrada')
-                        console.log('Error: ', error.response.data.errors)
+                        window.alert(error.response.data.errors)
                         return googleLogout()
                       } else {
                         return console.error(error.message)
@@ -263,12 +257,12 @@ const NavBar = () => {
                   />
               </form>
 
-              <span className='text-neutral-600'>
+              <span className='text-neutral-600 text-[1.25rem]'>
                 ¿No tienes una cuenta?, <b></b>
                   <Link
                    className='transition-all font-medium text-neutral-700 hover:text-neutral-900 hover:font-bold' to={'/registro'} 
                    onClick={() => setLoginModal(false)}>
-                      Regístrate.
+                      Regístrate aquí.
                   </Link>
                 </span>
             </section>

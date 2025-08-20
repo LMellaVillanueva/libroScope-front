@@ -36,14 +36,13 @@ export const useBookStore = create<State>((set) => ({
             if (data) {
                 set({ communityBooks: data.all_books })
             }
-        } catch (error: any) {
-        if (error.response && error.response.data) {
-          console.log('Error: ', error.response.data.errors)
-        } else {
-          return console.error(error.message)
+        } catch (error) {
+            if (error instanceof Error) {
+                return console.error(error.message)
+            }
         }
-      }
-    },
+      },
+
     getGoogleBooks: async (categorie): Promise<void> => {
         const { data } = await axios(`https://www.googleapis.com/books/v1/volumes?q=subject:${categorie}&maxResults=40&key=AIzaSyDNQ631Qv6pa6tyXCeU1xds2mnYL1KYNg8`)
         if (data) {
@@ -65,7 +64,7 @@ export const useBookStore = create<State>((set) => ({
             }
         } catch (error: any) {
         if (error.response && error.response.data) {
-          console.log('Error: ', error.response.data.errors)
+          window.alert(error.response.data.errors)
         } else {
           return console.error(error.message)
         }

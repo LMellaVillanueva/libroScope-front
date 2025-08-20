@@ -5,12 +5,12 @@ import { Categorie } from '../types'
 const Footer = () => {
 
   return (
-    <footer className="flex items-center justify-around p-16 text-white" style={{ backgroundColor: '#080e21' }}>
+    <footer className="flex lg:flex-row flex-col items-center gap-3 md:gap-0 md:justify-around p-16 text-white" style={{ backgroundColor: '#080e21' }}>
 
-      <section className="flex items-start justify-evenly w-2/3">
+      <section className="flex md:flex-row flex-col items-start justify-between h-[550px] md:h-fit lg:justify-evenly lg:w-2/3 w-full">
 
          <div className="flex flex-col text-start">
-          <h2>Géneros</h2>
+          <h2 className='text-lg'>Géneros</h2>
           <Link className='text-blue-500 transition-all hover:text-blue-300 min-w-[200px] hover:font-bold' to="/libros" state={Categorie.SCIENCE_FICTION}>Ciencia Ficción</Link>
           <Link className='text-blue-500 transition-all hover:text-blue-300 min-w-[200px] hover:font-bold' to="/libros" state={Categorie.ACTION}>Acción</Link>
           <Link className='text-blue-500 transition-all hover:text-blue-300 min-w-[200px] hover:font-bold' to="/libros" state={Categorie.HORROR}>Terror</Link>
@@ -24,12 +24,12 @@ const Footer = () => {
          </div>
 
          <div className="flex flex-col text-start">
-          <h2>Acerca de Mí</h2> 
+          <h2 className='text-lg'>Acerca de Mí</h2> 
           <Link className='text-blue-500 transition-all hover:text-blue-300 min-w-[200px] hover:font-bold' to={'/perfil'}>Perfil y Proyecto</Link>
          </div>   
 
         <div className="flex flex-col text-start">
-          <h2>Contacto</h2>
+          <h2 className='text-lg'>Contacto</h2>
           <p>Correo electrónico: mellalucas.v@gmail.com</p>
           {/* <article className='flex justify-evenly pt-2'> */}
             {/* <img src={gh} alt="gh" width={50} />
@@ -42,13 +42,13 @@ const Footer = () => {
 
       </section>
 
-      <section className="flex items-start justify-evenly w-1/3">
+      <section className="flex items-start justify-evenly md:w-1/2 lg:w-1/3">
       <Link to={'/'}>
         <img src={lb_logo} alt="logo"/>
       </Link>
       </section>
 
-      <p className='absolute mt-72'>Todos los derechos reservados © 2025</p>
+      <p className='lg:absolute lg:mt-72'>Todos los derechos reservados © 2025</p>
 
     </footer>
   )

@@ -15,7 +15,7 @@ import OneBook from './components/OneBook'
 import { useUserStore } from './store/user'
 import AllCreatedBooks from './admin/AllCreatedBooks'
 import Footer from './shared/Footer'
-import Profile from './components/Profile'
+import AboutMe from './components/AboutMe'
 
 function App() {
   //? User para actualizar el estado de allCretedBooks
@@ -38,6 +38,8 @@ function App() {
   //?Total de páginas según el total de libros
   const totalPages = Math.ceil( totalBooks / booksPerPage )
 
+  const windowSize = window.innerWidth
+
   useEffect(() => {
     if (location.pathname === '/libro/') navigate('/')
   }, [])
@@ -56,8 +58,12 @@ function App() {
         if (data) {
           setBooks(data.items)
         }
-      } catch (error) {
-        if (error instanceof Error) console.log(error.message)
+      } catch (error: any) {
+        if (error.response) {
+          window.alert(error.repsonse.data.errors)
+        } else {
+          console.error(error.message)
+        }
       }
     }
     fetchBooks()
@@ -70,21 +76,17 @@ function App() {
           //?Fetch de todos los libros
           const res = await axios('https://www.googleapis.com/books/v1/volumes?q=fiction&maxResults=40&key=AIzaSyDNQ631Qv6pa6tyXCeU1xds2mnYL1KYNg8')
 
-          //?Fetch de 5 libros para el banner
-          // const res5 = await axios('https://www.googleapis.com/books/v1/volumes?q=subject:self-help&maxResults=5&key=AIzaSyDNQ631Qv6pa6tyXCeU1xds2mnYL1KYNg8')
-
-
           if (res.data) {
             //?Setear todos los libros para la ruta /libros
             setAllBooks(res.data.items)
           }
-          // if (res5.data) {
-          //   setBannerBooks(res5.data.items)
-          // }
-
-        } catch (error) {
-          if (error instanceof Error) console.log(error.message)
+        } catch (error: any) {
+        if (error.response) {
+          window.alert(error.repsonse.data.errors)
+        } else {
+          console.error(error.message)
         }
+       }
       }
       fetchNoPaginationBooks()
     }, [])
@@ -102,14 +104,18 @@ function App() {
     <React.Fragment>
       <NavBar/>
         <Routes>
-          <Route path='/' element={<Landing books={ books } actualPage={ actualPage } setActualPage={ setActualPage } totalPages={ totalPages }/>}/>  
+          {windowSize > 768 ? (
+            <Route path='/' element={<Landing books={ books } actualPage={ actualPage } setActualPage={ setActualPage } totalPages={ totalPages }/>}/>  
+          ) : (
+            <Route path='/' element={<Landing books={ allBooks } actualPage={ actualPage } setActualPage={ setActualPage } totalPages={ totalPages }/>}/>  
+          )}
           <Route path='/registro' element={<RegisterUser/>}/>  
           <Route path='/publicar' element={<PublishBook/>}/>  
           <Route path='/libros' element={<Books allBooks={ allBooks }/>}/>  
           <Route path='/mis_libros' element={<CreatedBooks myBooks={ myBooks }/>}/>
           <Route path='/libro/:id' element={<OneBook/>}/>
           <Route path='/todos_los_libros' element={<AllCreatedBooks/>}/>
-          <Route path='/perfil' element={<Profile/>}/>
+          <Route path='/perfil' element={<AboutMe/>}/>
         </Routes>
       <Footer/>
     </React.Fragment>
