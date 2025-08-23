@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import type { GoogleBook, MyBook } from '../types'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import BookRecommendCard from '../shared/BookRecommendCard'
 import { FaArrowLeft, FaExternalLinkAlt } from 'react-icons/fa'
@@ -21,6 +21,7 @@ const OneBook = ({ windowSize }: Props) => {
     const elimMyBook = useBookStore(state => state.deleteMyBook)
     const fetchMyBooks = useBookStore(state => state.getBooks)
     const getCommunityBooks = useBookStore(state => state.getCommunityBooks)    
+    const [elimBook, setElimBook] = useState(false)
 
     const isGoogleBook = (book: GoogleBook | MyBook | undefined ): book is GoogleBook => {
       return !!book && 'volumeInfo' in book
@@ -30,8 +31,7 @@ const OneBook = ({ windowSize }: Props) => {
       if (!book) navigate('/mis_libros')
     }, [book])  
 
-    const handleElim = async (event: React.FormEvent) => {
-        event.preventDefault()
+    const handleElim = async () => {
         if (!isGoogleBook(book)) {
             try {
                 await elimMyBook(book?.id_book)
@@ -56,7 +56,6 @@ const OneBook = ({ windowSize }: Props) => {
                  if (data.recommend_books) {
                      setRecommendBooks(data.recommend_books)
                  }
-
              } catch (error: any) {
              if (error.response && error.response.data) {
                alert(error.response.data.errors)
@@ -162,18 +161,40 @@ const OneBook = ({ windowSize }: Props) => {
                   </p>
                 </span>
                 {user?.id_user === book?.user_id && (
-                  <form className='font-medium text-2xl text-gray-600 hover:text-black' onSubmit={handleElim}>
-                    <button type='submit'>Eliminar Libro</button>
-                  </form>
+                    <button 
+                    className='font-medium text-2xl text-red-500 hover:text-red-400' 
+                    type='submit'
+                    onClick={() => setElimBook(true)}>Eliminar Libro</button>
                 )}
                 {user?.admin == true && (
-                  <form className='font-medium text-2xl text-gray-600 hover:text-black' onSubmit={handleElim}>
-                    <button type='submit'>Eliminar Libro</button>
-                  </form>
+                    <button 
+                    className='font-medium text-2xl text-red-500 hover:text-red-400' 
+                    type='submit'
+                    onClick={() => setElimBook(true)}>Eliminar Libro</button>
                 )}
               </section>
             </article>
           </main>
+        )}
+        {elimBook && (
+          <React.Fragment>
+            <div className="fixed bg-black opacity-60 inset-0 z-20 w-[100vw] h-[100vh]"></div>
+            <div className="fixed m-auto inset-0 rounded-md lg:w-3/12 w-2/3 lg:h-4/12 h-1/3 flex flex-col items-center justify-center p-5 gap-10 z-30 text-2xl bg-neutral-200">
+              <p className="font-bold text-neutral-600">
+                ¿Quieres eliminar este libro?
+              </p>
+              <div className="flex justify-evenly items-center gap-8 w-full text-3xl">
+                <button
+                  className="text-neutral-500 hover:font-bold transition-all hover:text-neutral-900 border border-black p-2 rounded-md text-xl w-18"
+                  onClick={() => {handleElim(); setElimBook(false)}}>Sí
+                </button>
+                <button
+                  className="text-neutral-500 hover:font-bold transition-all hover:text-neutral-900 border border-black p-2 rounded-md text-xl w-18"
+                  onClick={() => setElimBook(false)}>No
+                </button>
+              </div>
+            </div>
+          </React.Fragment>
         )}
     </main>
   )

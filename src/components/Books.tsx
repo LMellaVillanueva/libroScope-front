@@ -50,13 +50,13 @@ const Books = ({ windowSize, allBooksCellphone }: Props) => {
             <button className='hover:font-bold' onClick={() => setCategorie(Categorie.MYSTERY)}>Misterio</button>
             <button className='hover:font-bold' onClick={() => setCategorie(Categorie.COMMUNITY)}>Comunidad</button>
             {categorie !== Categorie.NONE && (
-              <button className='text-red-600 hover:font-bold' onClick={() => setCategorie(Categorie.NONE)}>Borrar Filtro</button>
+              <button className='text-red-600 hover:font-bold' onClick={() => {setCategorie(Categorie.NONE); window.scrollTo({ top: 0, 'behavior': 'smooth' }); }}>Borrar Filtro</button>
             )}
           </div>
         </section>
       )}
         {/* Contenedor de libros */}
-        <section className='flex-1'>
+        <section className='flex-1 pb-44'>
           <div className={`grid ${!communityBooks && categorie === Categorie.COMMUNITY ? 'grid-cols-1' : 'grid-cols-2 md:grid-cols-3 xl:grid-cols-4'} gap-6`}>
             {categorie === Categorie.NONE && (
               allBooksCellphone?.map((oneBook) => (
@@ -69,7 +69,7 @@ const Books = ({ windowSize, allBooksCellphone }: Props) => {
               ))
             )}
             {categorie === Categorie.COMMUNITY && (
-              communityBooks ? (communityBooks?.map((oneBook) => (
+              communityBooks ? (communityBooks.map((oneBook) => (
                 <BookCard key={oneBook.id_book} book={oneBook} />
               ))) : (
                 <main className="h-[60vh]">

@@ -487,7 +487,7 @@ const NavBar = ({ windowSize }: Props) => {
                         to={'/libros'}
                         className='text-red-600 hover:font-bold text-3xl pl-5' 
                         state={Categorie.NONE}
-                        onClick={() => {setCategorie(false); setBurgerMenu(false);}}>Borrar Filtro</Link>
+                        onClick={() => { setCategorie(false); setBurgerMenu(false); window.scrollTo({ top: 0, 'behavior': 'smooth' }); }}>Borrar Filtro</Link>
                         <div className="border border-black w-full"></div>
                       </React.Fragment>
                     )}

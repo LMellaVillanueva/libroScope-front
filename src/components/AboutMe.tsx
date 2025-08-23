@@ -3,8 +3,8 @@ import img2 from '../assets/imgs/nav_logo.png'
 
 const AboutMe = () => {
   return (
-    <main className='py-40 px-10 text-neutral-700 flex items-center justify-evenly w-full'>
-        <section className='w-2/5 p-6 flex flex-col items-center gap-10'>
+    <main className='lg:mt-36 md:mt-28 mt-20 pb-32 px-5 lg:px-10 text-neutral-700 flex flex-col lg:flex-row items-center justify-evenly w-full'>
+        <section className='lg:w-2/5 p-6 flex flex-col items-center gap-10'>
             <h2 className='font-bold text-3xl'>Sobre Mí</h2>
             <img src={img1} alt="img1" width={200} className='drop-shadow-2xl drop-shadow-neutral-500'/>
             <p style={{ fontFamily: '"Maven Pro", sans-serif' }}> Soy Lucas Mella, un apasionado del desarrollado web que busca transformar ideas en soluciones sencillas y productos visualmente atractivos. <br /><br />
@@ -14,7 +14,9 @@ const AboutMe = () => {
             </p>
         </section>
 
-        <section className='w-2/5 p-6 flex flex-col items-center gap-10 '>
+        <div className='lg:hidden border border-black w-4/5 md:w-5/6 my-5'></div>
+
+        <section className='lg:w-2/5 p-6 flex flex-col items-center gap-10 '>
             <h2 className='font-bold text-3xl'>Sobre el Proyecto</h2>
             <img src={img2} alt="img2" width={300} className='drop-shadow-2xl drop-shadow-neutral-700'/>
             <p style={{ fontFamily: '"Maven Pro", sans-serif' }}> LibroScope es una plataforma que facilita descubrir y organizar libros de forma inteligente, similar a como Netflix recomienda películas. <br /><br />

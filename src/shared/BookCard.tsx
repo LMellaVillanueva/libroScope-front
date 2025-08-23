@@ -37,11 +37,11 @@ const BookCard = ({ book }: Props) => {
           state={{ book }}>
             <img
             src={`http://127.0.0.1:5000/books/${book?.image_path}`} 
-            className='w-44 h-64 object-cover rounded shadow-lg shadow-black'
+            className='lg:w-44 md:w-36 w-28 lg:h-64 md:h-56 h-40 object-cover rounded shadow-lg shadow-black'
             alt="Portada" />
           </Link>
             <article className='flex flex-col items-center gap-3 pt-2 h-[130px] lg:h-[230px] text-neutral-700'>
-              <h2 className='text-3xl w-xs max-h-[150px] break-words'>{book?.title}</h2>
+              <h2 className='text-3xl max-w-[150px] lg:max-w-xs max-h-[120px] overflow-y-auto break-words'>{book?.title}</h2>
             </article>
         </main>
       </React.Fragment>
