@@ -7,7 +7,11 @@ import { FaArrowLeft, FaExternalLinkAlt } from 'react-icons/fa'
 import { useUserStore } from '../store/user'
 import { useBookStore } from '../store/book'
 
-const OneBook = () => {
+type Props = {
+  windowSize: number
+}
+
+const OneBook = ({ windowSize }: Props) => {
     const location = useLocation()
     const navigate = useNavigate()
     const state = location.state as { book?: GoogleBook | MyBook }
@@ -67,22 +71,27 @@ const OneBook = () => {
   return (
     <main className='p-5 text-neutral-600'>
     {isGoogleBook(book) ? (
-        <div className='pb-40 mt-40 flex justify-around items-center'>
+        <main className='pb-40 lg:mt-36 md:mt-28 mt-20 flex justify-around items-center'>
             <button className='self-start' onClick={() => navigate(-1)}>
-            <FaArrowLeft size={35} className='transition-transform hover:scale-120'/>
+            <FaArrowLeft size={35} className='transition-transform hover:scale-120 absolute md:relative'/>
             </button>
-            <article className='w-full flex items-start justify-evenly'>
-                <img className='w-64 self-baseline'
+            <article className='w-full flex flex-col lg:flex-row items-center lg:items-start justify-evenly gap-8 lg:gap-0'>
+                <img className='w-3xs lg:w-64 lg:self-baseline'
                 src={book.volumeInfo.imageLinks?.smallThumbnail} 
                 alt={book.volumeInfo?.title} />
-                <section className='flex flex-col items-start gap-7 w-1/2 text-lg'>
-                <h2 className='text-4xl text-left font-bold'>{book.volumeInfo?.title}</h2>
-                {book.accessInfo.webReaderLink && (
-                <span className='flex items-center gap-2 transition-all text-neutral-600 font-medium text-2xl hover:text-neutral-900 hover:font-bold'>
-                  <a href={book.accessInfo.webReaderLink} target='a_blank' className='min-w-[102px]'>Ver Libro</a> 
-                  <FaExternalLinkAlt/>
-                </span>
-                )}
+                    {windowSize < 900 && (
+                      <h2 className='text-3xl text-center lg:text-left font-bold'>{book.volumeInfo?.title}</h2>
+                    )}
+                    <section className='flex flex-col items-center md:items-start gap-7 lg:w-1/2 text-lg'>
+                    {windowSize > 900 && (
+                      <h2 className='text-4xl text-left font-bold'>{book.volumeInfo?.title}</h2>
+                    )}
+                    {book.accessInfo.webReaderLink && (
+                    <span className='flex items-center gap-2 transition-all text-neutral-600 font-medium text-2xl hover:text-neutral-900 hover:font-bold'>
+                      <a href={book.accessInfo.webReaderLink} target='a_blank' className='min-w-[102px]'>Ver Libro</a> 
+                      <FaExternalLinkAlt/>
+                    </span>
+                    )}
                     <span className='flex gap-1'>
                         <p className='font-bold'>Autor/es:</p>
                         <p>{book.volumeInfo?.authors?.join(', ') || 'Libro sin información.'}</p>
@@ -93,7 +102,7 @@ const OneBook = () => {
                     </span>
                     <span className='flex flex-col items-start gap-2'>
                         <p className='font-bold'>Descripción:</p>
-                        <p id='scrollSect' className={`${!recommendBooks.length ? 'max-h-[300px] overflow-y-auto break-words' : ''}`}>{book.volumeInfo?.description || 'Libro sin información.'}</p>
+                        <p id='scrollSect' className={`${!recommendBooks.length ? 'max-h-[300px] overflow-y-auto break-words' : 'max-h-110 lg:max-h-fit overflow-y-auto lg:overflow-y-visible break-words lg:break-normal'}`}>{book.volumeInfo?.description || 'Libro sin información.'}</p>
                     </span>
                 </section>
             {/* Recomendaciones */}
@@ -108,27 +117,50 @@ const OneBook = () => {
             </article>
             )}
           </article>
-        </div>
+        </main>
         ) : (
-        <main className='p-5 pb-40 mt-40 flex justify-around items-center'>
+          <main className='pb-40 lg:mt-36 md:mt-28 mt-20 flex justify-around items-center'>
             <button className='self-start' onClick={() => navigate(-1)}>
-            <FaArrowLeft size={35} className='transition-transform hover:scale-120'/>
+              <FaArrowLeft size={35} className='transition-transform hover:scale-120 absolute md:relative'/>
             </button>
-            <article className='w-full flex items-start justify-evenly'>
-                <img className='w-64 self-baseline'
+            <article className='w-full flex flex-col lg:flex-row items-center lg:items-start justify-evenly gap-8 lg:gap-0'>
+              <img 
+                className='w-3xs lg:w-64 lg:self-baseline'
                 src={`http://127.0.0.1:5000/books/${book?.image_path}`} 
-                alt={book?.title} />
-                <section className='flex flex-col items-start gap-7 w-1/2 text-lg'>
-                <h2 className='text-4xl text-left font-bold'>{book?.title}</h2>
-                <p className='font-bold'>Autor: {book?.author}</p>
-                <p className='font-bold'>Género: {book?.genre}</p>
-                <span className='flex flex-col items-start gap-2'>
-                    <p className='font-bold'>Descripción:</p>
-                    <p id='scrollSect' className={`'max-h-[300px] overflow-y-auto break-words' : ''}`}>{book?.description || 'Libro sin información'}</p>
+                alt={book?.title} 
+              />
+              {windowSize < 900 && (
+                <h2 className='text-3xl max-w-4/5 text-center font-bold max-h-[300px] overflow-y-auto break-words'>{book?.title}</h2>
+              )}
+              <section className='flex flex-col items-center lg:items-start gap-7 lg:w-1/2 text-lg'>
+                {windowSize > 900 && (
+                  <h2 className='text-4xl text-left font-bold'>{book?.title}</h2>
+                )}
+                <a 
+                  href={`http://127.0.0.1:5000/books/${book?.pdf_path}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className='flex items-center gap-2 transition-all text-neutral-600 font-medium text-2xl hover:text-neutral-900 hover:font-bold'
+                >
+                  Ver Libro <FaExternalLinkAlt/>
+                </a>
+                <span className='flex gap-1'>
+                  <p className='font-bold'>Autor:</p>
+                  <p>{book?.author || 'Libro sin información'}</p>
                 </span>
-                <a href={`http://127.0.0.1:5000/books/${book?.pdf_path}`} target="_blank" rel="noopener noreferrer">
-                <button className='font-medium text-2xl text-gray-600 hover:text-black'>Ver Libro</button>
-              </a>
+                <span className='flex gap-1'>
+                  <p className='font-bold'>Género:</p>
+                  <p className='max-w-4/5 text-center max-h-[300px] overflow-y-auto break-words'>{book?.genre || 'Libro sin información'}</p>
+                </span>
+                <span className='flex items-start gap-2'>
+                  <p className='font-bold'>Descripción:</p>
+                  <p 
+                    id='scrollSect' 
+                    className='max-h-[300px] max-w-[200px] lg:max-w-fit overflow-y-auto break-words'
+                  >
+                    {book?.description || 'Libro sin información'}
+                  </p>
+                </span>
                 {user?.id_user === book?.user_id && (
                   <form className='font-medium text-2xl text-gray-600 hover:text-black' onSubmit={handleElim}>
                     <button type='submit'>Eliminar Libro</button>
@@ -139,10 +171,9 @@ const OneBook = () => {
                     <button type='submit'>Eliminar Libro</button>
                   </form>
                 )}
-    
-                </section>
+              </section>
             </article>
-        </main>
+          </main>
         )}
     </main>
   )

@@ -130,7 +130,7 @@ function App() {
           <Route path='/publicar' element={<PublishBook/>}/>  
           <Route path='/libros' element={<Books allBooks={ allBooks } allBooksCellphone={ allBooksForCellphone } windowSize={ windowSize }/>}/>  
           <Route path='/mis_libros' element={<CreatedBooks myBooks={ myBooks }/>}/>
-          <Route path='/libro/:id' element={<OneBook/>}/>
+          <Route path='/libro/:id' element={<OneBook windowSize={ windowSize }/>}/>
           <Route path='/todos_los_libros' element={<AllCreatedBooks/>}/>
           <Route path='/perfil' element={<AboutMe/>}/>
         </Routes>

@@ -26,7 +26,7 @@ const BookCard = ({ book }: Props) => {
         className='lg:w-44 md:w-36 w-28 lg:h-64 md:h-56 h-40 object-cover rounded shadow-lg shadow-black' 
         width={150} 
         alt={book?.volumeInfo.title} />        
-        <h2 id='scrollSect' className='h-[100px] max-w-44 md:text-start overflow-y-auto break-words text-black font-medium'>{book?.volumeInfo.title}</h2>
+        <h2 id='scrollSect' className='h-[100px] max-w-44 md:text-start overflow-y-auto break-words text-neutral-700 font-medium'>{book?.volumeInfo.title}</h2>
         </Link>
       </React.Fragment>
     ) : (
@@ -40,7 +40,7 @@ const BookCard = ({ book }: Props) => {
             className='w-44 h-64 object-cover rounded shadow-lg shadow-black'
             alt="Portada" />
           </Link>
-            <article className='flex flex-col items-center gap-3 h-[230px] text-orange-600'>
+            <article className='flex flex-col items-center gap-3 pt-2 h-[130px] lg:h-[230px] text-neutral-700'>
               <h2 className='text-3xl w-xs max-h-[150px] break-words'>{book?.title}</h2>
             </article>
         </main>

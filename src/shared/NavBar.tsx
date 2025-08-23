@@ -37,6 +37,14 @@ const NavBar = ({ windowSize }: Props) => {
     (state) => state.googleBookCategorie
   );
 
+  //Modal para Borrar Filtro
+  const [categorie, setCategorie] = useState(false)
+  const categorieState = useBookStore(state => state.googleBookCategorie)
+
+  useEffect(() => {
+    if (categorieState !== Categorie.NONE) setCategorie(true)
+  }, [categorieState])
+
   //View de celulares
   const [burguerMenu, setBurgerMenu] = useState(false);
 
@@ -107,7 +115,7 @@ const NavBar = ({ windowSize }: Props) => {
       }
     } catch (error: any) {
       if (error.response && error.response.data) {
-        return window.alert(error.response.data.errors);
+        // return window.alert(error.response.data.errors);
       } else {
         return console.error(error.message);
       }
@@ -135,11 +143,11 @@ const NavBar = ({ windowSize }: Props) => {
           setSearchedBooks(data.matching_books);
         }
       } else {
-        return window.alert("No puede estar vacío!");
+        // return window.alert("No puede estar vacío!");
       }
     } catch (error: any) {
       if (error.response && error.response.data) {
-        return window.alert(error.response.data.errors);
+        // return window.alert(error.response.data.errors);
       } else {
         return console.error(error.message);
       }
@@ -336,12 +344,13 @@ const NavBar = ({ windowSize }: Props) => {
                 </button>
               )}
             </section>
+              <div className="border-b border-b-black w-full py-2"></div>
 
             {/* //!Burguer activo */}
             {burguerMenu && (
               <React.Fragment>
                 <nav
-                  className="absolute w-full flex flex-col gap-3 left-0 top-20 z-20 text-3xl"
+                  className="absolute w-full flex flex-col gap-3 left-0 top-22 z-20 text-3xl border-b-2 border-b-black rounded-3xl"
                   style={{ backgroundColor: "#eeeeee" }}
                 >
                   <FiX
@@ -421,57 +430,71 @@ const NavBar = ({ windowSize }: Props) => {
                         className='transition-all hover:text-neutral-900 hover:font-bold pl-5' 
                         to="/libros" 
                         state={Categorie.SCIENCE_FICTION}
-                        onClick={() => setBurgerMenu(false)}>Ciencia Ficción</Link>
+                        onClick={() => {setBurgerMenu(false); setCategorie(true)}}>Ciencia Ficción</Link>
                         <Link 
                         className='transition-all hover:text-neutral-900 hover:font-bold pl-5' 
                         to="/libros" 
                         state={Categorie.ACTION}
-                        onClick={() => setBurgerMenu(false)}>Acción</Link>
+                        onClick={() => {setBurgerMenu(false); setCategorie(true)}}>Acción</Link>
                         <Link 
                         className='transition-all hover:text-neutral-900 hover:font-bold pl-5' 
                         to="/libros" 
                         state={Categorie.HORROR}
-                        onClick={() => setBurgerMenu(false)}>Terror</Link>
+                        onClick={() => {setBurgerMenu(false); setCategorie(true)}}>Terror</Link>
                         <Link 
                         className='transition-all hover:text-neutral-900 hover:font-bold pl-5' 
                         to="/libros" 
                         state={Categorie.DRAMA}
-                        onClick={() => setBurgerMenu(false)}>Dramático</Link>
+                        onClick={() => {setBurgerMenu(false); setCategorie(true)}}>Dramático</Link>
                         <Link 
                         className='transition-all hover:text-neutral-900 hover:font-bold pl-5' 
                         to="/libros" 
                         state={Categorie.ADVENTURE}
-                        onClick={() => setBurgerMenu(false)}>Aventura</Link>
+                        onClick={() => {setBurgerMenu(false); setCategorie(true)}}>Aventura</Link>
                         <Link 
                         className='transition-all hover:text-neutral-900 hover:font-bold pl-5' 
                         to="/libros" 
                         state={Categorie.HISTORY}
-                        onClick={() => setBurgerMenu(false)}>Histórico</Link>
+                        onClick={() => {setBurgerMenu(false); setCategorie(true)}}>Histórico</Link>
                         <Link 
                         className='transition-all hover:text-neutral-900 hover:font-bold pl-5' 
                         to="/libros" 
                         state={Categorie.SELF_HELP}
-                        onClick={() => setBurgerMenu(false)}>Desarrollo Personal</Link>
+                        onClick={() => {setBurgerMenu(false); setCategorie(true)}}>Desarrollo Personal</Link>
                         <Link 
                         className='transition-all hover:text-neutral-900 hover:font-bold pl-5' 
                         to="/libros" 
                         state={Categorie.FANTASY}
-                        onClick={() => setBurgerMenu(false)}>Fantasía</Link>
+                        onClick={() => {setBurgerMenu(false); setCategorie(true)}}>Fantasía</Link>
                         <Link 
                         className='transition-all hover:text-neutral-900 hover:font-bold pl-5' 
                         to="/libros" 
                         state={Categorie.MYSTERY}
-                        onClick={() => setBurgerMenu(false)}>Misterio</Link>
+                        onClick={() => {setBurgerMenu(false); setCategorie(true)}}>Misterio</Link>
                         <Link 
                         className='transition-all hover:text-neutral-900 hover:font-bold pl-5' 
                         to="/libros" 
                         state={Categorie.COMMUNITY}
-                        onClick={() => setBurgerMenu(false)}>Comunidad</Link>
+                        onClick={() => {setBurgerMenu(false); setCategorie(true)}}>Comunidad</Link>
+                        {!categorie && (
+                          <div className="border border-black w-full"></div>
+                        )}
                       </div>
                     )}
+                    {categorie && location.pathname === '/libros' && (
+                      <React.Fragment>
+                        <Link 
+                        to={'/libros'}
+                        className='text-red-600 hover:font-bold text-3xl pl-5' 
+                        state={Categorie.NONE}
+                        onClick={() => {setCategorie(false); setBurgerMenu(false);}}>Borrar Filtro</Link>
+                        <div className="border border-black w-full"></div>
+                      </React.Fragment>
+                    )}
                   </div>
+
                   <Link to={"/"} className="m-auto" onClick={() => setBurgerMenu(false)}>
-                    <img src={nav_logo} alt="nav_logo" width={300} />
+                    <img src={nav_logo} alt="nav_logo" width={330} />
                   </Link>
                 </nav>
               </React.Fragment>

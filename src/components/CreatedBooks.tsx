@@ -25,9 +25,9 @@ const CreatedBooks = ({ myBooks }: Props) => {
     <main className='flex flex-col gap-10 items-start lg:mt-36 md:mt-28 mt-20 text-neutral-600'>
         <h2 className="text-3xl md:px-10 m-auto md:m-0 pt-5 font-light">Libros de {user?.name}:</h2>
         {myBooks && myBooks.length > 0 ? (
-        <article className='flex justify-center items-center'>
+        <article className='flex flex-col lg:flex-row w-full lg:w-fit p-1 lg:p-5 justify-center items-center'>
                 {myBooks?.map((oneBook) => (
-                    <div key={oneBook.id_book} className='flex justify-center items-center'>
+                    <div key={oneBook.id_book} className='flex justify-center items-center p-5 lg:p-5'>
                         <BookCard book={ oneBook }/>
                     </div>
                 ))}

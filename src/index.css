@@ -78,9 +78,19 @@ button:disabled {
     font-size: 1.8rem;
     text-align: center;
   }
+
   #noBooksPublished {
     font-size: 2.3rem;
   }
+  
+  #noBooksCreated {
+    font-size: 2.5rem;
+  }
+
+  #previewTitle {
+    font-size: 2.3rem;
+  }
+
   #welcome_user {
     text-align: center;
   }

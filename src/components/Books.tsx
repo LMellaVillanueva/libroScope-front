@@ -29,7 +29,6 @@ const Books = ({ windowSize, allBooksCellphone }: Props) => {
       }
     }, [filterByFooter])
     
-    
     useEffect(() => {
         getGoogleBooksByCategorie(categorie)
     }, [categorie])
