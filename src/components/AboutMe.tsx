@@ -19,9 +19,9 @@ const AboutMe = () => {
         <section className='lg:w-2/5 p-6 flex flex-col items-center gap-10 '>
             <h2 className='font-bold text-3xl'>Sobre el Proyecto</h2>
             <img src={img2} alt="img2" width={300} className='drop-shadow-2xl drop-shadow-neutral-700'/>
-            <p style={{ fontFamily: '"Maven Pro", sans-serif' }}> LibroScope es una plataforma que facilita descubrir y organizar libros de forma inteligente, similar a como Netflix recomienda películas. <br /><br />
-              Este proyecto no solo integra un algoritmo de recomendaciones tipo Netflix, sino también tecnologías como ElasticSearch, gestión de datos en tiempo real, login con Google y para los futuros autores, publicar tus propios libros. <br /><br />
-              Con base de datos MySQL se gestionan las relaciones de los modelos en el Back-End, utilizando Python como lenguaje. Dicha tecnología también gestiona el algoritmo de recomendaciones que se basa en la categoría de cada libro, la búsqueda de ElasticSearch por medio de una query, validaciones de usuario, entre otros.
+            <p style={{ fontFamily: '"Maven Pro", sans-serif' }}> LibroScope es una plataforma que facilita descubrir, publicar y organizar libros de forma inteligente, similar a como Netflix recomienda películas. <br /><br />
+              Este proyecto no solo integra la publicación de libros por medio de PDF, sino también un algoritmo de recomendaciones tipo Netflix, tecnologías como ElasticSearch, login con Google y gestión de datos en tiempo real. <br /><br />
+              Con base de datos MySQL se gestionan las relaciones de los modelos en el Back-End, utilizando Python como lenguaje. Dicha tecnología también gestiona el algoritmo de recomendaciones que se basa en la categoría de cada libro, subida de archivos PDF e imagenes en base de datos, búsqueda de ElasticSearch por medio de una query, validaciones de usuario, entre otros.
             </p>
         </section>
 
