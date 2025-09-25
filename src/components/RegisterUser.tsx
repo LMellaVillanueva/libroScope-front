@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import coment from '../assets/imgs/coment.png'
 import libro from '../assets/imgs/libro.png'
 import pers from '../assets/imgs/pers.png'
-import axios from 'axios'
 import { useUserStore } from '../store/user'
 import { useNavigate } from 'react-router-dom'
 import { GoogleLogin, googleLogout, type CredentialResponse } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
 import type { GoogleJwtPayload } from '../types'
+import api from '../axiosConfig'
 
 const RegisterUser = () => {
 
@@ -36,7 +36,7 @@ const RegisterUser = () => {
     const { confirm_password, ...dataRegister } = registerInfo
 
     try {
-      const res = await axios.post('http://127.0.0.1:5000/user/register', dataRegister)
+      const res = await api.post('/user/register', dataRegister)
       if (res.data) {
         const user = {
           id_user: res.data.user_id,
@@ -84,7 +84,7 @@ const RegisterUser = () => {
                         email: google_user.email,
                         google_id: google_user.sub
                       }
-                      const res = await axios.post('http://127.0.0.1:5000/user/register', google_register)
+                      const res = await api.post('/user/register', google_register)
                       if (res.data) {
                           const id_user = res.data.user_id
                           const { google_id, ...data_user } = google_register

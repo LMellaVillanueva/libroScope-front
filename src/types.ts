@@ -18,8 +18,8 @@ export type MyBook = {
     genre: string,
     description: string,
     user_id: number,
-    pdf_path: string,
-    image_path: string,
+    pdf_url: string,
+    image_url: string,
 }
 
 export type GoogleBook = {

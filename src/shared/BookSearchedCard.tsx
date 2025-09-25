@@ -47,7 +47,7 @@ const BookSearchedCard = ({ book, setSearchedBooks, setBookSearch }: Props) => {
         to={`/libro/${book?.id_book}`}
         state={{ book }}
         onClick={ () => {setSearchedBooks([]); setBookSearch('');} }>
-          <img src={`http://127.0.0.1:5000/books/${book?.image_path}`} 
+          <img src={book?.image_url} 
           className='w-24 h-40 object-cover rounded shadow-md shadow-black' 
           width={50} 
           alt={book?.title} />        

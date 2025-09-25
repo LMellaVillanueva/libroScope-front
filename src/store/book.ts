@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import { type GoogleBook, type MyBook, Categorie } from "../types";
-import axios from "axios";
 import { useUserStore } from "./user";
+import api from "../axiosConfig";
+import axios from "axios";
 
 interface State {
     myBooks: MyBook[] | null
@@ -24,7 +25,7 @@ export const useBookStore = create<State>((set) => ({
     getBooks: async (): Promise<void> => {
         const user = useUserStore.getState().user
         if (user) {
-            const { data } = await axios(`http://127.0.0.1:5000/books/all_books/${user.id_user}`)
+            const { data } = await api(`/books/all_books/${user.id_user}`)
             if (data) {
                 set({ myBooks: data.books })
             }
@@ -32,7 +33,7 @@ export const useBookStore = create<State>((set) => ({
     },
     getCommunityBooks: async () => {
         try {
-            const { data } = await axios('http://localhost:5000/books/all_books')
+            const { data } = await api('/books/all_books')
             if (data) {
                 set({ communityBooks: data.all_books })
             }
@@ -54,7 +55,7 @@ export const useBookStore = create<State>((set) => ({
     },
     deleteMyBook: async (id): Promise<void> => {
         try {
-            const { data } = await axios.post(`http://localhost:5000/books/elim/${id}`)
+            const { data } = await api.post(`/books/elim/${id}`)
             if (data.success) {
                 alert(data.success)
                 set((state => ({ 
@@ -64,7 +65,8 @@ export const useBookStore = create<State>((set) => ({
             }
         } catch (error: any) {
         if (error.response && error.response.data) {
-          window.alert(error.response.data.errors)
+          console.error(error.response.data.errors)
+          console.error(error.message)
         } else {
           return console.error(error.message)
         }

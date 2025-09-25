@@ -1,7 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useUserStore } from "../store/user";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import {
   GoogleLogin,
   googleLogout,
@@ -13,6 +12,7 @@ import { FiLogOut, FiX, FiSearch, FiMenu } from "react-icons/fi";
 import { useBookStore } from "../store/book";
 import BookSearchedCard from "./BookSearchedCard";
 import nav_logo from "../assets/imgs/nav_logo.png";
+import api from "../axiosConfig";
 
 type Props = {
   windowSize: number;
@@ -52,9 +52,7 @@ const NavBar = ({ windowSize }: Props) => {
   useEffect(() => {
     const fetchUserById = async () => {
       try {
-        const { data } = await axios(
-          `http://127.0.0.1:5000/user/one_user/${user?.id_user}`
-        );
+        const { data } = await api(`/user/one_user/${user?.id_user}`);
         if (data.success) {
           setDbUser(true);
         }
@@ -88,9 +86,7 @@ const NavBar = ({ windowSize }: Props) => {
     setBookSearch(event.target.value);
     try {
       if (bookSearch.length) {
-        const { data } = await axios.post(
-          `http://127.0.0.1:5000/books/search/${googleBookCategorie}/${event.target.value}`
-        );
+        const { data } = await api.post(`/books/search/${googleBookCategorie}/${event.target.value}`);
         if (data.matching_books) {
           setSearchedBooks(data.matching_books);
         }
@@ -103,10 +99,7 @@ const NavBar = ({ windowSize }: Props) => {
   const handleLogin = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
     try {
-      const res = await axios.post(
-        "http://127.0.0.1:5000/user/login",
-        loginInfo
-      );
+      const res = await api.post("/user/login",loginInfo);
       if (res.data) {
         userLogin(res.data.user);
         setLoginModal(false);
@@ -136,9 +129,7 @@ const NavBar = ({ windowSize }: Props) => {
     event.preventDefault();
     try {
       if (bookSearch.length) {
-        const { data } = await axios.post(
-          `http://127.0.0.1:5000/books/search/${bookSearch}/${googleBookCategorie}`
-        );
+        const { data } = await api.post(`/books/search/${bookSearch}/${googleBookCategorie}`);
         if (data.matching_books) {
           setSearchedBooks(data.matching_books);
         }
@@ -579,10 +570,7 @@ const NavBar = ({ windowSize }: Props) => {
                         const google_user = jwtDecode<GoogleJwtPayload>(
                           credentials?.credential
                         );
-                        const res = await axios.post(
-                          "http://127.0.0.1:5000/user/login",
-                          { email: google_user.email }
-                        );
+                        const res = await api.post("/user/login",{ email: google_user.email });
                         if (res.data) {
                           userLogin(res.data.user);
                           setLoginModal(false);

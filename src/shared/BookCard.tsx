@@ -36,7 +36,7 @@ const BookCard = ({ book }: Props) => {
           to={`/libro/${book?.id_book}`}
           state={{ book }}>
             <img
-            src={`http://127.0.0.1:5000/books/${book?.image_path}`} 
+            src={book?.image_url} 
             className='lg:w-44 md:w-36 w-28 lg:h-64 md:h-56 h-40 object-cover rounded shadow-lg shadow-black'
             alt="Portada" />
           </Link>

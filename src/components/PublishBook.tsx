@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useUserStore } from '../store/user'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useBookStore } from '../store/book'
 import book from '../assets/imgs/book.png'
+import api from '../axiosConfig'
 
 const PublishBook = () => {
     const user = useUserStore(state => state.user)
@@ -58,7 +58,9 @@ const PublishBook = () => {
         formData.append('image', image)
 
         try {
-            const res = await axios.post('http://127.0.0.1:5000/books/publish', formData)
+            const res = await api.post('/books/publish', formData, {
+              headers: { 'Content-Type': 'multipart/form-data' }
+            })
             if (res.data) {
               await fetchMyBooks()
               await getCommunityBooks()

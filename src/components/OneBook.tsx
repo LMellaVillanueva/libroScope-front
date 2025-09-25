@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import type { GoogleBook, MyBook } from '../types'
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useEffect, useState } from 'react'
+import api from '../axiosConfig'
 import BookRecommendCard from '../shared/BookRecommendCard'
 import { FaArrowLeft, FaExternalLinkAlt } from 'react-icons/fa'
 import { useUserStore } from '../store/user'
@@ -21,7 +21,7 @@ const OneBook = ({ windowSize }: Props) => {
     const elimMyBook = useBookStore(state => state.deleteMyBook)
     const fetchMyBooks = useBookStore(state => state.getBooks)
     const getCommunityBooks = useBookStore(state => state.getCommunityBooks)    
-    const [elimBook, setElimBook] = useState(false)
+    const [bookDeleted, setBookDeleted] = useState(false)
 
     const isGoogleBook = (book: GoogleBook | MyBook | undefined ): book is GoogleBook => {
       return !!book && 'volumeInfo' in book
@@ -33,32 +33,38 @@ const OneBook = ({ windowSize }: Props) => {
 
     const handleElim = async () => {
         if (!isGoogleBook(book)) {
+          const confirmElim = window.confirm('¿Quieres eliminar este libro?')
+          if (confirmElim) {
             try {
-                await elimMyBook(book?.id_book)
-                await fetchMyBooks()
-                await getCommunityBooks()
-                navigate('/mis_libros')
+              await elimMyBook(book?.id_book)
+              await fetchMyBooks()
+              await getCommunityBooks()
+              setBookDeleted(true)
             } catch (error: any) {
-                if (error.response && error.response.data) {
-                    window.alert(error.repsonse.data.errors)
-                    navigate('/mis_libros')
-                } else {
-                    return console.error(error.message)
-                }
+              if (error.response && error.response.data) {
+                setBookDeleted(true)
+              } else {
+                return console.error(error.message)
+              }
             }
+          }
         }  
     }
+
+    useEffect(() => {
+      if (bookDeleted) navigate('/mis_libros')
+    }, [bookDeleted])
 
      useEffect(() => {
          const fetchRecommendBooks = async () => {
              try {
-                 const { data } = await axios.post('http://127.0.0.1:5000/books/recommend', book)
+                 const { data } = await api.post('/books/recommend', book)
                  if (data.recommend_books) {
                      setRecommendBooks(data.recommend_books)
                  }
              } catch (error: any) {
              if (error.response && error.response.data) {
-               alert(error.response.data.errors)
+               console.log(error.response.data.errors)
              } else {
                return console.error(error.message)
              }
@@ -110,7 +116,7 @@ const OneBook = ({ windowSize }: Props) => {
                     <h2 className='font-semibold text-xl'>Te podría interesar:</h2>
                 <section className='flex flex-col gap-10 w-full p-10'>
                 {recommendBooks.map((book) => (
-                    <BookRecommendCard book={book}/>
+                    <BookRecommendCard key={book.id} book={book}/>
                 ))}
                 </section>
             </article>
@@ -125,7 +131,7 @@ const OneBook = ({ windowSize }: Props) => {
             <article className='w-full flex flex-col lg:flex-row items-center lg:items-start justify-evenly gap-8 lg:gap-0'>
               <img 
                 className='w-3xs lg:w-64 lg:self-baseline'
-                src={`http://127.0.0.1:5000/books/${book?.image_path}`} 
+                src={book?.image_url} 
                 alt={book?.title} 
               />
               {windowSize < 900 && (
@@ -136,7 +142,7 @@ const OneBook = ({ windowSize }: Props) => {
                   <h2 className='text-4xl text-left font-bold'>{book?.title}</h2>
                 )}
                 <a 
-                  href={`http://127.0.0.1:5000/books/${book?.pdf_path}`} 
+                  href={book?.pdf_url} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className='flex items-center gap-2 transition-all text-neutral-600 font-medium text-2xl hover:text-neutral-900 hover:font-bold'
@@ -164,37 +170,17 @@ const OneBook = ({ windowSize }: Props) => {
                     <button 
                     className='font-medium text-2xl text-red-500 hover:text-red-400' 
                     type='submit'
-                    onClick={() => setElimBook(true)}>Eliminar Libro</button>
+                    onClick={() => handleElim()}>Eliminar Libro</button>
                 )}
                 {user?.admin == true && (
                     <button 
                     className='font-medium text-2xl text-red-500 hover:text-red-400' 
                     type='submit'
-                    onClick={() => setElimBook(true)}>Eliminar Libro</button>
+                    onClick={() => handleElim()}>Eliminar Libro</button>
                 )}
               </section>
             </article>
           </main>
-        )}
-        {elimBook && (
-          <React.Fragment>
-            <div className="fixed bg-black opacity-60 inset-0 z-20 w-[100vw] h-[100vh]"></div>
-            <div className="fixed m-auto inset-0 rounded-md lg:w-3/12 w-2/3 lg:h-4/12 h-1/3 flex flex-col items-center justify-center p-5 gap-10 z-30 text-2xl bg-neutral-200">
-              <p className="font-bold text-neutral-600">
-                ¿Quieres eliminar este libro?
-              </p>
-              <div className="flex justify-evenly items-center gap-8 w-full text-3xl">
-                <button
-                  className="text-neutral-500 hover:font-bold transition-all hover:text-neutral-900 border border-black p-2 rounded-md text-xl w-18"
-                  onClick={() => {handleElim(); setElimBook(false)}}>Sí
-                </button>
-                <button
-                  className="text-neutral-500 hover:font-bold transition-all hover:text-neutral-900 border border-black p-2 rounded-md text-xl w-18"
-                  onClick={() => setElimBook(false)}>No
-                </button>
-              </div>
-            </div>
-          </React.Fragment>
         )}
     </main>
   )
